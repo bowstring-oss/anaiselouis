@@ -1,0 +1,24 @@
+# System files
+*-debug.log
+.DS_Store
+.angular
+.idea/runConfigurations
+.nx
+dist
+node_modules
+tmp
+
+# Sensitive Firebase files
+.firebase
+.runtimeconfig.json
+.service-account.json
+gha-creds-*.json
+
+# Version side-effect files
+apps/*/src/.gitInfoPartial.ts
+apps/*/src/.packageVersion.ts
+
+
+
+.nx/cache
+.nx/workspace-data

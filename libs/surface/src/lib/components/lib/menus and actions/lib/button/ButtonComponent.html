@@ -1,0 +1,69 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness">
+  <div class="between">
+    <div>
+      @if (urlInput$(); as url) {@if (url.includes(":") || url.match("\\.[a-z]")) {<a class="harness" #externalLinkHtmlAnchorElement
+        [attr.href]="url"
+        [attr.tabindex]="disabledInput$() ? -1 : 0"
+        (click)="$event.stopPropagation(); outputSubject.next();"
+        (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+        (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || externalLinkHtmlAnchorElement.click();"
+        (pointerup)="hapticsService.trigger();"
+        target="_blank"
+        role="button">
+        <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+      </a>} @else {<a class="harness" #routerLinkHtmlAnchorElement
+        [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : 0"
+        (click)="$event.stopPropagation(); outputSubject.next();"
+        (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+        (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || routerLinkHtmlAnchorElement.click();"
+        (pointerup)="hapticsService.trigger();"
+        [routerLink]="url"
+        routerLinkActive
+        #routerLinkActive="routerLinkActive"
+        [routerLinkActiveOptions]="{ exact: url === '/' }"
+        role="button">
+        <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+      </a>}} @else {<button class="harness" #htmlButtonElement
+        [attr.disabled]="disabledInput$() || undefined"
+        [attr.tabindex]="disabledInput$() ? -1 : 0"
+        [attr.type]="typeInput$() || 'button'"
+        (click)="$event.stopPropagation(); outputSubject.next();"
+        (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+        (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.preventDefault() || htmlButtonElement.click();"
+        (pointerup)="hapticsService.trigger();"
+        role="button">
+        <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+      </button>}
+
+      <svg
+        viewBox="0 0 1 1"
+        xmlns="http://www.w3.org/2000/svg">
+        <clipPath
+          [attr.id]="wellRoundedDirective.clipPathId"
+          clipPathUnits="objectBoundingBox">
+          <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+        </clipPath>
+        <mask
+          [attr.id]="wellRoundedDirective.glassMaskId$()"
+          maskContentUnits="userSpaceOnUse"
+          maskUnits="userSpaceOnUse">
+          <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+        </mask>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <ng-content />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

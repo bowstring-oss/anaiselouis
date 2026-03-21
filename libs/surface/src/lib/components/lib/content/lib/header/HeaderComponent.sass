@@ -1,0 +1,70 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--header--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--header--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
+
+  @include directives.FlexboxContainer-host
+  @include directives.Typography-host
+
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--header--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--header--gap-row) !important
+
+  > .harness
+    cursor: default
+    user-select: none
+
+    > .between::ng-deep
+      > *
+        @include directives.FlexboxContainer-children
+        @include directives.Typography-children
+
+      > h1,
+      > h2,
+      > h3,
+      > h4,
+      > h5,
+      > h6
+        margin: 0
+
+      > h1
+        font-size: calc(1em * pow(var(--phi), 5))
+
+      > h2
+        font-size: calc(1em * pow(var(--phi), 4))
+
+      > h3
+        font-size: calc(1em * pow(var(--phi), 3))
+        font-weight: 900
+
+      > h4
+        font-size: calc(1em * pow(var(--phi), 3))
+
+        + h5
+          opacity: 0.75
+
+      > h5
+        font-size: calc(1em * pow(var(--phi), 2))
+
+        + h6
+          opacity: 0.75
+
+      > h6
+        font-size: calc(1em * pow(var(--phi), 1))
+
+
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--header--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--header--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--typography-directive--font-size-exponent: var(--bowstring--#{ $host-context-namespace }--font-size-exponent) !important

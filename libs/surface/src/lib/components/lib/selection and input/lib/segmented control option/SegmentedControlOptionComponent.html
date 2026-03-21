@@ -1,0 +1,26 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<button class="harness" #htmlButtonElement
+  [attr.aria-checked]="segmentedControlValueAccessor.value === valueInput$()"
+  [attr.disabled]="disabledInput$() || undefined"
+  [attr.tabindex]="disabledInput$() ? -1 : 0"
+  (click)="$event.stopPropagation(); segmentedControlValueAccessor.writeValue(valueInput$()); segmentedControlValueAccessor.onChange?.(); segmentedControlValueAccessor.onTouched?.();"
+  (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+  (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || htmlButtonElement.click();"
+  (pointerup)="segmentedControlValueAccessor.value !== valueInput$() && hapticsService.trigger();"
+  role="radio"
+  type="button">
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</button>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <ng-content />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

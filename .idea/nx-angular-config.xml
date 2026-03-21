@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="NxAngularConfigService" workspaceLocation="file://$PROJECT_DIR$/nx.json">
+    <projects>
+      <project name="cloud-functions" file="file://$PROJECT_DIR$/libs/cloud functions/project.json" />
+      <project name="colors" file="file://$PROJECT_DIR$/libs/colors/project.json" />
+      <project name="config" file="file://$PROJECT_DIR$/libs/config/project.json" />
+      <project name="core" file="file://$PROJECT_DIR$/libs/core/project.json" />
+      <project name="i18n" file="file://$PROJECT_DIR$/libs/i18n/project.json" />
+      <project name="surface" file="file://$PROJECT_DIR$/libs/surface/project.json" />
+      <project name="symbols" file="file://$PROJECT_DIR$/libs/symbols/project.json" />
+      <project name="website" file="file://$PROJECT_DIR$/apps/website/project.json" />
+    </projects>
+  </component>
+</project>

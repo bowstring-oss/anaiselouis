@@ -1,0 +1,52 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+@use "../container/ContainerDirective"
+
+
+$namespace: "flexbox-container"
+
+$align-content: sassFunctions.get-input-reference($namespace, "align-content", normal)
+$align-items: sassFunctions.get-input-reference($namespace, "align-items", normal)
+$flex-direction: sassFunctions.get-input-reference($namespace, "flex-direction", column)
+$flex-wrap: sassFunctions.get-input-reference($namespace, "flex-wrap", nowrap)
+$gap-column: sassFunctions.get-input-reference($namespace, "gap-column", 0)
+$gap-row: sassFunctions.get-input-reference($namespace, "gap-row", 0)
+$justify-content: sassFunctions.get-input-reference($namespace, "justify-content", normal)
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include ContainerDirective.children
+
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ("align-content", "align-items", "flex-direction", "flex-wrap", "gap-column", "gap-row", "justify-content", "scroll-left", "scroll-top"))
+  @include sassMixins.reset-values($namespace, ("scroll-left", "scroll-top"))
+
+@mixin host
+  @include ContainerDirective.host
+
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness > .between
+    align-content: $align-content
+    align-items: $align-items
+    display: flex
+    flex-direction: $flex-direction
+    flex-wrap: $flex-wrap
+    gap: $gap-row $gap-column
+    justify-content: $justify-content
+
+  &.inline > .harness
+    &,
+    > .between
+      display: inline-flex !important

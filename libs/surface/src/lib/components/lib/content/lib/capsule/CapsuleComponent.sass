@@ -1,0 +1,82 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--capsule--gap-column: calc(var(--bowstring--capsule--padding-sides) * pow(var(--phi), -1))
+  --bowstring--capsule--gap-row: calc(var(--bowstring--capsule--padding-bottom) * pow(var(--phi), -1))
+  --bowstring--capsule--material-opacity: 1
+  --bowstring--capsule--padding-bottom: calc(1rem * pow(var(--phi), -2))
+  --bowstring--capsule--padding-sides: calc(1rem * pow(var(--phi), -1))
+  --bowstring--capsule--padding-top: calc(1rem * pow(var(--phi), -2))
+
+  @include directives.Elevated-host
+  @include directives.FlexboxContainer-host
+  @include directives.Primary-host
+  @include directives.WellRounded-host
+
+  --bowstring--container-directive--padding-bottom: var(--bowstring--capsule--padding-bottom) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--capsule--padding-sides) !important
+  --bowstring--container-directive--padding-top: var(--bowstring--capsule--padding-top) !important
+  --bowstring--elevated-directive--material-opacity: var(--bowstring--capsule--material-opacity) !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--capsule--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--capsule--gap-row) !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
+  --bowstring--well-rounded-directive--material-opacity: var(--bowstring--capsule--material-opacity) !important
+
+  > .harness
+    cursor: default
+    user-select: none
+
+    > .between
+      font-size: calc(1em * pow(var(--phi), -0.1))
+      text-transform: uppercase
+
+      &::ng-deep > *
+        --bowstring--capsule--material-opacity: initial
+
+        @include directives.Elevated-children
+        @include directives.FlexboxContainer-children
+        @include directives.Primary-children
+        @include directives.WellRounded-children
+
+  &:not(.material-glass):not(.material-inverse):not(.material-primary):not(.material-secondary)
+    @include directives.Canvas-host(0%)
+
+    > .harness > .between::ng-deep > *
+      @include directives.Canvas-children
+
+  &.material-glass
+    --bowstring--capsule--material-opacity: 0.625
+
+    @include directives.Glass-host
+
+    --bowstring--glass-directive--material-opacity: var(--bowstring--capsule--material-opacity) !important
+
+    > .harness > .between::ng-deep > *
+      @include directives.Glass-children
+
+  &.material-inverse
+    @include directives.Inverse-host(0%)
+
+    > .harness > .between::ng-deep > *
+      @include directives.Inverse-children
+
+  &.material-primary
+    @include directives.Primary-host
+
+    > .harness > .between::ng-deep > *
+      @include directives.Primary-children
+
+  &.material-secondary
+    @include directives.Secondary-host
+
+    > .harness > .between::ng-deep > *
+      @include directives.Secondary-children

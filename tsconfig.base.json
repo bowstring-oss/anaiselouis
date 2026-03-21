@@ -1,0 +1,62 @@
+{
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters":       true,
+    "strictInputAccessModifiers":      true,
+    "strictStandalone":                true,
+    "strictTemplates":                 true
+  },
+  "compileOnSave":          false,
+  "compilerOptions":        {
+    "allowSyntheticDefaultImports":       true,
+    "baseUrl":                            ".",
+    "emitDecoratorMetadata":              true,
+    "experimentalDecorators":             true,
+    "forceConsistentCasingInFileNames":   true,
+    "importHelpers":                      true,
+    "lib":                                [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module":                             "ESNext",
+    "moduleResolution":                   "Node",
+    "noFallthroughCasesInSwitch":         true,
+    "noImplicitOverride":                 true,
+    "noImplicitReturns":                  true,
+    "noPropertyAccessFromIndexSignature": true,
+    "outDir":                             "dist/out-tsc",
+    "paths":                              {
+      "@bowstring/colors":  [ "libs/colors/src/index.ts" ],
+      "@bowstring/config":  [ "libs/config/src/index.ts" ],
+      "@bowstring/core":    [ "libs/core/src/index.ts" ],
+      "@bowstring/i18n":    [ "libs/i18n/src/index.ts" ],
+      "@bowstring/surface": [ "libs/surface/src/index.ts" ],
+      "@bowstring/symbols": [ "libs/symbols/src/index.ts" ]
+    },
+    "resolveJsonModule":                  true,
+    "rootDir":                            ".",
+    "skipDefaultLibCheck":                true,
+    "skipLibCheck":                       true,
+    "strict":                             true,
+    "target":                             "ESNext",
+    "types":                              [
+      "@angular/localize",
+      "@types/body-scroll-lock",
+      "@types/compression",
+      "@types/cookie-parser",
+      "@types/google.maps",
+      "@types/lodash",
+      "@types/masonry-layout",
+      "@types/serviceworker"
+    ]
+  },
+  "exclude":                [
+    "dist",
+    "node_modules",
+    "temp",
+    "tmp",
+    "**/README.md"
+  ],
+  "include":                [ "!**/*.ts" ]
+}

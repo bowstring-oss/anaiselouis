@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "anaiselouis-787a5"
+  },
+  "targets": {
+    "anaiselouis-787a5": {
+      "hosting": {
+        "website": [
+          "anaiselouis-787a5"
+        ]
+      }
+    }
+  }
+}

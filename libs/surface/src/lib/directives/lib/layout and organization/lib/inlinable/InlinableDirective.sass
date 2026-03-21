@@ -1,0 +1,31 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "inlinable"
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ())
+  @include sassMixins.reset-values($namespace, ())
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  &.inline > .harness
+    display: inline-grid
+
+    > .between
+      display: inline-grid

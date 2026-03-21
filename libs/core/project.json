@@ -1,0 +1,84 @@
+{
+  "name":        "core",
+  "$schema":     "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot":  "libs/core/src",
+  "tags":        [ "has-cloud-functions" ],
+  "targets":     {
+    "build":                    {
+      "dependsOn": [ "build--cloud-functions" ],
+      "executor":  "@nx/esbuild:esbuild",
+      "options":   {
+        "declaration":         true,
+        "deleteOutputPath":    false,
+        "esbuildOptions":      {
+          "banner": {
+            "css": "/*!\n / Copyright © 2026 Gavin William Sawyer. All rights reserved.\n /\n",
+            "js":  "/*\n * Copyright © 2026 Gavin William Sawyer. All rights reserved.\n */\n"
+          }
+        },
+        "external":            [ "@bowstring/*" ],
+        "generatePackageJson": true,
+        "main":                "libs/core/src/index.ts",
+        "metafile":            true,
+        "minify":              true,
+        "outputPath":          "dist/libs/core",
+        "splitting":           true,
+        "treeShaking":         true,
+        "tsConfig":            "libs/core/tsconfig.lib.json"
+      },
+      "outputs":   [ "{workspaceRoot}/dist/libs/core" ]
+    },
+    "build--cloud-functions":   {
+      "dependsOn": [ "esbuild--cloud-functions" ],
+      "executor":  "nx:run-commands",
+      "options":   { "commands": [ "mv dist/libs/core/cloud\\ functions/package.cloud-functions.json dist/libs/core/cloud\\ functions/package.json" ] },
+      "outputs":   [ "{workspaceRoot}/dist/libs/core/cloud functions" ]
+    },
+    "deploy":                   {
+      "dependsOn": [ "build--cloud-functions" ],
+      "executor":  "nx:run-commands",
+      "options":   { "command": "firebase deploy --only functions:core" }
+    },
+    "esbuild--cloud-functions": {
+      "dependsOn": [
+        "lint",
+        "prebuild"
+      ],
+      "executor":  "@nx/esbuild:esbuild",
+      "options":   {
+        "assets":           [
+          {
+            "glob":   "package.cloud-functions.json",
+            "input":  "libs/core",
+            "output": "."
+          }
+        ],
+        "bundle":           true,
+        "deleteOutputPath": false,
+        "esbuildOptions":   {
+          "banner": {
+            "css": "/*!\n / Copyright © 2026 Gavin William Sawyer. All rights reserved.\n /\n",
+            "js":  "/*\n * Copyright © 2026 Gavin William Sawyer. All rights reserved.\n */\n"
+          }
+        },
+        "format":           [ "cjs" ],
+        "main":             "libs/core/src/lib/main.cloud-functions.ts",
+        "metafile":         true,
+        "minify":           true,
+        "outputPath":       "dist/libs/core/cloud functions",
+        "platform":         "node",
+        "tsConfig":         "libs/core/tsconfig.lib.cloud-functions.json"
+      },
+      "outputs":   [ "{workspaceRoot}/dist/libs/core/cloud functions" ]
+    },
+    "lint":                     {
+      "executor": "@nx/eslint:lint",
+      "options":  { "lintFilePatterns": [ "libs/core/src/**/*.ts" ] }
+    },
+    "prebuild":                 {
+      "executor": "nx:run-commands",
+      "options":  { "commands": [ "rm -rf dist/libs/core" ] }
+    }
+  }
+}

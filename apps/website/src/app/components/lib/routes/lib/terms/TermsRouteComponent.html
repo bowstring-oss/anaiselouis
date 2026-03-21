@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<bowstring--article>
+  <bowstring--heading-group
+    styleFirstLetter
+    styleFirstParagraph>
+    <bowstring--header>
+      <h2 i18n="@@apps--Website--Components--Routes--Terms--Article--Header">Terms of Service</h2>
+      <h3>
+        <bowstring--flexbox-container
+          alignItems="first baseline"
+          flexDirection="row"
+          flexWrap="wrap">
+          <bowstring--capsule
+            i18n
+            material="primary">legal</bowstring--capsule>
+          <bowstring--label [input]="updatedDate | bowstringDate:DateFormat.LongDate" />
+        </bowstring--flexbox-container>
+      </h3>
+    </bowstring--header>
+    <p i18n="@@apps--Website--Components--Routes--Terms--Article--Preface"><span style="font-variant: small-caps;">Welcome to {{ configLib.brand.title }}</span> &lpar;&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;&rpar;. These Terms of Service &lpar;&ldquo;Terms&rdquo;&rpar; govern your use of our website located at {{ environment.subdomain && environment.subdomain + "." }}{{ configLib.domain }} &lpar;our &ldquo;Site&rdquo;&rpar; and any related services, features, or content we provide.</p>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_1--Header">Use of our Site</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_1--Paragraph">You agree to use our Site for lawful purposes only and in accordance with these Terms. You must be at least 13 years old to use our Site. If you create an account, you are responsible for maintaining the confidentiality of your login credentials and for all activity that occurs under your account.</p>
+    </bowstring--section>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_2--Header">User content</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_2--Paragraph">You grant us a non-exclusive, worldwide license to use, display, and distribute any content you submit in connection with the Site. You agree not to submit anything unlawful, defamatory, or infringing.</p>
+    </bowstring--section>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_3--Header">Intellectual property</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_3--Paragraph">All content on our Site, including design, images, logos, copy, and code, is our property or used with permission. You may not reproduce or use any part of our Site without written consent, except where permitted by fair use.</p>
+    </bowstring--section>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_4--Header">Third-party links and services</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_4--Paragraph">We may link to or integrate with third-party services. We are not responsible for their content or policies. Please review their terms and privacy practices.</p>
+    </bowstring--section>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_5--Header">Liability</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_5--Paragraph">To the fullest extent permitted by law, we are not liable for any indirect, incidental, or consequential damages arising from your use of our Site.</p>
+    </bowstring--section>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_6--Header">Changes</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_6--Paragraph">We reserve the right to make changes to legal policies. These Terms are effective on the date shown above. Continued use of our Site is understood as your acceptance of any changes.</p>
+    </bowstring--section>
+    <bowstring--section>
+      <bowstring--header>
+        <h4 i18n="@@apps--Website--Components--Routes--Terms--Article--Section_7--Header">Disclaimer</h4>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Terms--Article--Section_7--Paragraph">This Site is provided &ldquo;as is&rdquo; without warranties of any kind.</p>
+    </bowstring--section>
+  </bowstring--heading-group>
+</bowstring--article>

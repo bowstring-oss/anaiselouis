@@ -1,0 +1,44 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.FlexboxContainer-host
+  @include directives.Inlinable-host
+
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
+
+  > .harness > .between > svg
+    display: grid
+    filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
+    height: 1.123em
+    overflow: visible
+    transform: translateZ(0)
+    margin-bottom: calc((var(--bowstring--logo--viewbox-height) - var(--bowstring--logo--baseline-y)) / var(--bowstring--logo--viewbox-height) * 1.123em)
+    margin-top: calc((var(--bowstring--logo--viewbox-height) - var(--bowstring--logo--baseline-y)) / var(--bowstring--logo--viewbox-height) * -1.123em)
+
+    > g
+      > path,
+      > rect
+        &.focusHover
+          display: none
+
+\:host-context(bowstring--link:not(.disabled) > .harness:focus-within, bowstring--link:not(.disabled) > .harness:hover) > .harness > .between > svg > g
+  > path,
+  > rect
+    &.focusHover
+      display: inline
+
+\:host-context(#badgeSymbol)
+  --bowstring--container-directive--position: absolute !important
+  --bowstring--container-directive--position-right: 0 !important
+  --bowstring--container-directive--position-top: 0 !important
+
+  > .harness > .between
+    font-size: calc(1em * pow(var(--phi), 0.25))

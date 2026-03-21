@@ -1,0 +1,11 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<bowstring--header *bowstringRouteHeader>
+  <h2>@if (projectRoutes | bowstringFindRouteByPath:'**'; as route) {{{ route.data?.["title"] }}}</h2>
+</bowstring--header>
+
+<bowstring--heading-group styleFirstParagraph>
+  <p i18n>Make sure the URL &lpar;&ldquo;{{ "https://" + (environment.subdomain ? environment.subdomain + "." : "") }}{{ configLib.domain }}<span style="word-break: break-all;">{{ pathService.path$() }}</span>&rdquo;&rpar; is correct.</p>
+</bowstring--heading-group>

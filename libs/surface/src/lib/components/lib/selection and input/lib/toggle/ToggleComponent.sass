@@ -1,0 +1,115 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --bowstring--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+
+  > .harness > .between
+    font-size: calc(1rem * pow(var(--phi), -0.5))
+
+    &::ng-deep > *
+      @include directives.FlexboxContainer-children
+
+    > div
+      display: contents
+
+      @include directives.Canvas-host(0%)
+      @include directives.FlexboxContainer-host
+
+      --bowstring--flexbox-container-directive--align-items: center !important
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--gap-column: calc(var(--bowstring--container-directive--padding-sides) * pow(var(--phi), -1)) !important
+      --bowstring--flexbox-container-directive--gap-row: calc(var(--bowstring--container-directive--padding-bottom) * pow(var(--phi), -1)) !important
+
+      > .harness
+        cursor: default
+        user-select: none
+
+        > .between
+          background: transparent !important
+          height: calc(18px * pow(var(--phi), 0) + 2px)
+          width: calc(18px * pow(var(--phi), 1) + 2px)
+
+          &::ng-deep > *
+            @include directives.Canvas-children
+            @include directives.FlexboxContainer-children
+
+          > input
+            border: 0
+            opacity: 0
+            outline: 0
+            padding: 0
+
+            &:checked + div
+              @include directives.Primary-host
+
+              --bowstring--toggle--translation-x: calc(18px * pow(var(--phi), -1))
+
+          > div
+            display: contents
+
+            @include directives.Canvas-host(24%)
+            @include directives.Container-host
+
+            --bowstring--container-directive--position: absolute !important
+
+            > .harness > .between
+              border-radius: calc(10px)
+              cursor: pointer
+              height: calc(18px * pow(var(--phi), 0) + 2px)
+              transition: background-color 75ms ease-in-out
+              width: calc(18px * pow(var(--phi), 1) + 2px)
+
+              &::ng-deep > *
+                @include directives.Canvas-children
+                @include directives.Container-children
+
+              &:before
+                @include directives.Canvas-host(0%)
+                @include directives.Elevated-shadow(4)
+
+                background-color: var(--bowstring--canvas-directive--colors--background)
+                border-radius: 50%
+                content: ""
+                height: calc(18px)
+                left: 1px
+                position: absolute
+                top: 1px
+                transition: translate 75ms ease-in-out
+                translate: var(--bowstring--toggle--translation-x, 0px) 0 0
+                width: calc(18px)
+
+                @media (prefers-color-scheme: dark)
+                  background-color: var(--bowstring--canvas-directive--colors--background-inverse)
+
+              &::ng-deep > div
+                aspect-ratio: 1
+                font-size: 0.8em
+                height: 100%
+                position: relative
+
+                > bowstring--symbol
+                  @include directives.Canvas-host(0%)
+
+                  --bowstring--container-directive--position: absolute !important
+                  --bowstring--container-directive--position-left: 50% !important
+                  --bowstring--container-directive--position-top: 50% !important
+
+                  > .harness
+                    transition: translate 75ms ease-in-out
+                    translate: calc(var(--bowstring--toggle--translation-x, 0px) - 50% + 1px) -50% 0
+
+                    > .between
+                      background: transparent !important
+
+                      @media (prefers-color-scheme: dark)
+                        color: var(--bowstring--colors--foreground-inverse) !important

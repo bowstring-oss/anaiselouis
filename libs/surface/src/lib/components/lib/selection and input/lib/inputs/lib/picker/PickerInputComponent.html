@@ -1,0 +1,116 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness">
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</div>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  @if (labelInput$(); as label) {<label
+    [attr.for]="inputName$()"
+    [innerHTML]="explicitAutocompleteInput$() ? (label | bowstringInsertZwnjs) : labelInput$()"></label>}
+  <div>
+    <div class="harness" #htmlDivElement>
+      <div class="between">
+        @if (chevronUpChevronDownSymbol$(); as symbol) {<div id="symbol">
+          <div class="harness">
+            <div class="between">
+              <svg
+                [attr.viewBox]="'0 0 ' + symbol.viewBoxWidth + ' ' + symbol.viewBoxHeight + ''"
+                xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <rect
+                    [attr.height]="symbol.viewBoxHeight"
+                    [attr.width]="symbol.viewBoxWidth"
+                    opacity="0"
+                    x="0"
+                    y="0" />
+                  @for (path of symbol.paths; track $index) {<path
+                    [attr.d]="path.definition"
+                    [attr.fill-opacity]="path.opacity"
+                    fill="currentColor" />}
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>}
+        @if (htmlInputElement.value) {<div id="clearControl">
+          <button class="harness" #htmlButtonElement
+            (click)="$event.stopPropagation(); !this.focused$() || writeValue() || onChange?.(); htmlInputElement.focus();"
+            (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+            (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || htmlButtonElement.click();"
+            (pointerup)="hapticsService.trigger();"
+            (pointerdown)="onPointerdown();"
+            tabindex="-1"
+            type="button">
+            <div class="between">
+              @if (xmarkCircleFillSymbol$(); as symbol) {<svg
+                [attr.viewBox]="'0 0 ' + symbol.viewBoxWidth + ' ' + symbol.viewBoxHeight + ''"
+                xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <rect
+                    [attr.height]="symbol.viewBoxHeight"
+                    [attr.width]="symbol.viewBoxWidth"
+                    opacity="0"
+                    x="0"
+                    y="0" />
+                  @for (path of symbol.paths; track $index) {<path
+                    [attr.d]="path.definition"
+                    [attr.fill-opacity]="path.opacity"
+                    fill="currentColor" />}
+                </g>
+              </svg>}
+            </div>
+          </button>
+        </div>}
+        <select #htmlInputElement
+          [attr.autocomplete]="autocompleteInput$()"
+          [attr.enterkeyhint]="enterKeyHintInput$()"
+          [attr.disabled]="disabledModel$() || undefined"
+          [attr.name]="inputName$()"
+          [attr.tabindex]="disabledModel$() ? -1 : 0"
+          [attr.type]="typeInput$()"
+          (blur)="onBlur();"
+          (change)="onChange?.();"
+          (click)="$event.stopPropagation();"
+          (focus)="onFocus();"
+          (input)="onInput();"
+          (keydown)="$event.code !== 'Enter' || (enterKeyHintInput$() !== 'next' ? enterKeyHintInput$() !== 'previous' ? onSubmit?.() : focusPrevious() : focusNext()) || $event.preventDefault() || $event.stopPropagation();"
+          (pointerdown)="onPointerdown();">
+          @if (placeholderInput$() || value === "") {<option
+            [attr.selected]="value === '' || undefined"
+            disabled
+            value="">
+            {{ placeholderInput$() }}
+          </option>}
+          @for (optionComponent of optionComponents$(); track $index) {<option
+            [attr.selected]="value === optionComponent.valueInput$() || undefined"
+            [attr.value]="optionComponent.valueInput$()">{{ optionComponent.labelInput$() }}</option>}
+        </select>
+      </div>
+    </div>
+
+    <svg
+      viewBox="0 0 1 1"
+      xmlns="http://www.w3.org/2000/svg">
+      <clipPath
+        [attr.id]="wellRoundedDirective.clipPathId"
+        clipPathUnits="objectBoundingBox">
+        <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+      </clipPath>
+      <mask
+        [attr.id]="wellRoundedDirective.glassMaskId$()"
+        maskContentUnits="userSpaceOnUse"
+        maskUnits="userSpaceOnUse">
+        <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+      </mask>
+    </svg>
+  </div>
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

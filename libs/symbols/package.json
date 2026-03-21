@@ -1,0 +1,16 @@
+{
+  "name":        "@bowstring/symbols",
+  "homepage":    "https://bowstr.ing",
+  "author":      {
+    "name":  "Gavin William Sawyer",
+    "email": "g@vinsawyer.us",
+    "url":   "https://gavinsawyer.us"
+  },
+  "repository":  {
+    "type":      "git",
+    "url":       "git+https://github.com/gavinsawyer/bowstring.git",
+    "directory": "libs/symbols"
+  },
+  "private":     true,
+  "sideEffects": false
+}

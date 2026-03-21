@@ -1,0 +1,42 @@
+{
+  "analytics":          true,
+  "namedInputs":        {
+    "default":       [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "production":    [ "default" ],
+    "sharedGlobals": [ ]
+  },
+  "nxCloudAccessToken": "${NX_CLOUD_ACCESS_TOKEN}",
+  "nxCloudId":          "${NX_CLOUD_ID}",
+  "parallel":           7,
+  "targetDefaults":     {
+    "angular--browser":       { "cache": true },
+    "angular--server":        { "cache": true },
+    "build":                  {
+      "dependsOn": [ "^build" ],
+      "inputs":    [
+        "production",
+        "^production"
+      ]
+    },
+    "build--cloud-functions": { "cache": true },
+    "build--intl-server":     { "cache": true },
+    "build--service-worker":  { "cache": true },
+    "deploy":                 {
+      "dependsOn": [ "^deploy" ],
+      "inputs":    [
+        "production",
+        "^production"
+      ]
+    },
+    "lint":                   {
+      "cache":  true,
+      "inputs": [
+        "default",
+        "{workspaceRoot}/eslint.config.js"
+      ]
+    }
+  }
+}

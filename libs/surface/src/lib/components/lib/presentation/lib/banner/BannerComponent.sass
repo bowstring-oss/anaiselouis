@@ -1,0 +1,37 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--banner--gap-column: var(--bowstring--container-directive--padding-sides)
+  --bowstring--banner--gap-row: var(--bowstring--container-directive--padding-bottom)
+
+  @include directives.Canvas-host(0%)
+  @include directives.FlexboxContainer-host
+
+  --bowstring--container-directive--margin-sides: calc(-1 * var(--bowstring--root--padding-sides)) !important
+  --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--root--padding-sides) !important
+  --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+  --bowstring--container-directive--position-top: calc(-1 * var(--bowstring--root--padding-top)) !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--banner--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--banner--gap-row) !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
+
+  @media (min-width: 48rem)
+    --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 0)) !important
+    --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), 0)) !important
+
+  > .harness > .between::ng-deep > *
+    @include directives.Canvas-children
+    @include directives.FlexboxContainer-children
+
+\:host-context(bowstring--main)
+  --bowstring--container-directive--margin-bottom: calc(-1 * var(--bowstring--main--gap-row)) !important

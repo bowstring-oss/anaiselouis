@@ -1,0 +1,91 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+@property --bowstring--scroll-stack--current-item-index
+  syntax: "<number>"
+  initial-value: 1
+  inherits: true
+
+\:host
+  display: contents
+
+  @include directives.Container-host
+
+  --bowstring--container-directive--overflow-x: scroll !important
+  --bowstring--container-directive--overflow-y: visible !important
+  --bowstring--container-directive--scroll-snap-type: x mandatory !important
+
+  > .harness
+    transform: translateZ(0)
+
+    > .between
+      animation: bowstring--scroll-stack--progress linear both
+      animation-timeline: scroll(self inline)
+      display: flex
+      flex-direction: row
+      z-index: auto !important
+
+      @keyframes bowstring--scroll-stack--progress
+        from
+          --bowstring--scroll-stack--current-item-index: 1
+        to
+          --bowstring--scroll-stack--current-item-index: var(--bowstring--scroll-stack--items-count)
+
+      > div
+        --bowstring--scroll-stack--item--eccentricity: calc((1 - min(1, pow(pow(var(--bowstring--scroll-stack--item--index) - var(--bowstring--scroll-stack--last-snapped-item-index, 0), 2), 0.5))) * clamp(0, 1 - pow(pow(2 * var(--bowstring--scroll-stack--item--relative-transformation--absolute-value) - 1, 2), 0.5), 1))
+        --bowstring--scroll-stack--item--relative-direction: calc(var(--bowstring--scroll-stack--item--relative-transformation) / pow(pow(var(--bowstring--scroll-stack--item--relative-transformation) + 1 / 65536, 2), 0.5))
+        --bowstring--scroll-stack--item--relative-transformation: calc(var(--bowstring--scroll-stack--item--index) - var(--bowstring--scroll-stack--current-item-index))
+        --bowstring--scroll-stack--item--relative-transformation--absolute-value: calc(pow(pow(var(--bowstring--scroll-stack--item--relative-transformation), 2), 0.5))
+        --bowstring--scroll-stack--item--transformation: calc(log(var(--bowstring--scroll-stack--item--relative-transformation--absolute-value) + 1) * var(--bowstring--scroll-stack--item--relative-direction))
+        --bowstring--scroll-stack--item--transformation--dulled-absolute-value: calc(max(0, pow(pow(var(--bowstring--scroll-stack--item--transformation), 2), 0.5) - 0.015625))
+        --bowstring--scroll-stack--item--transformation--dulled: calc(var(--bowstring--scroll-stack--item--transformation) / pow(pow(var(--bowstring--scroll-stack--item--transformation), 2), 0.5) * var(--bowstring--scroll-stack--item--transformation--dulled-absolute-value))
+
+        display: flex
+        flex: 0 0 100%
+        flex-direction: row
+
+        &:before
+          aspect-ratio: var(--bowstring--scroll-stack--minimum-aspect-ratio-input)
+          content: ""
+          flex: 0 0 100%
+          scroll-snap-align: start
+          z-index: calc(200 - round(100 * var(--bowstring--scroll-stack--item--relative-transformation--absolute-value), 1))
+
+        > div
+          display: flex
+          filter: blur(calc(0.125rem * var(--bowstring--scroll-stack--item--transformation--dulled-absolute-value) * (1 + var(--bowstring--scroll-stack--item--eccentricity))))
+          flex-direction: column
+          height: 100%
+          justify-content: center
+          left: 0
+          position: fixed
+          // noinspection CssInvalidFunction
+          transform: rotate(calc(5.625deg * var(--bowstring--scroll-stack--item--transformation--dulled) * (1 + 2 * var(--bowstring--scroll-stack--item--eccentricity)))) scale(calc(1 - 0.1875 * var(--bowstring--scroll-stack--item--transformation--dulled-absolute-value) * (1 + var(--bowstring--scroll-stack--item--eccentricity)))) translate3d(calc(15.625% * var(--bowstring--scroll-stack--item--transformation--dulled) * (1 + 8 * var(--bowstring--scroll-stack--item--eccentricity))), calc(-12.5% * var(--bowstring--scroll-stack--item--transformation--dulled-absolute-value) * (1 + var(--bowstring--scroll-stack--item--eccentricity)) - 0.0625px * var(--bowstring--scroll-stack--item--transformation--dulled-absolute-value) * var(--bowstring--scroll-stack--viewport-vertical-offset, 0)), 0)
+          transform-origin: 50% 100% 0
+          width: 100%
+          z-index: calc(100 - round(100 * var(--bowstring--scroll-stack--item--relative-transformation--absolute-value), 1))
+
+          &::ng-deep > *
+            @include directives.Container-children
+
+            --bowstring--scroll-stack--current-item-index: initial
+            --bowstring--scroll-stack--items-count: initial
+            --bowstring--scroll-stack--last-snapped-item-index: initial
+            --bowstring--scroll-stack--minimum-aspect-ratio-input: initial
+            --bowstring--scroll-stack--viewport-vertical-offset: initial
+
+            --bowstring--scroll-stack--item--eccentricity: initial
+            --bowstring--scroll-stack--item--index: initial
+            --bowstring--scroll-stack--item--relative-direction: initial
+            --bowstring--scroll-stack--item--relative-transformation: initial
+            --bowstring--scroll-stack--item--relative-transformation--absolute-value: initial
+            --bowstring--scroll-stack--item--transformation: initial
+            --bowstring--scroll-stack--item--transformation--dulled-absolute-value: initial
+            --bowstring--scroll-stack--item--transformation--dulled: initial
+
+      &::-webkit-scrollbar
+        display: none

@@ -1,0 +1,14 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.Container-host
+  @include directives.Inlinable-host
+
+  --bowstring--container-directive--align-self: baseline !important

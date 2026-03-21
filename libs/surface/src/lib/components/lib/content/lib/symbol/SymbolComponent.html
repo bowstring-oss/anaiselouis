@@ -1,0 +1,30 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<span class="harness"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></span>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  @if (symbol$(); as symbol) {<svg
+    [attr.viewBox]="'0 0 ' + symbol.viewBoxWidth + ' ' + symbol.viewBoxHeight + ''"
+    xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect
+        [attr.height]="symbol.viewBoxHeight"
+        [attr.width]="symbol.viewBoxWidth"
+        opacity="0"
+        x="0"
+        y="0" />
+      @for (path of symbol.paths; track $index) {<path
+        [attr.d]="path.definition"
+        [attr.fill-opacity]="path.opacity"
+        fill="currentColor" />}
+    </g>
+  </svg>}
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

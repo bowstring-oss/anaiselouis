@@ -1,0 +1,27 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--article--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--article--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--flexbox-child-directive--flex-basis: 100% !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--article--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--article--gap-row) !important
+
+  > .harness > .between::ng-deep > *
+    @include directives.FlexboxContainer-children
+
+
+@each $host-context-namespace in ("main", "above", "below", "sheet", "box")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--article--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--article--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

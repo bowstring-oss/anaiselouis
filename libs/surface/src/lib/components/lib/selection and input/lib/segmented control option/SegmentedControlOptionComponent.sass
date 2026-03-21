@@ -1,0 +1,75 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--segmented-control--gap-column: calc(1rem * pow(var(--phi), -2))
+  --bowstring--segmented-control--gap-row: calc(1rem * pow(var(--phi), -3))
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--flexbox-child-directive--flex-basis: 100% !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--segmented-control--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--segmented-control--gap-row) !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
+
+  > .harness
+    background: none
+    border: 0
+    color: inherit
+    cursor: pointer
+    font: inherit
+    letter-spacing: inherit
+    line-height: inherit
+    padding: 0
+    text-align: start
+    text-decoration: none
+    text-shadow: 0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow, transparent)
+
+    > .between
+      font-size: calc(1rem * pow(var(--phi), 0.25))
+      opacity: 1
+      transition: color 72ms ease-in-out, opacity 200ms ease-in-out
+
+      &::ng-deep > *
+        @include directives.FlexboxContainer-children
+
+      > .symbol
+        display: contents
+
+        @include directives.FlexboxContainer-host
+
+        --bowstring--flexbox-container-directive--align-items: center !important
+        --bowstring--flexbox-container-directive--justify-content: center !important
+
+        > .harness > .between > svg
+          display: grid
+          filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
+          height: 1em
+          max-width: 1em
+          overflow: visible
+          transform: translateZ(0)
+
+      > .label
+        display: contents
+
+        @include directives.Container-host
+
+        --bowstring--container-directive--align-self: baseline !important
+
+  &.disabled > .harness
+    pointer-events: none
+
+    > .between
+      opacity: 0.5
+
+  @media (prefers-color-scheme: dark)
+    &.selected
+      color: var(--bowstring--colors--foreground-inverse)

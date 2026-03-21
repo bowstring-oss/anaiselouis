@@ -1,0 +1,71 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness">
+  <div class="between">
+    @if (labelInput$(); as label) {<label
+      [attr.for]="inputName$()"
+      [innerHTML]="label"></label>}
+    <div>
+      <div class="harness" #htmlDivElement>
+        <div class="between">
+          <select #htmlSelectElement [attr.name]="inputName$()">
+            @for (option of options$(); track $index) {<option [value]="option.valueInput$()">{{ option.valueInput$() }}</option>}
+          </select>
+          <div bowstringWellRoundedDirective #pickerWellRoundedDirective="wellRoundedDirective"
+            [level]="(wellRoundedDirective.levelInput$() || 1) * 1.125">
+            <div class="harness" #pickerHtmlDivElement><div class="between"></div></div>
+
+            <svg
+              viewBox="0 0 1 1"
+              xmlns="http://www.w3.org/2000/svg">
+              <clipPath
+                [attr.id]="pickerWellRoundedDirective.clipPathId"
+                clipPathUnits="objectBoundingBox">
+                <path
+                  [attr.d]="pickerWellRoundedDirective.pathDefinition$()"
+                  fill="transparent" />
+              </clipPath>
+              <mask
+                [attr.id]="pickerWellRoundedDirective.glassMaskId$()"
+                maskContentUnits="userSpaceOnUse"
+                maskUnits="userSpaceOnUse">
+                <path [attr.d]="pickerWellRoundedDirective.pathDefinition$()" />
+              </mask>
+            </svg>
+          </div>
+          <ng-container *ngTemplateOutlet="contentTemplate" />
+        </div>
+      </div>
+
+      <svg
+        viewBox="0 0 1 1"
+        xmlns="http://www.w3.org/2000/svg">
+        <clipPath
+          [attr.id]="wellRoundedDirective.clipPathId"
+          clipPathUnits="objectBoundingBox">
+          <path
+            [attr.d]="wellRoundedDirective.pathDefinition$()"
+            fill="transparent" />
+        </clipPath>
+        <mask
+          [attr.id]="wellRoundedDirective.glassMaskId$()"
+          maskContentUnits="userSpaceOnUse"
+          maskUnits="userSpaceOnUse">
+          <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+        </mask>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <ng-content />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

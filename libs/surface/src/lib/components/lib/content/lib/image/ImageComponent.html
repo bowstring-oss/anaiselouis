@@ -1,0 +1,48 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness">
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</div>
+
+<svg
+  viewBox="0 0 1 1"
+  xmlns="http://www.w3.org/2000/svg">
+  <clipPath
+    [attr.id]="wellRoundedDirective.clipPathId"
+    clipPathUnits="objectBoundingBox">
+    <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+  </clipPath>
+  <mask
+    [attr.id]="wellRoundedDirective.glassMaskId$()"
+    maskContentUnits="userSpaceOnUse"
+    maskUnits="userSpaceOnUse">
+    <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+  </mask>
+</svg>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <img #htmlImageElement
+    [attr.alt]="altInput$()"
+    [attr.role]="!outputSubject.observed ? !urlInput$() ? undefined : 'link' : 'button'"
+    [attr.tabindex]="(!outputSubject.observed && !urlInput$()) || disabledInput$() || routerLinkActive.isActive ? -1 : 0"
+    (click)="outputSubject.next();"
+    [height]="heightInput$() || imageDimensions$()?.height || 'auto'"
+    (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+    (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || htmlImageElement.click();"
+    [loading]="loadingInput$()"
+    [ngSrc]="input$()"
+    (pointerup)="(!outputSubject.observed && !urlInput$()) || this.hapticsService.trigger();"
+    [routerLink]="urlInput$()"
+    routerLinkActive
+    #routerLinkActive="routerLinkActive"
+    [routerLinkActiveOptions]="{ exact: exactInput$() || false }"
+    [width]="widthInput$() || imageDimensions$()?.width || 'auto'" />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

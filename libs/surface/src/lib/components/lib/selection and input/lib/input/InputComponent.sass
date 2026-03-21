@@ -1,0 +1,141 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+@mixin host
+  display: contents
+
+  @include directives.Elevated-host("> .harness > .between > div")
+  @include directives.FlexboxContainer-host
+  @include directives.HoverTransforming-host("> .harness > .between > div")
+  @include directives.WellRounded-host("> .harness > .between > div")
+
+  --bowstring--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --bowstring--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+
+  > .harness > .between
+    &::ng-deep > *
+      @include directives.FlexboxContainer-children
+
+    > label
+      font-size: calc(1rem * pow(var(--phi), -0.5))
+
+    > div
+      display: contents
+
+      --bowstring--input--gap-column: calc(var(--bowstring--container-directive--padding-sides) * pow(var(--phi), -1))
+      --bowstring--input--gap-row: calc(var(--bowstring--container-directive--padding-bottom) * pow(var(--phi), -1))
+
+      @include directives.Canvas-host(0%)
+      @include directives.FlexboxContainer-host
+
+      --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -2)) !important
+      --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), -1)) !important
+      --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -2)) !important
+      --bowstring--flexbox-container-directive--align-items: center !important
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--gap-column: var(--bowstring--input--gap-column) !important
+      --bowstring--flexbox-container-directive--gap-row: var(--bowstring--input--gap-row) !important
+
+      > .harness
+        cursor: text
+        user-select: none
+
+        > .between
+          &::ng-deep > *
+            @include directives.Canvas-children
+            @include directives.Elevated-children
+            @include directives.FlexboxContainer-children
+            @include directives.HoverTransforming-children
+            @include directives.WellRounded-children
+
+          > div#clearControl
+            display: contents
+
+            @include directives.Canvas-host(18%)
+            @include directives.FlexboxContainer-host
+
+            --bowstring--flexbox-container-directive--align-items: center !important
+            --bowstring--flexbox-container-directive--justify-content: center !important
+
+            > .harness
+              background: none
+              border: 0
+              color: inherit
+              cursor: pointer
+              display: grid
+              font: inherit
+              letter-spacing: inherit
+              line-height: inherit
+              order: 1
+              padding: 0
+              text-align: start
+              text-decoration: none
+              text-shadow: 0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow, transparent)
+
+              > .between
+                background: none !important
+                opacity: 1
+                transition: opacity 200ms ease-in-out
+
+                &::ng-deep > *
+                  @include directives.Canvas-children
+                  @include directives.FlexboxContainer-children
+
+                > svg
+                  display: grid
+                  filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
+                  height: 1em
+                  max-width: 1em
+                  overflow: visible
+                  transform: translateZ(0)
+
+          > input,
+          > select
+            background: none
+            border: 0
+            color: black
+            flex: 1 1 0
+            font: inherit
+            height: 18px
+            letter-spacing: inherit
+            line-height: inherit
+            outline: 0
+            padding: 0
+            width: 0
+            -webkit-tap-highlight-color: transparent
+            -webkit-text-fill-color: currentColor
+
+            @media (prefers-color-scheme: dark)
+              color: white
+
+          > input
+            @include directives.Canvas-host(0%)
+
+            caret-color: currentColor
+
+          > input::placeholder
+            color: hsl(0, 0%, 50%)
+
+          &:not(:focus-within)
+            column-gap: 0
+
+            > div#clearControl > .harness
+              cursor: text
+              opacity: 0
+              width: 0
+
+  &.disabled > .harness > .between > div > .harness
+    cursor: default
+
+    > .between
+      > div#clearControl
+        display: none
+
+      > input,
+      > select
+        color: hsl(0, 0%, 50%)
+        cursor: default

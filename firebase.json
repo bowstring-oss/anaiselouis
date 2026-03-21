@@ -1,0 +1,77 @@
+{
+  "emulators":  {
+    "auth":              { "port": 9099 },
+    "database":          { "port": 9000 },
+    "firestore":         { "port": 8080 },
+    "singleProjectMode": true,
+    "ui":                { "enabled": true }
+  },
+  "extensions": { "firebase-web-authn": "./node_modules/@firebase-web-authn/extension" },
+  "firestore":  {
+    "indexes": "firestore.indexes.json",
+    "rules":   "firestore.rules"
+  },
+  "functions":  [
+    {
+      "codebase": "cloud-functions",
+      "ignore":   [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "source":   "dist/libs/cloud functions"
+    },
+    {
+      "codebase": "core",
+      "ignore":   [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "source":   "dist/libs/core/cloud functions"
+    }
+  ],
+  "hosting":    [
+    {
+      "headers":  [
+        {
+          "headers": [
+            {
+              "key":   "Cache-Control",
+              "value": "public,max-age=31536000,immutable"
+            }
+          ],
+          "source":  "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)"
+        },
+        {
+          "headers": [
+            {
+              "key":   "Cache-Control",
+              "value": "no-cache"
+            }
+          ],
+          "source":  "/main.service-worker.js"
+        }
+      ],
+      "ignore":   [ "**/.*" ],
+      "public":   "dist/apps/website/browser",
+      "rewrites": [
+        {
+          "function": "ext-firebase-web-authn-api",
+          "source":   "/firebase-web-authn-api"
+        },
+        {
+          "run":    {
+            "pinTag":    true,
+            "serviceId": "ssr-website"
+          },
+          "source": "**"
+        }
+      ],
+      "target":   "website"
+    }
+  ],
+  "storage":    { "rules": "storage.rules" }
+}

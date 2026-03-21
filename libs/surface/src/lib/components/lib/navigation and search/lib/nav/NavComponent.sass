@@ -1,0 +1,45 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--nav--font-size-exponent: -2
+  --bowstring--nav--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--nav--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--container-directive--margin-bottom: calc(-1 * var(--bowstring--root--gap-row)) !important
+  --bowstring--container-directive--margin-sides: calc(-1 * var(--bowstring--root--gap-column)) !important
+  --bowstring--container-directive--margin-top: calc(-1 * var(--bowstring--root--gap-row)) !important
+  --bowstring--container-directive--overflow-x: scroll !important
+  --bowstring--container-directive--overflow-y: visible !important
+  --bowstring--container-directive--padding-bottom: var(--bowstring--root--gap-row) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--root--gap-column) !important
+  --bowstring--container-directive--padding-top: var(--bowstring--root--gap-row) !important
+  --bowstring--flexbox-child-directive--flex-grow: 1 !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--nav--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--nav--gap-row) !important
+  --bowstring--flexbox-container-directive--justify-content: space-between !important
+
+  > .harness
+    cursor: default
+    margin: calc(min(-1 * var(--bowstring--root--safe-area-inset-top), var(--bowstring--container-directive--margin-top))) calc(min(-1 * var(--bowstring--root--safe-area-inset-right), var(--bowstring--container-directive--margin-sides))) calc(min(-1 * var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--container-directive--margin-bottom))) calc(min(-1 * var(--bowstring--root--safe-area-inset-left), var(--bowstring--container-directive--margin-sides))) !important
+    max-width: 100vw
+    user-select: none
+    z-index: -1
+
+    > .between
+      padding: calc(max(var(--bowstring--root--safe-area-inset-top), var(--bowstring--container-directive--padding-top))) calc(max(var(--bowstring--root--safe-area-inset-right), var(--bowstring--container-directive--padding-sides))) calc(max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--container-directive--padding-bottom))) calc(max(var(--bowstring--root--safe-area-inset-left), var(--bowstring--container-directive--padding-sides))) !important
+
+      &::ng-deep > *
+        @include directives.FlexboxContainer-children
+
+      &::-webkit-scrollbar
+        display: none

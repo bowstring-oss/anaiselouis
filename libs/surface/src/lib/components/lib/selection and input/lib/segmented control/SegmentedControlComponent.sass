@@ -1,0 +1,78 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.FlexboxContainer-host
+  @include directives.WellRounded-host("> .harness > .between > div")
+
+  --bowstring--flexbox-container-directive--gap-column: calc(1rem * pow(var(--phi), -2)) !important
+  --bowstring--flexbox-container-directive--gap-row: calc(1rem * pow(var(--phi), -3)) !important
+
+  > .harness > .between
+    &::ng-deep > *
+      @include directives.FlexboxContainer-children
+
+    > label
+      font-size: calc(1rem * pow(var(--phi), -0.5))
+
+    > div
+      display: contents
+
+      @include directives.Canvas-host(24%)
+      @include directives.FlexboxContainer-host
+
+      --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+      --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+      --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+      --bowstring--flexbox-container-directive--flex-direction: row !important
+      --bowstring--flexbox-container-directive--gap-column: calc(var(--bowstring--container-directive--padding-sides) * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) !important
+      --bowstring--flexbox-container-directive--gap-row: calc(var(--bowstring--container-directive--padding-bottom) * pow(var(--phi), -1) + 1rem * pow(var(--phi), -1)) !important
+
+      > .harness > .between
+        box-shadow: inset 0 calc(0.25rem * pow(var(--phi), -2)) calc(1rem * pow(var(--phi), -1)) calc(-1rem * pow(var(--phi), -3)) transparentize(black, 0.25)
+
+        &::ng-deep > *
+          @include directives.FlexboxContainer-children
+          @include directives.WellRounded-children
+
+        > select
+          display: none
+
+        > div
+          @include directives.Canvas-children
+
+          display: contents
+
+          @include directives.Canvas-host(0%)
+          @include directives.Container-host
+          @include directives.Elevated-host
+          @include directives.WellRounded-host
+
+          --bowstring--container-directive--position: absolute !important
+          --bowstring--container-directive--position-left: calc(1px * var(--bowstring--segmented-control--selected-option-offset) + 2rem * pow(var(--phi), -1) * var(--bowstring--segmented-control--selected-option-index) + 1.5px) !important
+          --bowstring--container-directive--position-top: 1.5px !important
+          --bowstring--elevated-directive--level: 4 !important
+
+          > .harness
+            border-radius: 9px
+            height: calc(100% - 3px)
+            transition: left 75ms ease-in-out, width 75ms ease-in-out
+            width: calc(1px * var(--bowstring--segmented-control--selected-option-width) + 2rem - 3px)
+
+            > .between
+              background-color: var(--bowstring--canvas-directive--colors--background)
+
+              @media (prefers-color-scheme: dark)
+                background-color: var(--bowstring--canvas-directive--colors--background-inverse)
+
+              &::ng-deep > *
+                @include directives.Canvas-children
+                @include directives.Container-children
+                @include directives.Elevated-children
+                @include directives.WellRounded-children

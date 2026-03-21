@@ -1,0 +1,12 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<span class="harness"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></span>
+
+<ng-template #contentTemplate>
+  @if (inlinableDirective.inlineInput$()) {<span>@for (itemTemplateRef of itemTemplateRefs$(); track $index) {<span><ng-container *ngTemplateOutlet="itemTemplateRef" /></span>}</span>} @else {@switch (typeInput$()) {
+    @case ("ordered") {<ol>@for (itemTemplateRef of itemTemplateRefs$(); track $index) {<li><ng-container *ngTemplateOutlet="itemTemplateRef" /></li>}</ol>}
+    @default {<ul>@for (itemTemplateRef of itemTemplateRefs$(); track $index) {<li><ng-container *ngTemplateOutlet="itemTemplateRef" /></li>}</ul>}
+  }}
+</ng-template>

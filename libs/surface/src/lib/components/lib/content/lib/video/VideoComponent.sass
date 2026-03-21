@@ -1,0 +1,24 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+
+  @include directives.Canvas-host(18%)
+  @include directives.Elevated-host
+  @include directives.FlexboxContainer-host
+  @include directives.WellRounded-host
+
+  > .harness > .between > video
+    background: transparent !important
+    flex-grow: 1
+    height: auto
+    max-width: calc(100% - 2 * var(--bowstring--container-directive--margin-sides-input, 0px) - 2 * var(--bowstring--container-directive--padding-sides-input, 0px))
+    object-fit: cover !important
+    width: auto !important
+    z-index: auto !important

@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness" #htmlDivElement>
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</div>
+
+<svg
+  viewBox="0 0 1 1"
+  xmlns="http://www.w3.org/2000/svg">
+  <clipPath
+    [attr.id]="wellRoundedDirective.clipPathId"
+    clipPathUnits="objectBoundingBox">
+    <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+  </clipPath>
+  <mask
+    [attr.id]="wellRoundedDirective.glassMaskId$()"
+    maskContentUnits="userSpaceOnUse"
+    maskUnits="userSpaceOnUse">
+    <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+  </mask>
+</svg>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <google-map
+    [options]="options$()"
+    height="100%"
+    width="100%" />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

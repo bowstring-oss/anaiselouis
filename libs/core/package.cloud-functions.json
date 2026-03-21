@@ -1,0 +1,22 @@
+{
+  "name":         "@bowstring/core--cloud-functions",
+  "homepage":     "https://bowstr.ing",
+  "author":       {
+    "name":  "Gavin William Sawyer",
+    "email": "g@vinsawyer.us",
+    "url":   "https://gavinsawyer.us"
+  },
+  "repository":   {
+    "type":      "git",
+    "url":       "github:gavinsawyer/bowstring",
+    "directory": "libs/core/src/lib/cloud functions"
+  },
+  "private":      true,
+  "engines":      { "node": "22" },
+  "main":         "./main.cloud-functions.cjs",
+  "type":         "module",
+  "dependencies": {
+    "@angular/localize":  "18",
+    "firebase-functions": "7"
+  }
+}

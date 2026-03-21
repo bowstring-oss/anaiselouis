@@ -1,0 +1,46 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../../../directives"
+@use "../../../input with options/InputWithOptionsComponent"
+
+
+\:host
+  @include InputWithOptionsComponent.host
+
+  > .harness > .between > div > .harness > .between
+    > div#symbol
+      display: contents
+
+      @include directives.FlexboxContainer-host
+
+      --bowstring--flexbox-container-directive--align-items: center !important
+      --bowstring--flexbox-container-directive--justify-content: center !important
+
+      > .harness
+        cursor: text
+        order: 1
+        z-index: -1
+
+        > .between
+          font-size: calc(1em * pow(var(--phi), -1))
+
+          > svg
+            display: grid
+            filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
+            height: 1em
+            max-width: 1em
+            overflow: visible
+            transform: translateZ(0)
+
+    > select
+      appearance: none
+      cursor: text
+      margin-right: calc(-7px - var(--bowstring--input--gap-column))
+
+    &:not(:focus-within) > select
+      margin-right: -7px
+
+  &.placeholder > .harness > .between > div > .harness > .between > select
+    color: hsl(0, 0%, 50%)

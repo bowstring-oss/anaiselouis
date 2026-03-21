@@ -1,0 +1,13 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../input/InputComponent"
+
+
+\:host
+  @include InputComponent.host
+
+  > .harness > .between > div > .harness > .between > input::-webkit-date-and-time-value
+    margin: 0 -8px
+    text-align: start

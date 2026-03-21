@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Apple Inc." pattern="file:libs/symbols/src/lib/*&amp;&amp;!file:libs/symbols/src/lib/loadSymbol.ts" />
+</component>

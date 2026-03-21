@@ -1,0 +1,60 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<bowstring--article>
+  <bowstring--heading-group
+    styleFirstLetter
+    styleFirstParagraph>
+    <bowstring--header>
+      <h2 i18n="@@apps--Website--Components--Routes--Privacy--Article--Header">Privacy Policy</h2>
+      <h3>
+        <bowstring--flexbox-container
+          alignItems="first baseline"
+          flexDirection="row"
+          flexWrap="wrap">
+          <bowstring--capsule
+            i18n
+            material="primary">legal</bowstring--capsule>
+          <bowstring--label [input]="updatedDate | bowstringDate:DateFormat.LongDate" />
+        </bowstring--flexbox-container>
+      </h3>
+    </bowstring--header>
+    <p i18n="@@apps--Website--Components--Routes--Privacy--Article--Paragraph"><span style="font-variant: small-caps;">This site stores information</span> in your browser to improve your experience. Activity is shared with third parties listed below and may be stored outside your country of residence.</p>
+    <bowstring--section>
+      <bowstring--header>
+        <h4>Google</h4>
+        <h5><bowstring--list inline><bowstring--link
+          *bowstringListItem
+          inline
+          url="https://www.google.com/intl/en/policies/privacy/">
+          <bowstring--label
+            i18n-input
+            input="privacy policy" />
+        </bowstring--link><bowstring--link
+          *bowstringListItem
+          inline
+          url="https://www.google.com/intl/en/policies/terms/">
+          <bowstring--label
+            i18n-input
+            input="terms" />
+        </bowstring--link></bowstring--list></h5>
+      </bowstring--header>
+      <p i18n="@@apps--Website--Components--Routes--Privacy--Article--Section_1--Paragraph">This site is protected by <bowstring--link
+        inline
+        url="https://www.google.com/recaptcha/">
+        <bowstring--label input="reCAPTCHA" />
+      </bowstring--link> and uses <bowstring--link
+        inline
+        url="https://www.google.com/analytics/">
+        <bowstring--label input="Google Analytics" />
+      </bowstring--link>. If you are signed into Google with this browser and have turned on <bowstring--link
+        inline
+        url="https://myadcenter.google.com/">
+        <bowstring--label
+          i18n-input
+          input="personalized ads" />
+      </bowstring--link>, your engagement with this site may be tracked across devices.</p>
+    </bowstring--section>
+  </bowstring--heading-group>
+</bowstring--article>

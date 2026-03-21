@@ -1,0 +1,21 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.Container-host
+
+  > .harness > .between
+    font-size: calc(1em * pow(var(--phi), -0.5))
+
+    &::ng-deep > *
+      @include directives.Container-children
+
+    > p
+      margin: 0
+      opacity: 0.75

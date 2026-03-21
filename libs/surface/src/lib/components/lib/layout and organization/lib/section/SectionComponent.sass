@@ -1,0 +1,33 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--section--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--section--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--section--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--section--gap-row) !important
+
+  > .harness > .between::ng-deep
+    > *
+      @include directives.FlexboxContainer-children
+
+    > router-outlet
+      display: none
+
+
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--section--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--section--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))
+
+\:host-context(bowstring--heading-group) > .harness > .between::ng-deep > p
+  margin: 0

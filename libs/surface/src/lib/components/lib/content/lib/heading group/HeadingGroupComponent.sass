@@ -1,0 +1,39 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--heading-group--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--heading-group--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--heading-group--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--heading-group--gap-row) !important
+
+  > .harness > .between::ng-deep
+    > *
+      @include directives.FlexboxContainer-children
+
+    > p
+      margin: 0
+
+  &.styleFirstLetter > .harness > .between::ng-deep > p:first-of-type:first-letter
+    float: left
+    font-size: calc(1em * pow(var(--phi), 2))
+    line-height: calc(1em * pow(var(--phi), -4))
+    margin: calc(1em * pow(var(--phi), -2)) calc(1em * pow(var(--phi), -6)) 0 0
+
+  &.styleFirstParagraph > .harness > .between::ng-deep > p:first-of-type
+    font-size: calc(1em * pow(var(--phi), 0.5))
+
+
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--heading-group--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--heading-group--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

@@ -1,0 +1,229 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "hover-transforming"
+
+$last-translation-x: sassFunctions.get-value-reference($namespace, "last-translation-x")
+$last-translation-y: sassFunctions.get-value-reference($namespace, "last-translation-y")
+$translation-x: sassFunctions.get-value-reference($namespace, "translation-x")
+$translation-y: sassFunctions.get-value-reference($namespace, "translation-y")
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ())
+  @include sassMixins.reset-values($namespace, ("last-translation-x", "last-translation-y", "translation-x", "translation-y"))
+
+@mixin host($child-selector: '')
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  #{ $child-selector } > .harness
+    @keyframes lower-harness
+      0%
+        @include keyframes--raise-harness
+
+      100%
+        @include keyframes--lower-harness
+
+    @keyframes press-harness
+      0%
+        @include keyframes--unpress-harness
+
+      100%
+        @include keyframes--press-harness
+
+    @keyframes pressWhenRaised-harness
+      0%
+        @include keyframes--unpressWhenRaised-harness
+
+      100%
+        @include keyframes--press-harness
+
+    @keyframes raise-harness
+      0%
+        @include keyframes--lower-harness
+
+      100%
+        @include keyframes--raise-harness
+
+    @keyframes transform-harness
+      0%
+        @include keyframes--untransform-harness
+
+      100%
+        @include keyframes--transform-harness
+
+    @keyframes unpress-harness
+      0%
+        @include keyframes--press-harness
+
+      100%
+        @include keyframes--unpress-harness
+
+    @keyframes unpressWhenRaised-harness
+      0%
+        @include keyframes--press-harness
+
+      100%
+        @include keyframes--unpressWhenRaised-harness
+
+    @keyframes untransform-harness
+      0%
+        @include keyframes--last-transform-harness
+
+      100%
+        @include keyframes--untransform-harness
+
+  &:not(.disabled)
+    &.pressedOrUnpressing
+      #{ $child-selector } > .harness
+        animation: press-harness 50ms var(--bounce) forwards
+
+        &:before
+          animation: press-shadow 50ms var(--bounce) forwards
+
+      &:not(.pressed)
+        #{ $child-selector } > .harness
+          animation: unpress-harness 50ms var(--bounce) forwards
+
+          &:before
+            animation: unpress-shadow 50ms var(--bounce) forwards
+
+    &.transformedOrUntransforming
+      #{ $child-selector } > .harness
+        animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards
+        z-index: 3
+
+        &:before
+          animation: raise-shadow 200ms var(--bounce) forwards
+
+      &:not(.transformed)
+        #{ $child-selector } > .harness
+          animation: lower-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards
+          z-index: auto
+
+          &:before
+            animation: lower-shadow 200ms var(--bounce) forwards
+
+      &.pressedOrUnpressing
+        #{ $child-selector } > .harness
+          animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 50ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 50ms var(--bounce) forwards
+
+        &:not(.pressed)
+          #{ $child-selector } > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 50ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 50ms var(--bounce) forwards
+
+    &.focusedOrUnfocusing
+      #{ $child-selector } > .harness
+        animation: raise-harness 200ms var(--bounce) forwards
+        z-index: 3
+
+        &:before
+          animation: raise-shadow 200ms var(--bounce) forwards
+
+      &:not(.focused)
+        #{ $child-selector } > .harness
+          animation: lower-harness 200ms var(--bounce) forwards
+          z-index: auto
+
+          &:before
+            animation: lower-shadow 200ms var(--bounce) forwards
+
+      &.pressedOrUnpressing
+        #{ $child-selector } > .harness
+          animation: raise-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 50ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 50ms var(--bounce) forwards
+
+        &:not(.pressed)
+          #{ $child-selector } > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 50ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 50ms var(--bounce) forwards
+
+      &.transformedOrUntransforming
+        #{ $child-selector } > .harness
+          animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 200ms var(--bounce) forwards
+
+        &:not(.transformed)
+          #{ $child-selector } > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards
+
+        &.pressedOrUnpressing
+          #{ $child-selector } > .harness
+            animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 50ms var(--bounce) forwards
+
+            &:before
+              animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 50ms var(--bounce) forwards
+
+          &:not(.transformed)
+            #{ $child-selector } > .harness
+              animation: raise-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards, pressWhenRaised-harness 50ms var(--bounce) forwards
+
+              &:before
+                animation: raise-shadow 200ms var(--bounce) forwards, pressWhenRaised-shadow 50ms var(--bounce) forwards
+
+          &:not(.pressed)
+            #{ $child-selector } > .harness
+              animation: raise-harness 200ms var(--bounce) forwards, transform-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 50ms var(--bounce) forwards
+
+              &:before
+                animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 50ms var(--bounce) forwards
+
+            &:not(.transformed)
+              #{ $child-selector } > .harness
+                animation: raise-harness 200ms var(--bounce) forwards, untransform-harness 200ms var(--bounce) forwards, unpressWhenRaised-harness 50ms var(--bounce) forwards
+
+                &:before
+                  animation: raise-shadow 200ms var(--bounce) forwards, unpressWhenRaised-shadow 50ms var(--bounce) forwards
+
+
+@mixin keyframes--last-transform-harness
+  translate: calc(1rem * $last-translation-x) calc(1rem * $last-translation-y) 0
+
+@mixin keyframes--lower-harness
+  scale: 1
+
+@mixin keyframes--press-harness
+  scale: 0.984375
+
+@mixin keyframes--raise-harness
+  scale: 1.03125
+
+@mixin keyframes--transform-harness
+  translate: calc(1rem * $translation-x) calc(1rem * $translation-y) 0
+
+@mixin keyframes--unpress-harness
+  scale: 1
+
+@mixin keyframes--unpressWhenRaised-harness
+  scale: 1.03125
+
+@mixin keyframes--untransform-harness
+  translate: 0 0 0

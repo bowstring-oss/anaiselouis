@@ -1,0 +1,365 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--footer--gap-column: var(--bowstring--container-directive--padding-sides)
+  --bowstring--footer--gap-row: var(--bowstring--container-directive--padding-bottom)
+  --bowstring--footer--material-opacity: 0.625
+  --bowstring--footer--padding-bottom: calc(1rem * pow(var(--phi), -1))
+  --bowstring--footer--padding-sides: calc(1rem * pow(var(--phi), 0))
+  --bowstring--footer--padding-top: calc(1rem * pow(var(--phi), -1))
+  --bowstring--footer--position-bottom: max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--root--gap-row))
+
+  @media (min-width: 48rem)
+    --bowstring--footer--padding-bottom: calc(1rem * pow(var(--phi), 0))
+    --bowstring--footer--padding-sides: calc(1rem * pow(var(--phi), 1))
+    --bowstring--footer--padding-top: calc(1rem * pow(var(--phi), 0))
+
+  @include directives.Elevated-host
+  @include directives.FlexboxContainer-host
+  @include directives.Glass-host
+  @include directives.WellRounded-host
+
+  --bowstring--container-directive--padding-bottom: var(--bowstring--footer--padding-bottom) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--footer--padding-sides) !important
+  --bowstring--container-directive--padding-top: var(--bowstring--footer--padding-top) !important
+  --bowstring--container-directive--position-bottom: var(--bowstring--footer--position-bottom) !important
+  --bowstring--container-directive--position-top: 0 !important
+  --bowstring--elevated-directive--material-opacity: var(--bowstring--footer--material-opacity) !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--footer--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--footer--gap-row) !important
+  --bowstring--glass-directive--material-opacity: var(--bowstring--footer--material-opacity) !important
+  --bowstring--well-rounded-directive--material-opacity: var(--bowstring--footer--material-opacity) !important
+
+  > .harness
+    transform-origin: bottom
+    z-index: 1
+
+    @mixin keyframes--lower-harness
+      scale: 1
+
+    @mixin keyframes--raise-harness
+      scale: calc(1 + max(0, var(--bowstring--footer--raising-scale)))
+
+    @include keyframes--lower-harness
+
+    @keyframes lower-harness
+      0%
+        @include keyframes--raise-harness
+
+      100%
+        @include keyframes--lower-harness
+
+    @keyframes raise-harness
+      0%
+        @include keyframes--lower-harness
+
+      100%
+        @include keyframes--raise-harness
+
+    @mixin keyframes--pin-harness
+      translate: 0 0 0
+
+    @mixin keyframes--unpin-harness
+      translate: 0 calc(min(1px * var(--bowstring--footer--height) + 2 * var(--bowstring--root--gap-row) + var(--bowstring--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--bowstring--footer--unpinning-translation))) 0
+
+    @keyframes pin-harness
+      0%
+        @include keyframes--unpin-harness
+
+      100%
+        @include keyframes--pin-harness
+
+    @keyframes unpin-harness
+      0%
+        @include keyframes--pin-harness
+
+      100%
+        @include keyframes--unpin-harness
+
+    > .between::ng-deep > *
+      --bowstring--footer--height: initial
+      --bowstring--footer--material-opacity: initial
+      --bowstring--footer--raising-scale: initial
+      --bowstring--footer--unpinning-translation: initial
+
+      @include directives.Elevated-children
+      @include directives.FlexboxContainer-children
+      @include directives.Glass-children
+      @include directives.WellRounded-children
+
+  > .backdrop
+    display: grid
+    grid-auto-rows: 1fr
+    margin-bottom: calc(-1 * var(--bowstring--root--gap-row))
+
+    &:before
+      bottom: calc(-7rem - (1 + 3 * var(--phi)) * max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--root--gap-row)))
+      height: calc(1px * var(--bowstring--footer--height) + (2 + 4 * var(--phi)) * max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--root--gap-row)) + 7rem)
+      left: 0
+      mask-image: linear-gradient(to bottom, transparent, red calc(0px + var(--phi) * max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--root--gap-row))), red calc(1px * var(--bowstring--footer--height) + (2 + 4 * var(--phi)) * max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--root--gap-row))), transparent calc(1px * var(--bowstring--footer--height) + (2 + 4 * var(--phi)) * max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--root--gap-row)) + 7rem))
+      position: fixed
+      transform: translateZ(0)
+      width: 100vw
+
+      @mixin keyframes--hide-backdrop
+        backdrop-filter: blur(0)
+
+      @mixin keyframes--show-backdrop
+        backdrop-filter: blur(0.25rem)
+
+      @include keyframes--hide-backdrop
+
+      @keyframes hide-backdrop
+        0%
+          @include keyframes--show-backdrop
+
+        100%
+          @include keyframes--hide-backdrop
+
+      @keyframes show-backdrop
+        0%
+          @include keyframes--hide-backdrop
+
+        100%
+          @include keyframes--show-backdrop
+
+      @mixin keyframes--pin-backdrop
+        translate: 0 0 0
+
+      @mixin keyframes--unpin-backdrop
+        translate: 0 calc(min(1px * var(--bowstring--footer--height) + 2 * var(--bowstring--root--gap-row) + var(--bowstring--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--bowstring--footer--unpinning-translation))) 0
+
+      @keyframes pin-backdrop
+        0%
+          @include keyframes--unpin-backdrop
+
+        100%
+          @include keyframes--pin-backdrop
+
+      @keyframes unpin-backdrop
+        0%
+          @include keyframes--pin-backdrop
+
+        100%
+          @include keyframes--unpin-backdrop
+
+  &.pinned,
+  &.unpinning
+    --bowstring--container-directive--position: sticky !important
+
+    &:not(.pinning, .unpinning)
+      > .harness
+        translate: 0 0 0
+
+      > .backdrop:before
+        translate: 0 0 0
+
+    &.pinning
+      > .harness
+        animation: pin-harness 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: pin-backdrop 360ms var(--bounce) forwards
+
+    &.unpinning
+      > .harness
+        animation: unpin-harness 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: unpin-backdrop 360ms var(--bounce) forwards
+
+    &.raisedOrLoweringWhenPinnedOrUnpinning
+      > .harness
+        animation: raise-harness 360ms var(--bounce) forwards
+
+        &:before
+          animation: raise-shadow 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: show-backdrop 360ms var(--bounce) forwards
+
+      &.pinning
+        > .harness
+          animation: pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 360ms var(--bounce) forwards
+
+        > .backdrop:before
+          animation: pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
+
+      &.unpinning,
+      &:not(.raisedWhenPinnedOrUnpinning)
+        > .harness
+          animation: unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
+
+          &:before
+            animation: lower-shadow 360ms var(--bounce) forwards
+
+        > .backdrop:before
+          animation: unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards
+
+      > .harness
+        z-index: 2
+
+      > .backdrop
+        z-index: 1
+
+    > .backdrop:before
+      content: ""
+
+div#pinnedControl
+  @include directives.Elevated-children
+  @include directives.FlexboxContainer-children
+  @include directives.Glass-children
+  @include directives.WellRounded-children
+
+  --bowstring--footer--pinned-control--material-opacity: 0.625
+  --bowstring--footer--pinned-control--padding-bottom: calc(1rem * pow(var(--phi), -2))
+  --bowstring--footer--pinned-control--padding-sides: calc(1rem * pow(var(--phi), -1))
+  --bowstring--footer--pinned-control--padding-top: calc(1rem * pow(var(--phi), -2))
+
+  @include directives.Canvas-host(9%)
+  @include directives.FlexboxContainer-host
+  @include directives.HoverTransforming-host
+  @include directives.WellRounded-host
+
+  --bowstring--container-directive--margin-bottom: calc(-1 * var(--bowstring--footer--pinned-control--padding-bottom)) !important
+  --bowstring--container-directive--margin-sides: calc(-1 * var(--bowstring--footer--pinned-control--padding-sides)) !important
+  --bowstring--container-directive--margin-top: calc(-1 * var(--bowstring--footer--pinned-control--padding-top)) !important
+  --bowstring--container-directive--padding-bottom: var(--bowstring--footer--pinned-control--padding-bottom) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--footer--pinned-control--padding-sides) !important
+  --bowstring--container-directive--padding-top: var(--bowstring--footer--pinned-control--padding-top) !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--justify-content: center !important
+  --bowstring--well-rounded-directive--material-opacity: var(--bowstring--footer--pinned-control--material-opacity) !important
+
+  > .harness
+    background: none
+    border: 0
+    color: inherit
+    cursor: pointer
+    font: inherit
+    letter-spacing: inherit
+    line-height: inherit
+    padding: 0
+    text-align: start
+    text-decoration: none
+    text-shadow: 0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow, transparent)
+
+    > .between
+      font-size: calc(1rem * pow(var(--phi), 0.5))
+      opacity: 1
+      transition: opacity 200ms ease-in-out
+
+      > svg
+        display: grid
+        filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
+        height: 1em
+        overflow: visible
+        transform: translateZ(0)
+        width: 1em
+
+    &:not(:focus-within, :hover) > .between
+      background: none !important
+
+\:host-context(bowstring--main)
+  > .harness
+    @mixin keyframes-main--pin-harness
+      translate: 0 0 0
+
+    @mixin keyframes-main--unpin-harness
+      translate: 0 calc(min(1px * var(--bowstring--footer--height) + 2 * var(--bowstring--main--gap-row) + var(--bowstring--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--bowstring--footer--unpinning-translation))) 0
+
+    @keyframes main--pin-harness
+      0%
+        @include keyframes-main--unpin-harness
+
+      100%
+        @include keyframes-main--pin-harness
+
+    @keyframes main--unpin-harness
+      0%
+        @include keyframes-main--pin-harness
+
+      100%
+        @include keyframes-main--unpin-harness
+
+  > .backdrop
+    margin-bottom: calc(-1 * var(--bowstring--main--gap-row))
+
+    &:before
+      @mixin keyframes-main--pin-backdrop
+        translate: 0 0 0
+
+      @mixin keyframes-main--unpin-backdrop
+        translate: 0 calc(min(1px * var(--bowstring--footer--height) + 2 * var(--bowstring--main--gap-row) + var(--bowstring--root--safe-area-inset-bottom) + 100vh - 100dvh, 1px * var(--bowstring--footer--unpinning-translation))) 0
+
+      @keyframes main--pin-backdrop
+        0%
+          @include keyframes-main--unpin-backdrop
+
+        100%
+          @include keyframes-main--pin-backdrop
+
+      @keyframes main--unpin-backdrop
+        0%
+          @include keyframes-main--pin-backdrop
+
+        100%
+          @include keyframes-main--unpin-backdrop
+
+  &.pinned,
+  &.unpinning
+    &.pinning
+      > .harness
+        animation: main--pin-harness 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: main--pin-backdrop 360ms var(--bounce) forwards
+
+    &.unpinning
+      > .harness
+        animation: main--unpin-harness 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: main--unpin-backdrop 360ms var(--bounce) forwards
+
+    &.raisedOrLoweringWhenPinnedOrUnpinning
+      > .harness
+        animation: raise-harness 360ms var(--bounce) forwards
+
+        &:before
+          animation: raise-shadow 360ms var(--bounce) forwards
+
+      > .backdrop:before
+        animation: show-backdrop 360ms var(--bounce) forwards
+
+      &.pinning
+        > .harness
+          animation: main--pin-harness 360ms var(--bounce) forwards, raise-harness 360ms var(--bounce) forwards
+
+          &:before
+            animation: raise-shadow 360ms var(--bounce) forwards
+
+        > .backdrop:before
+          animation: main--pin-backdrop 360ms var(--bounce) forwards, show-backdrop 360ms var(--bounce) forwards
+
+      &.unpinning,
+      &:not(.raisedWhenPinnedOrUnpinning)
+        > .harness
+          animation: main--unpin-harness 360ms var(--bounce) forwards, lower-harness 360ms var(--bounce) forwards
+
+          &:before
+            animation: lower-shadow 360ms var(--bounce) forwards
+
+        > .backdrop:before
+          animation: main--unpin-backdrop 360ms var(--bounce) forwards, hide-backdrop 360ms var(--bounce) forwards

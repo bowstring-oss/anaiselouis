@@ -1,0 +1,42 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+@use "../container/ContainerDirective"
+
+
+$namespace: "masonry-container"
+
+$columns: sassFunctions.get-input-reference($namespace, "columns", 1)
+$gap-column: sassFunctions.get-input-reference($namespace, "gap-column", calc(1rem * pow(var(--phi), 2)))
+$gap-row: sassFunctions.get-input-reference($namespace, "gap-row", calc(1rem * pow(var(--phi), 1)))
+
+$column-width: sassFunctions.get-value-reference($namespace, "column-width")
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include ContainerDirective.children
+
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ("columns", "gap-column", "gap-row"))
+  @include sassMixins.reset-values($namespace, ("column-width"))
+
+@mixin host
+  @include ContainerDirective.host
+
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness > .between
+    display: grid
+    gap: $gap-row $gap-column
+    grid-template-columns: repeat($columns, 1fr)
+    margin-bottom: calc(-1 * $gap-row)

@@ -1,0 +1,83 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--link--gap-column: calc(1rem * pow(var(--phi), -2))
+  --bowstring--link--gap-row: calc(1rem * pow(var(--phi), -3))
+
+  @include directives.FlexboxContainer-host
+  @include directives.Inlinable-host
+
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--link--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--link--gap-row) !important
+  --bowstring--flexbox-container-directive--align-items: flex-start !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+
+  > .harness
+    background: none
+    border: 0
+    color: inherit
+    cursor: pointer
+    font: inherit
+    letter-spacing: inherit
+    line-height: inherit
+    opacity: 1
+    padding: 0
+    text-align: start
+    text-decoration: none
+    text-shadow: 0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow, transparent)
+    transition: opacity 200ms ease-in-out
+
+    > .between
+      background: none !important
+
+  &:not(.material-primary):not(.material-secondary):not(.material-warning)
+    @include directives.Canvas-host(18%)
+
+  &.material-primary
+    @include directives.Primary-host
+
+    > .harness > .between
+      color: var(--bowstring--primary-directive--colors--background) !important
+
+  &.material-secondary
+    @include directives.Secondary-host
+
+    > .harness > .between
+      color: var(--bowstring--secondary-directive--colors--background) !important
+
+  &.material-warning
+    @include directives.Warning-host
+
+    > .harness > .between
+      color: var(--bowstring--warning-directive--colors--background) !important
+
+  &:not(.disabled)
+    > .harness
+      &:active:hover
+        opacity: 0.75
+
+      &:hover,
+      &:focus-within
+        > .between
+          text-decoration: underline
+
+  &.disabled > .harness
+    opacity: 0.5
+    pointer-events: none
+
+
+\:host-context(bowstring--nav, bowstring--footer > .harness > .between > bowstring--header) > .harness
+  color: currentColor
+
+\:host-context(bowstring--main > .harness > .between > bowstring--flexbox-container > .harness > .between > bowstring--header) > .harness
+  opacity: 1 !important
+
+  > .between
+    color: currentColor

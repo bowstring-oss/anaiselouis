@@ -1,0 +1,44 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "inverse"
+
+$background: sassFunctions.get-color-reference($namespace, "background")
+
+@function get-color($theme, $type, $shade)
+  @if ($theme == "light")
+    @if ($type == "background")
+      @return hsl(0, 0%, 0% + $shade)
+    @else if ($type == "foreground")
+      @return hsl(0, 0%, 100% - $shade)
+  @else if ($theme == "dark")
+    @if ($type == "background")
+      @return hsl(0, 0%, 100% - $shade)
+    @else if ($type == "foreground")
+      @return hsl(0, 0%, 0% + $shade)
+
+
+@mixin color-scheme($theme, $shade)
+  --bowstring--colors--foreground: #{ get-color($theme, "foreground", $shade) }
+
+  --bowstring--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background", $shade) }
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ("background"))
+  @include sassMixins.reset-inputs($namespace, ())
+  @include sassMixins.reset-values($namespace, ())
+
+@mixin host($shade)
+  @include color-scheme("light", $shade)
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark", $shade)
+
+  > .harness > .between
+    background: $background
+    color: var(--bowstring--colors--foreground)

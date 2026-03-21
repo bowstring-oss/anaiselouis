@@ -1,0 +1,194 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--error--gap-column: var(--bowstring--container-directive--padding-sides)
+  --bowstring--error--gap-row: var(--bowstring--container-directive--padding-bottom)
+
+  @include directives.Elevated-host
+  @include directives.FlexboxContainer-host
+  @include directives.Warning-host
+  @include directives.WellRounded-host
+
+  --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+  --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+  --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+  --bowstring--flexbox-container-directive--align-items: center !important
+  --bowstring--flexbox-container-directive--flex-direction: row !important
+  --bowstring--flexbox-container-directive--justify-content: space-between !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--error--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--error--gap-row) !important
+
+  @media (min-width: 48rem)
+    --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), 0)) !important
+    --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 1)) !important
+    --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), 0)) !important
+
+  > .harness
+    transform-origin: bottom
+    z-index: 1
+
+    @mixin keyframes--hide-harness
+      margin-bottom: calc(-1px * var(--bowstring--error--height) - var(--bowstring--errors-container--gap-row))
+      opacity: 0
+      scale: 0
+
+    @mixin keyframes--show-harness
+      margin-bottom: 0
+      opacity: 1
+      scale: 1
+
+    @include keyframes--hide-harness
+
+    @keyframes hide-harness
+      0%
+        @include keyframes--show-harness
+
+      100%
+        @include keyframes--hide-harness
+
+    @keyframes show-harness
+      0%
+        @include keyframes--hide-harness
+
+      100%
+        @include keyframes--show-harness
+
+    > .between
+      &::ng-deep > *
+        --bowstring--error--height: initial
+
+        @include directives.Elevated-children
+        @include directives.FlexboxContainer-children
+        @include directives.Warning-children
+        @include directives.WellRounded-children
+
+      > div:first-child
+        display: contents
+
+        @include directives.FlexboxContainer-host
+
+        > .harness > .between > div::ng-deep > *
+          @include directives.FlexboxContainer-children
+
+      > div#closeControl
+        display: contents
+
+        @include directives.Elevated-children
+        @include directives.FlexboxContainer-children
+        @include directives.Glass-children
+        @include directives.WellRounded-children
+
+        --bowstring--error--close-control--material-opacity: 0.625
+        --bowstring--error--close-control--padding-bottom: calc(1rem * pow(var(--phi), -2))
+        --bowstring--error--close-control--padding-sides: calc(1rem * pow(var(--phi), -1))
+        --bowstring--error--close-control--padding-top: calc(1rem * pow(var(--phi), -2))
+
+        @include directives.Canvas-host(9%)
+        @include directives.FlexboxContainer-host
+        @include directives.HoverTransforming-host
+        @include directives.WellRounded-host
+
+        --bowstring--container-directive--margin-bottom: calc(-1 * var(--bowstring--error--close-control--padding-bottom)) !important
+        --bowstring--container-directive--margin-sides: calc(-1 * var(--bowstring--error--close-control--padding-sides)) !important
+        --bowstring--container-directive--margin-top: calc(-1 * var(--bowstring--error--close-control--padding-top)) !important
+        --bowstring--container-directive--padding-bottom: var(--bowstring--error--close-control--padding-bottom) !important
+        --bowstring--container-directive--padding-sides: var(--bowstring--error--close-control--padding-sides) !important
+        --bowstring--container-directive--padding-top: var(--bowstring--error--close-control--padding-top) !important
+        --bowstring--flexbox-container-directive--align-items: center !important
+        --bowstring--flexbox-container-directive--flex-direction: row !important
+        --bowstring--flexbox-container-directive--justify-content: center !important
+        --bowstring--well-rounded-directive--material-opacity: var(--bowstring--error--close-control--material-opacity) !important
+
+        > .harness
+          background: none
+          border: 0
+          color: inherit
+          cursor: pointer
+          font: inherit
+          letter-spacing: inherit
+          line-height: inherit
+          padding: 0
+          text-align: start
+          text-decoration: none
+          text-shadow: 0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow, transparent)
+
+          > .between
+            font-size: calc(1rem * pow(var(--phi), 0.5))
+            opacity: 1
+            transition: opacity 200ms ease-in-out
+
+            > svg
+              display: grid
+              filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
+              height: 1em
+              overflow: visible
+              transform: translateZ(0)
+              width: 1em
+
+          &:not(:focus-within, :hover) > .between
+            background: none !important
+
+  > .backdrop
+    display: grid
+    grid-auto-rows: 1fr
+    margin-bottom: calc(-1 * var(--bowstring--errors-container--gap-row))
+
+    &:before
+      bottom: calc(-1 * var(--phi) * var(--bowstring--errors-container--gap-row))
+      height: calc(1px * var(--bowstring--error--height) + (1 + 2 * var(--phi)) * var(--bowstring--errors-container--gap-row))
+      left: 0
+      mask-image: linear-gradient(to bottom, transparent, red calc(0px + var(--phi) * var(--bowstring--errors-container--gap-row)), red calc(1px * var(--bowstring--error--height) + (1 + var(--phi)) * var(--bowstring--errors-container--gap-row)), transparent calc(1px * var(--bowstring--error--height) + (1 + 2 * var(--phi)) * var(--bowstring--errors-container--gap-row)))
+      position: fixed
+      transform: translateZ(0)
+      width: 100vw
+
+      @mixin keyframes--hide-backdrop
+        backdrop-filter: blur(0)
+
+      @mixin keyframes--show-backdrop
+        backdrop-filter: blur(calc(1rem * pow(var(--phi), -3)))
+
+      @include keyframes--hide-backdrop
+
+      @keyframes hide-backdrop
+        0%
+          @include keyframes--show-backdrop
+
+        100%
+          @include keyframes--hide-backdrop
+
+      @keyframes show-backdrop
+        0%
+          @include keyframes--hide-backdrop
+
+        100%
+          @include keyframes--show-backdrop
+
+  &.openOrClosing
+    > .harness
+      animation: show-harness 180ms ease-in forwards
+      z-index: 2
+
+    > .backdrop
+      z-index: 1
+
+      &:before
+        animation: show-backdrop 180ms ease-in forwards
+        content: ''
+
+    &:not(.open)
+      > .harness
+        animation: hide-harness 180ms ease-in forwards
+
+      > .backdrop
+        z-index: auto
+
+        &:before
+          animation: hide-backdrop 180ms ease-in forwards

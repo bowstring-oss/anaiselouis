@@ -1,0 +1,21 @@
+{
+  "name":         "@anaiselouis/cloud-functions",
+  "homepage":     "https://anaiselouis.com",
+  "author":       {
+    "name":  "Gavin William Sawyer",
+    "email": "g@vinsawyer.us",
+    "url":   "https://gavinsawyer.us"
+  },
+  "repository":   {
+    "type":      "git",
+    "url":       "github:gavinsawyer/anaiselouis",
+    "directory": "libs/cloud functions"
+  },
+  "private":      true,
+  "engines":      { "node": "22" },
+  "main":         "./main.cjs",
+  "type":         "module",
+  "dependencies": {
+    "firebase-functions": "7"
+  }
+}

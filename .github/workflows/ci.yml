@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  resolve-apps:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.echo.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v6
+      - id:  echo
+        run: |
+             APPS=$(jq -sc '[.[].name]' apps/*/project.json)
+             echo "apps=$APPS" >> "$GITHUB_OUTPUT"
+  deploy:
+    needs:   resolve-apps
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: ${{ fromJson(needs.resolve-apps.outputs.apps) }}
+        include:
+          - project: cloud-functions,tag:has-cloud-functions
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - id:   cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key:  node-modules-cache-${{ hashFiles('package-lock.json') }}
+      - if:  steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - id:   auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ANAISELOUIS_787A5 }}
+          token_format:     access_token
+      - run: npx nx run-many --target deploy --projects ${{ matrix.project }} --parallel=5
+        env:
+          APP_CHECK_TOKEN_WEBSITE:       ${{ secrets.APP_CHECK_TOKEN_WEBSITE }}
+          FIREBASE_SERVICE_ACCOUNT_PATH: ${{ steps.auth.outputs.credentials_file_path }}
+          FIREBASE_TOKEN:                ${{ steps.auth.outputs.access_token }}
+          NODE_OPTIONS:                  --max_old_space_size=6144
+          NX_CLOUD_ACCESS_TOKEN:         ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}

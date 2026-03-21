@@ -1,0 +1,35 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--masonry-container--column-width: var(--bowstring--masonry-container-directive--column-width)
+  --bowstring--masonry-container--gap-column: 0
+  --bowstring--masonry-container--gap-row: 0
+
+  @include directives.MasonryContainer-host
+
+  --bowstring--masonry-container-directive--gap-column: var(--bowstring--masonry-container--gap-column) !important
+  --bowstring--masonry-container-directive--gap-row: var(--bowstring--masonry-container--gap-row) !important
+
+  > .harness > .between
+    &::ng-deep > *
+      @include directives.MasonryContainer-children
+
+    > div:first-child
+      width: var(--bowstring--masonry-container--gap-column)
+
+    > div.bowstringMasonryChild
+      margin-bottom: var(--bowstring--masonry-container--gap-row)
+      width: calc(1px * var(--bowstring--masonry-container--column-width))
+
+
+@each $host-context-namespace in ("main", "above", "below", "nav", "footer", "aside", "sheet", "inspector", "box", "article", "form", "section", "heading-group", "header", "button", "capsule", "link")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--masonry-container--gap-column: var(--bowstring--#{ $host-context-namespace }--gap-column)
+    --bowstring--masonry-container--gap-row: var(--bowstring--#{ $host-context-namespace }--gap-row)

@@ -1,0 +1,16 @@
+{
+  "name":        "@bowstring/i18n",
+  "homepage":    "https://bowstr.ing",
+  "author":      {
+    "name":  "Gavin William Sawyer",
+    "email": "g@vinsawyer.us",
+    "url":   "https://gavinsawyer.us"
+  },
+  "repository":  {
+    "type":      "git",
+    "url":       "git+https://github.com/gavinsawyer/bowstring.git",
+    "directory": "libs/i18n"
+  },
+  "private":     true,
+  "sideEffects": false
+}

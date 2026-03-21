@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<span class="harness"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></span>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <svg
+    [attr.viewBox]="'0 -' + (configLib.brand.logo.viewBoxHeight - configLib.brand.logo.baselineY) + ' ' + configLib.brand.logo.viewBoxWidth + ' ' + configLib.brand.logo.viewBoxHeight + ''"
+    xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect
+        [attr.height]="configLib.brand.logo.viewBoxHeight"
+        [attr.width]="configLib.brand.logo.viewBoxWidth"
+        opacity="0"
+        x="0"
+        y="0" />
+      @for (path of configLib.brand.logo.focusHover?.paths; track $index) {<path class="focusHover"
+        [attr.d]="path.definition"
+        [attr.fill-opacity]="path.opacity"
+        fill="currentColor"
+        fill-rule="nonzero" />}
+      @for (rect of configLib.brand.logo.focusHover?.rects; track $index) {<rect class="focusHover"
+        [attr.height]="rect.height"
+        [attr.width]="rect.width"
+        [attr.x]="rect.x"
+        [attr.y]="rect.y"
+        fill="currentColor"
+        fill-rule="nonzero" />}
+      @for (path of configLib.brand.logo.paths; track $index) {<path
+        [attr.d]="path.definition"
+        [attr.fill-opacity]="path.opacity"
+        fill="currentColor"
+        fill-rule="nonzero" />}
+      @for (rect of configLib.brand.logo.rects; track $index) {<rect
+        [attr.height]="rect.height"
+        [attr.width]="rect.width"
+        [attr.x]="rect.x"
+        [attr.y]="rect.y"
+        fill="currentColor"
+        fill-rule="nonzero" />}
+    </g>
+  </svg>
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

@@ -1,0 +1,60 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.Container-host
+
+  > .harness > .between > img
+    aspect-ratio: var(--bowstring--image--aspect-ratio)
+    height: auto
+    max-width: calc(100% - 2 * var(--bowstring--container-directive--margin-sides-input, 0px) - 2 * var(--bowstring--container-directive--padding-sides-input, 0px))
+    width: 100%
+
+  &:not(.appearance-transparent)
+    --bowstring--image--material-opacity: 1
+
+    @include directives.Canvas-host(18%)
+    @include directives.Elevated-host
+    @include directives.WellRounded-host
+
+    --bowstring--container-directive--aspect-ratio: var(--bowstring--image--aspect-ratio) !important
+    --bowstring--elevated-directive--material-opacity: var(--bowstring--image--material-opacity) !important
+    --bowstring--well-rounded-directive--material-opacity: var(--bowstring--image--material-opacity) !important
+
+  &.appearance-circular > .harness
+    &:before,
+    > .between
+      border-radius: 50% !important
+
+    > .between
+      clip-path: circle() !important
+
+      > img
+        aspect-ratio: 1
+
+  &.appearance-transparent
+    --bowstring--container-directive--padding-bottom: calc(1rem * pow(var(--phi), -1)) !important
+    --bowstring--container-directive--padding-sides: calc(1rem * pow(var(--phi), 0)) !important
+    --bowstring--container-directive--padding-top: calc(1rem * pow(var(--phi), -1)) !important
+
+    > svg
+      display: none
+
+  &.outputObservedOrHasUrlInput
+    @include directives.HoverTransforming-host
+
+    > .harness > .between > img
+      cursor: pointer
+
+@each $host-context-namespace in ("footer", "sheet", "box", "article", "button", "capsule")
+  \:host-context(bowstring--#{ $host-context-namespace }).appearance-transparent
+    --bowstring--container-directive--padding-bottom: calc(var(--bowstring--#{ $host-context-namespace }--padding-bottom) * pow(var(--phi), -1)) !important
+    --bowstring--container-directive--padding-sides: calc(var(--bowstring--#{ $host-context-namespace }--padding-sides) * pow(var(--phi), -1)) !important
+    --bowstring--container-directive--padding-top: calc(var(--bowstring--#{ $host-context-namespace }--padding-top) * pow(var(--phi), -1)) !important
+

@@ -1,0 +1,34 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "grid-child"
+
+$grid-column-end: sassFunctions.get-input-reference($namespace, "grid-column-end", auto)
+$grid-column-start: sassFunctions.get-input-reference($namespace, "grid-column-start", auto)
+$grid-row-end: sassFunctions.get-input-reference($namespace, "grid-row-end", auto)
+$grid-row-start: sassFunctions.get-input-reference($namespace, "grid-row-start", auto)
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ())
+  @include sassMixins.reset-values($namespace, ())
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness
+    grid-column: $grid-column-start / $grid-column-end
+    grid-row: $grid-row-start / $grid-row-end

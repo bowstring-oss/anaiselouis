@@ -1,0 +1,94 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<dialog class="harness" #htmlDialogElement
+  (click)="$event.stopPropagation(); openModel$.set(false);"
+  (keydown)="($event.code !== 'Enter' && $event.code !== 'Escape' && $event.code !== 'Space') || $event.stopPropagation(); onKeydown($event);"
+  (keyup)="($event.code !== 'Enter' && $event.code !== 'Escape' && $event.code !== 'Space') || $event.stopPropagation(); onKeyup($event);"
+  tabindex="0">
+  <div class="between">
+    <div>
+      <div class="harness" #htmlDivElement
+        (click)="$event.stopPropagation();"
+        (keydown)="$event.code === 'Escape' || $event.stopPropagation();"
+        tabindex="-1">
+        <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+      </div>
+
+      <svg
+        viewBox="0 0 1 1"
+        xmlns="http://www.w3.org/2000/svg">
+        <clipPath
+          [attr.id]="wellRoundedDirective.clipPathId"
+          clipPathUnits="objectBoundingBox">
+          <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+        </clipPath>
+        <mask
+          [attr.id]="wellRoundedDirective.glassMaskId$()"
+          maskContentUnits="userSpaceOnUse"
+          maskUnits="userSpaceOnUse">
+          <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+        </mask>
+      </svg>
+    </div>
+  </div>
+</dialog>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <ng-content />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>
+<ng-template #dragControlTemplate>
+  <div id="dragControl"
+    bowstringHoverTransformingDirective #dragControlHoverTransformingDirective="hoverTransformingDirective"
+    bowstringWellRoundedDirective #dragControlWellRoundedDirective="wellRoundedDirective"
+    [level]="(wellRoundedDirective.levelInput$() || 1) * 2">
+    <div class="harness" #dragControlHtmlDivElement
+      (click)="$event.stopPropagation();"
+      (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+      (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || dragControlHtmlDivElement.click();"
+      (pointerup)="hapticsService.trigger();"
+      tabindex="-1">
+      <div class="between">
+        @if (arrowUpAndDownAndArrowLeftAndRightSymbol$(); as symbol) {<svg
+          [attr.viewBox]="'0 0 ' + symbol.viewBoxWidth + ' ' + symbol.viewBoxHeight + ''"
+          xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <rect
+              [attr.height]="symbol.viewBoxHeight"
+              [attr.width]="symbol.viewBoxWidth"
+              opacity="0"
+              x="0"
+              y="0" />
+            @for (path of symbol.paths; track $index) {<path
+              [attr.d]="path.definition"
+              [attr.fill-opacity]="path.opacity"
+              fill="currentColor" />}
+          </g>
+        </svg>}
+      </div>
+    </div>
+
+    <svg
+      viewBox="0 0 1 1"
+      xmlns="http://www.w3.org/2000/svg">
+      <clipPath
+        [attr.id]="dragControlWellRoundedDirective.clipPathId"
+        clipPathUnits="objectBoundingBox">
+        <path [attr.d]="dragControlWellRoundedDirective.pathDefinition$()" />
+      </clipPath>
+      <mask
+        [attr.id]="dragControlWellRoundedDirective.glassMaskId$()"
+        maskContentUnits="userSpaceOnUse"
+        maskUnits="userSpaceOnUse">
+        <path [attr.d]="dragControlWellRoundedDirective.pathDefinition$()" />
+      </mask>
+    </svg>
+  </div>
+</ng-template>

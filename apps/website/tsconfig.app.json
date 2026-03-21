@@ -1,0 +1,12 @@
+{
+  "compilerOptions": { "declaration": false },
+  "extends":         "../../tsconfig.base.json",
+  "files":           [
+    "src/app/main.browser.ts",
+    "src/app/main.intl-server.ts",
+    "src/app/main.server.ts",
+    "src/app/main.service-worker.ts",
+    "src/environment.prod.ts"
+  ],
+  "include":         [ "../../libs/symbols/src/lib/_*.ts" ]
+}

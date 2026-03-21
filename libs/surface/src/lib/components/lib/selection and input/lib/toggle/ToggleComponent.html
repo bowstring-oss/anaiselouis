@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness">
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</div>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  @if (labelInput$(); as label) {<label
+    [attr.for]="inputName$()"
+    [innerHTML]="label"></label>}
+  <div>
+    <div class="harness">
+      <label class="between">
+        <input #htmlInputElement
+          [attr.disabled]="disabledModel$() || undefined"
+          [attr.name]="inputName$()"
+          [attr.tabindex]="disabledModel$() ? -1 : 0"
+          (blur)="onChange?.(); onTouched?.();"
+          (change)="onChange?.();"
+          (click)="$event.stopPropagation();"
+          (input)="onInput();"
+          (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+          (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || htmlInputElement.click();"
+          role="switch"
+          type="checkbox">
+        <div>
+          <div class="harness"
+            (pointerup)="hapticsService.trigger();">
+            <div class="between">@if (symbolTemplateRef$(); as symbolTemplateRef) {<div><ng-container *ngTemplateOutlet="symbolTemplateRef" /></div>}</div>
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

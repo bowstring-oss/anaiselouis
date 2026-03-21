@@ -1,0 +1,55 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "canvas"
+
+$background: sassFunctions.get-color-reference($namespace, "background")
+$background-inverse: sassFunctions.get-color-reference($namespace, "background-inverse")
+
+@function get-color($theme, $type, $shade)
+  @if ($theme == "light")
+    @if ($type == "background")
+      @return hsl(0, 0%, 100% - $shade)
+    @if ($type == "background-inverse")
+      @return invert(hsl(0, 0%, 100% - $shade))
+    @else if ($type == "foreground")
+      @return hsl(0, 0%, 20% - $shade)
+    @else if ($type == "foreground-inverse")
+      @return invert(hsl(0, 0%, 20% - $shade))
+  @else if ($theme == "dark")
+    @if ($type == "background")
+      @return hsl(0, 0%, 0% + $shade)
+    @if ($type == "background-inverse")
+      @return invert(hsl(0, 0%, 0% + $shade))
+    @else if ($type == "foreground")
+      @return hsl(0, 0%, 80% + $shade)
+    @if ($type == "foreground-inverse")
+      @return invert(hsl(0, 0%, 80% + $shade))
+
+
+@mixin color-scheme($theme, $shade, $background-alpha: 1)
+  --bowstring--colors--foreground: #{ get-color($theme, "foreground", $shade) }
+  --bowstring--colors--foreground-inverse: #{ get-color($theme, "foreground-inverse", $shade) }
+
+  --bowstring--#{ $namespace }-directive--colors--background: #{ transparentize(get-color($theme, "background", $shade), 1 - $background-alpha) }
+  --bowstring--#{ $namespace }-directive--colors--background-inverse: #{ transparentize(get-color($theme, "background-inverse", $shade), 1 - $background-alpha) }
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ("background", "background-inverse"))
+  @include sassMixins.reset-inputs($namespace, ())
+  @include sassMixins.reset-values($namespace, ())
+
+@mixin host($shade, $background-alpha: 1)
+  @include color-scheme("light", $shade, $background-alpha)
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark", $shade, $background-alpha)
+
+  > .harness > .between
+    background: $background
+    color: var(--bowstring--colors--foreground)

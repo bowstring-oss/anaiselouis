@@ -1,0 +1,34 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  --bowstring--inspector--font-size-exponent: -2
+  --bowstring--inspector--gap-column: calc(var(--bowstring--root--gap-column) * pow(var(--phi), -1))
+  --bowstring--inspector--gap-row: calc(var(--bowstring--root--gap-row) * pow(var(--phi), -1))
+
+  @include directives.FlexboxContainer-host
+
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--inspector--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--inspector--gap-row) !important
+
+  @media (min-width: 48rem)
+    --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 4)) !important
+    --bowstring--flexbox-child-directive--flex-grow: pow(var(--phi), -2) !important
+
+  > .harness
+    z-index: 2
+
+    > .between::ng-deep > *
+      @include directives.FlexboxContainer-children
+
+
+@each $host-context-namespace in ("main", "above", "below", "sheet", "box")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--inspector--gap-column: calc(var(--bowstring--#{ $host-context-namespace }--gap-column) * pow(var(--phi), -1))
+    --bowstring--inspector--gap-row: calc(var(--bowstring--#{ $host-context-namespace }--gap-row) * pow(var(--phi), -1))

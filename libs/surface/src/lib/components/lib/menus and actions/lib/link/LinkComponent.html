@@ -1,0 +1,38 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+@if (urlInput$(); as url) {@if (url.includes(":") || url.match("\\.[a-z]")) {<a class="harness" #externalLinkHtmlAnchorElement
+  [attr.href]="url"
+  [attr.tabindex]="disabledInput$() ? -1 : 0"
+  (click)="$event.stopPropagation(); output.emit();"
+  (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || externalLinkHtmlAnchorElement.click();"
+  (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+  role="link"
+  target="_blank"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></a>} @else {<a class="harness" #routerLinkHtmlAnchorElement
+  [attr.tabindex]="disabledInput$() || routerLinkActive.isActive ? -1 : 0"
+  (click)="$event.stopPropagation(); output.emit();"
+  (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || routerLinkHtmlAnchorElement.click();"
+  (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+  role="link"
+  [routerLink]="url"
+  routerLinkActive
+  #routerLinkActive="routerLinkActive"
+  [routerLinkActiveOptions]="{ exact: exactInput$() || false }"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></a>}} @else {<button class="harness" #htmlButtonElement
+  [attr.disabled]="disabledInput$() || undefined"
+  [attr.tabindex]="disabledInput$() ? -1 : 0"
+  [attr.type]="typeInput$() || 'button'"
+  (click)="$event.stopPropagation(); output.emit();"
+  (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || htmlButtonElement.click();"
+  (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+  role="link"><span class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></span></button>}
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <ng-content />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>

@@ -1,0 +1,54 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "primary"
+
+$background: sassFunctions.get-color-reference($namespace, "background")
+
+$background-dark: sassFunctions.get-value-reference($namespace, "background-dark")
+$background-light: sassFunctions.get-value-reference($namespace, "background-light")
+$foreground-dark: sassFunctions.get-value-reference($namespace, "foreground-dark")
+$foreground-light: sassFunctions.get-value-reference($namespace, "foreground-light")
+
+@function get-color($theme, $type)
+  @if ($theme == "light")
+    @if ($type == "background")
+      @return $background-light
+    @else if ($type == "foreground")
+      @return $foreground-light
+  @else if ($theme == "dark")
+    @if ($type == "background")
+      @return $background-dark
+    @else if ($type == "foreground")
+      @return $foreground-dark
+
+
+@mixin color-scheme($theme)
+  --bowstring--colors--foreground: #{ get-color($theme, "foreground") }
+  --bowstring--colors--foreground-shadow: initial
+
+  --bowstring--#{ $namespace }-directive--colors--background: #{ get-color($theme, "background") }
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ("background"))
+  @include sassMixins.reset-inputs($namespace, ())
+  @include sassMixins.reset-values($namespace, ("background-dark", "background-light", "foreground-dark", "foreground-light"))
+
+@mixin host
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness
+    &:before
+      color: $background
+
+    > .between
+      background: $background
+      color: var(--bowstring--colors--foreground)

@@ -1,0 +1,100 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../../../libs/surface/src/lib/directives/lib/layout and organization/lib/flexbox container/FlexboxContainerDirective"
+@use "../../../../../../../libs/surface/src/lib/directives/lib/materials/lib/canvas/CanvasDirective"
+
+
+\:host
+  display: contents
+
+  --bowstring--root--gap-column: var(--bowstring--root--padding-sides)
+  --bowstring--root--gap-row: var(--bowstring--root--padding-bottom)
+
+  --bowstring--root--padding-bottom: calc(1rem * pow(var(--phi), -1))
+  --bowstring--root--padding-sides: calc(1rem * pow(var(--phi), 0))
+
+  @media (min-width: 24rem)
+    --bowstring--root--padding-bottom: calc(1rem * pow(var(--phi), 0))
+    --bowstring--root--padding-sides: calc(1rem * pow(var(--phi), 1))
+
+  @media (min-width: 48rem)
+    --bowstring--root--padding-bottom: calc(1rem * pow(var(--phi), 1))
+    --bowstring--root--padding-sides: calc(1rem * pow(var(--phi), 2))
+
+  --bowstring--root--padding-top: calc(var(--bowstring--root--padding-bottom) * pow(var(--phi), 2))
+  --bowstring--root--safe-area-inset-bottom: env(safe-area-inset-bottom)
+  --bowstring--root--safe-area-inset-left: env(safe-area-inset-left)
+  --bowstring--root--safe-area-inset-top: env(safe-area-inset-top)
+  --bowstring--root--safe-area-inset-right: env(safe-area-inset-right)
+
+  @include CanvasDirective.host(0%)
+  @include FlexboxContainerDirective.host
+
+  --bowstring--container-directive--padding-bottom: var(--bowstring--root--padding-bottom) !important
+  --bowstring--container-directive--padding-sides: var(--bowstring--root--padding-sides) !important
+  --bowstring--container-directive--padding-top: var(--bowstring--root--padding-top) !important
+  --bowstring--flexbox-child-directive--flex-grow: 1 !important
+  --bowstring--flexbox-container-directive--gap-column: var(--bowstring--root--gap-column) !important
+  --bowstring--flexbox-container-directive--gap-row: var(--bowstring--root--gap-row) !important
+
+  > .harness > .between
+    flex-direction: column
+    //noinspection CssNoGenericFontName
+    font-family: var(--bowstring--root--font-family)
+    font-optical-sizing: auto
+    font-style: normal
+    letter-spacing: -0.03444185375em
+    line-height: 1.1458980338
+    padding: calc(max(var(--bowstring--root--safe-area-inset-top), var(--bowstring--container-directive--padding-top))) calc(max(var(--bowstring--root--safe-area-inset-right), var(--bowstring--container-directive--padding-sides))) calc(max(var(--bowstring--root--safe-area-inset-bottom), var(--bowstring--container-directive--padding-bottom))) calc(max(var(--bowstring--root--safe-area-inset-left), var(--bowstring--container-directive--padding-sides))) !important
+
+    &::ng-deep > *
+      @include CanvasDirective.children
+      @include FlexboxContainerDirective.children
+
+    > bowstring--main::ng-deep > .harness > .between > bowstring--flexbox-container > .harness > .between > bowstring--flexbox-container > .harness > .between > bowstring--flexbox-container
+      &,
+      > .harness > .between > bowstring--section
+        @media (min-width: 48rem)
+          --bowstring--flexbox-container-directive--flex-direction: row !important
+
+      > .harness > .between > bowstring--section
+        &,
+        > .harness > .between > bowstring--flexbox-container
+          @media (min-width: 48rem)
+            --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
+            --bowstring--flexbox-child-directive--flex-grow: 1 !important
+            --bowstring--flexbox-child-directive--flex-shrink: 0 !important
+
+        > .harness > .between > bowstring--flexbox-container > .harness > .between > router-outlet
+          display: none
+
+    > bowstring--footer::ng-deep > .harness > .between
+      > bowstring--section#connectivitySection
+        --bowstring--flexbox-container-directive--justify-content: center !important
+
+        @media (min-width: 48rem)
+          --bowstring--flexbox-container-directive--justify-content: flex-start !important
+
+          &.connectivitySection--hasCityTime
+            --bowstring--flexbox-container-directive--justify-content: space-between !important
+
+      > bowstring--section#informationAndOptionsSection > .harness > .between
+        > bowstring--flexbox-container:first-child
+          --bowstring--flexbox-container-directive--justify-content: center !important
+
+          > .harness > .between > span > div#copyrightYear
+            display: none
+
+            @media (min-width: 48rem)
+              display: contents !important
+
+          @media (min-width: 48rem)
+            --bowstring--flexbox-container-directive--justify-content: flex-start !important
+
+        > bowstring--flexbox-container:nth-child(2)
+          --bowstring--flexbox-child-directive--flex-basis: 100% !important
+
+          @media (min-width: 48rem)
+            --bowstring--flexbox-child-directive--flex-basis: auto !important

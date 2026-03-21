@@ -1,0 +1,88 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<footer class="harness" #htmlElement
+  (click)="$event.stopPropagation();"
+  (keydown)="($event.code !== 'Enter' && $event.code !== 'Escape' && $event.code !== 'Space') || $event.stopPropagation(); onKeydown($event);"
+  (keyup)="($event.code !== 'Enter' && $event.code !== 'Escape' && $event.code !== 'Space') || $event.stopPropagation(); onKeyup($event);"
+  tabindex="-1">
+  <div class="between"><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</footer>
+<div class="backdrop" #backdropHtmlDivElement></div>
+
+<svg
+  viewBox="0 0 1 1"
+  xmlns="http://www.w3.org/2000/svg">
+  <clipPath
+    [attr.id]="wellRoundedDirective.clipPathId"
+    clipPathUnits="objectBoundingBox">
+    <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+  </clipPath>
+  <mask
+    [attr.id]="wellRoundedDirective.glassMaskId$()"
+    maskContentUnits="userSpaceOnUse"
+    maskUnits="userSpaceOnUse">
+    <path [attr.d]="wellRoundedDirective.pathDefinition$()" />
+  </mask>
+</svg>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  <ng-content />
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>
+<ng-template #pinnedControlTemplate>
+  <div id="pinnedControl"
+    bowstringHoverTransformingDirective #pinnedControlHoverTransformingDirective="hoverTransformingDirective"
+    bowstringWellRoundedDirective #pinnedControlWellRoundedDirective="wellRoundedDirective"
+    [level]="(wellRoundedDirective.levelInput$() || 1) * 2">
+    <button class="harness" #pinnedControlHtmlButtonElement
+      (click)="$event.stopPropagation(); pinnedModel$.set(!pinnedModelWithTransform$());"
+      (keydown)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation();"
+      (keyup)="($event.code !== 'Enter' && $event.code !== 'Space') || $event.preventDefault() || $event.stopPropagation() || pinnedControlHtmlButtonElement.click();"
+      (pointerup)="hapticsService.trigger();"
+      role="button"
+      tabindex="0"
+      type="button">
+      <div class="between">
+        @if (pinnedModelWithTransform$() ? pinSlashFillSymbol$() : pinFillSymbol$(); as symbol) {<svg
+          [attr.viewBox]="'0 0 ' + symbol.viewBoxWidth + ' ' + symbol.viewBoxHeight + ''"
+          xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <rect
+              [attr.height]="symbol.viewBoxHeight"
+              [attr.width]="symbol.viewBoxWidth"
+              opacity="0"
+              x="0"
+              y="0" />
+            @for (path of symbol.paths; track $index) {<path
+              [attr.d]="path.definition"
+              [attr.fill-opacity]="path.opacity"
+              fill="currentColor" />}
+          </g>
+        </svg>}
+      </div>
+    </button>
+
+    <svg
+      viewBox="0 0 1 1"
+      xmlns="http://www.w3.org/2000/svg">
+      <clipPath
+        [attr.id]="pinnedControlWellRoundedDirective.clipPathId"
+        clipPathUnits="objectBoundingBox">
+        <path [attr.d]="pinnedControlWellRoundedDirective.pathDefinition$()" />
+      </clipPath>
+      <mask
+        [attr.id]="pinnedControlWellRoundedDirective.glassMaskId$()"
+        maskContentUnits="userSpaceOnUse"
+        maskUnits="userSpaceOnUse">
+        <path [attr.d]="pinnedControlWellRoundedDirective.pathDefinition$()" />
+      </mask>
+    </svg>
+  </div>
+</ng-template>

@@ -1,0 +1,23 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../../../directives"
+
+
+\:host
+  display: contents
+
+  @include directives.Canvas-host(60%)
+  @include directives.FlexboxContainer-host
+
+  > .harness > .between
+    opacity: 0.25
+
+    > div
+      flex: 0 0 1px
+
+
+@each $host-context-namespace in ("footer", "sheet", "inspector", "box")
+  \:host-context(bowstring--#{ $host-context-namespace })
+    --bowstring--container-directive--margin-sides: calc(-1 * var(--bowstring--#{ $host-context-namespace }--gap-column)) !important

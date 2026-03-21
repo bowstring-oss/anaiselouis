@@ -1,0 +1,53 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+@use "../container/ContainerDirective"
+
+
+$namespace: "grid-container"
+
+$align-content: sassFunctions.get-input-reference($namespace, "align-content", normal)
+$align-items: sassFunctions.get-input-reference($namespace, "align-items", normal)
+$gap-column: sassFunctions.get-input-reference($namespace, "gap-column", calc(1rem * pow(var(--phi), 2)))
+$gap-row: sassFunctions.get-input-reference($namespace, "gap-row", calc(1rem * pow(var(--phi), 1)))
+$grid-auto-flow: sassFunctions.get-input-reference($namespace, "grid-auto-flow", row)
+$grid-auto-columns: sassFunctions.get-input-reference($namespace, "grid-auto-columns", none)
+$grid-auto-rows: sassFunctions.get-input-reference($namespace, "grid-auto-rows", none)
+$grid-template-columns: sassFunctions.get-input-reference($namespace, "grid-template-columns", none)
+$grid-template-rows: sassFunctions.get-input-reference($namespace, "grid-template-rows", none)
+$justify-content: sassFunctions.get-input-reference($namespace, "justify-content", normal)
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include ContainerDirective.children
+
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ("align-content", "align-items", "flex-direction", "flex-wrap", "gap-column", "gap-row", "grid-auto-flow", "grid-auto-columns", "grid-auto-rows", "grid-template-columns", "grid-template-rows", "justify-content", "scroll-left", "scroll-top"))
+  @include sassMixins.reset-values($namespace, ("scroll-left", "scroll-top"))
+
+@mixin host
+  @include ContainerDirective.host
+
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  > .harness > .between
+    align-content: $align-content
+    align-items: $align-items
+    display: grid
+    gap: $gap-row $gap-column
+    grid-auto-flow: $grid-auto-flow
+    grid-auto-columns: $grid-auto-columns
+    grid-auto-rows: $grid-auto-rows
+    grid-template-columns: $grid-template-columns
+    grid-template-rows: $grid-template-rows
+    justify-content: $justify-content

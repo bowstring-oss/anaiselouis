@@ -1,0 +1,70 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "well-rounded"
+
+$roundness: sassFunctions.get-value-reference($namespace, "roundness")
+$clip-path-source: sassFunctions.get-value-reference($namespace, "clip-path-source")
+$glass-mask-source: sassFunctions.get-value-reference($namespace, "glass-mask-source")
+
+$level: sassFunctions.get-input-reference($namespace, "level", 1)
+$material-opacity: sassFunctions.get-input-reference($namespace, "material-opacity", 1)
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ("level", "material-opacity"))
+  @include sassMixins.reset-values($namespace, ("roundness", "clip-path-source", "glass-mask-source"))
+
+@mixin host($child-selector: '')
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  #{ $child-selector } > .harness
+    &:before
+      border-radius: calc($roundness * 1rem * var(--phi) / $level)
+
+    > .between,
+    &:after
+      clip-path: $clip-path-source
+
+    &:after
+      mask-image: $glass-mask-source
+
+  #{ $child-selector } > svg
+    height: 1px
+    left: 0
+    position: absolute
+    top: 0
+    width: 1px
+
+    > clipPath,
+    > mask
+      > path
+        fill: transparent
+
+    > mask > path
+      stroke: red
+      stroke-linecap: round
+      stroke-linejoin: round
+      stroke-width: calc($material-opacity * 2rem * pow(var(--phi), -2))
+      transform: scaleX(var(--bowstring--well-rounded-directive--width)) scaleY(var(--bowstring--well-rounded-directive--height))
+      vector-effect: non-scaling-stroke
+
+  &.uninitialized
+    #{ $child-selector } > .harness
+      > .between,
+      &:after
+        border-radius: calc($roundness * 1.375rem / $level)
+        overflow: hidden

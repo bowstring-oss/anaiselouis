@@ -1,0 +1,91 @@
+/*!
+ / Copyright © 2026 Gavin William Sawyer. All rights reserved.
+ /
+
+@use "../../../sass functions" as sassFunctions
+@use "../../../sass mixins" as sassMixins
+
+
+$namespace: "elevated"
+
+$level: sassFunctions.get-input-reference($namespace, "level", 1)
+$material-opacity: sassFunctions.get-input-reference($namespace, "material-opacity", 1)
+
+@function get-color($theme, $type, $shade)
+
+
+@mixin color-scheme($theme)
+
+@mixin children
+  @include sassMixins.reset-colors($namespace, ())
+  @include sassMixins.reset-inputs($namespace, ("level", "material-opacity"))
+  @include sassMixins.reset-values($namespace, ())
+
+@mixin host($child-selector: '')
+  @include color-scheme("light")
+
+  @media (prefers-color-scheme: dark)
+    @include color-scheme("dark")
+
+  #{ $child-selector } > .harness:before
+    color: transparentize(black, 0.25)
+    content: ""
+    left: 0
+    height: calc(100% - 4px)
+    opacity: calc(pow($material-opacity, 2))
+    position: absolute
+    top: 0
+    width: calc(100% - 4px)
+    transform: translateX(2px) translateY(2px) translateZ(0)
+    transition: box-shadow 200ms var(--bounce)
+    z-index: 0
+
+    @keyframes lower-shadow
+      0%
+        @include shadow($level / 1.6180339887)
+
+      100%
+        @include shadow($level)
+
+    @keyframes press-shadow
+      0%
+        @include shadow($level)
+
+      100%
+        @include shadow(calc($level + 1))
+
+    @keyframes pressWhenRaised-shadow
+      0%
+        @include shadow($level / 1.6180339887)
+
+      100%
+        @include shadow(calc($level + 1))
+
+    @keyframes raise-shadow
+      0%
+        @include shadow($level)
+
+      100%
+        @include shadow($level / 1.6180339887)
+
+    @keyframes unpress-shadow
+      0%
+        @include shadow(calc($level + 1))
+
+      100%
+        @include shadow($level)
+
+    @keyframes unpressWhenRaised-shadow
+      0%
+        @include shadow(calc($level + 1))
+
+      100%
+        @include shadow($level / 1.6180339887)
+
+  &:not(.disabled)
+    #{ $child-selector } > .harness:before
+      @include shadow($level)
+
+
+@mixin shadow($level)
+  box-shadow: 0 calc(0.5rem * pow(var(--phi), 0 - $level)) calc(1rem * pow(var(--phi), 0 - $level + 1)) calc(-1rem * pow(var(--phi), 0 - $level - 1))

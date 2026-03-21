@@ -1,0 +1,18 @@
+<!--
+  ~ Copyright © 2026 Gavin William Sawyer. All rights reserved.
+  -->
+
+<div class="harness" #htmlDivElement>
+  <div class="between" #innerHtmlDivElement><ng-container *ngTemplateOutlet="contentTemplate" /></div>
+</div>
+
+<ng-template #badgeSymbolTemplate>
+  @if (containerDirective.badgeSymbolTemplateRef$(); as badgeSymbolTemplateRef) {<div id="badgeSymbol">
+    <ng-container *ngTemplateOutlet="badgeSymbolTemplateRef" />
+  </div>}
+</ng-template>
+<ng-template #contentTemplate>
+  @if (itemTemplateRefs$()[0]; as itemTemplateRef) {<div [style.--bowstring--scroll-stack--item--index]="1"><div><ng-container *ngTemplateOutlet="itemTemplateRef" /></div></div>}
+  @defer {@for (itemTemplateRef of itemTemplateRefs$().slice(1); track $index) {<div [style.--bowstring--scroll-stack--item--index]="$index + 2"><div><ng-container *ngTemplateOutlet="itemTemplateRef" /></div></div>}}
+  <ng-container *ngTemplateOutlet="badgeSymbolTemplate" />
+</ng-template>
