@@ -63,10 +63,7 @@
           "source":   "/firebase-web-authn-api"
         },
         {
-          "run":    {
-            "pinTag":    true,
-            "serviceId": "ssr-website"
-          },
+          "run":    { "serviceId": "ssr-website" },
           "source": "**"
         }
       ],
