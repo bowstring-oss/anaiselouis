@@ -8,7 +8,7 @@
   },
   "repository":   {
     "type":      "git",
-    "url":       "github:gavinsawyer/anaiselouis",
+    "url":       "git+https://github.com/bowstring-oss/anaiselouis.git",
     "directory": "libs/cloud functions"
   },
   "private":      true,

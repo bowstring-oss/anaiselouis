@@ -213,6 +213,7 @@
       "executor": "@nx/eslint:lint",
       "inputs":   [
         "{workspaceRoot}/apps/website/src/.gitInfoPartial.ts",
+        "{workspaceRoot}/apps/website/src/.packageRepositoryUrl.ts",
         "{workspaceRoot}/apps/website/src/.packageVersion.ts"
       ],
       "options":  {
@@ -228,11 +229,13 @@
         "commands": [
           "rm -rf dist/apps/website",
           "node -p \"'import { type GitInfo } from \\'git-describe\\';\\n\\n\\nexport const gitInfoPartial: Partial<GitInfo> = ' + JSON.stringify(((gitInfo) => ({dirty: gitInfo.dirty,hash: gitInfo.hash}))(require('git-describe').gitDescribeSync())) + ';'\" > apps/website/src/.gitInfoPartial.ts",
+          "node -p \"'export const packageRepositoryUrl: string = \\\"' + require('./package.json').repository.replace('github:', 'https://github.com/') + '\\\" as const;'\" > apps/website/src/.packageRepositoryUrl.ts",
           "node -p \"'export const packageVersion: string = \\\"' + require('./package.json').version + '\\\" as const;'\" > apps/website/src/.packageVersion.ts"
         ]
       },
       "outputs":  [
         "{workspaceRoot}/apps/website/src/.gitInfoPartial.ts",
+        "{workspaceRoot}/apps/website/src/.packageRepositoryUrl.ts",
         "{workspaceRoot}/apps/website/src/.packageVersion.ts"
       ]
     }

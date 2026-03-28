@@ -8,7 +8,7 @@
   },
   "repository":   {
     "type":      "git",
-    "url":       "github:gavinsawyer/bowstring",
+    "url":       "git+https://github.com/gavinsawyer/bowstring.git",
     "directory": "libs/core/src/lib/cloud functions"
   },
   "private":      true,

@@ -21,6 +21,33 @@ const projectRoutes: Routes = [
   },
   {
     data:          {
+      description: $localize`:@@apps--Website--Components--Routes--Connect--Meta--Description:...`,
+      title:       $localize`:@@apps--Website--Components--Routes--Connect--Meta--Title:Connect`,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./connect/ConnectRouteComponent").then<Type<unknown>>(({ ConnectRouteComponent }: typeof import("./connect/ConnectRouteComponent")): Type<unknown> => ConnectRouteComponent),
+    path:          "connect",
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - Connect`,
+  },
+  {
+    data:          {
+      description: $localize`:@@apps--Website--Components--Routes--Connect--Meta--Description:...`,
+      title:       $localize`:@@apps--Website--Components--Routes--Connect--Meta--Title:Work`,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown>>(({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> => PrivacyRouteComponent),
+    path:          "work",
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - Work`,
+  },
+  {
+    data:          {
+      description: $localize`:@@apps--Website--Components--Routes--Connect--Meta--Description:...`,
+      title:       $localize`:@@apps--Website--Components--Routes--Connect--Meta--Title:Bio`,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown>>(({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> => PrivacyRouteComponent),
+    path:          "bio",
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - Bio`,
+  },
+  {
+    data:          {
       description: $localize`:@@apps--Website--Components--Routes--Privacy--Meta--Description:...`,
       title:       $localize`:@@apps--Website--Components--Routes--Privacy--Meta--Title:Privacy`,
     },

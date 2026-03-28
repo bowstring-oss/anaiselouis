@@ -41,7 +41,7 @@ export interface Brand {
   "primaryColor": Color;
 
   /** The brand's roundness. */
-  "roundness": 1;
+  "roundness": number;
 
   /** The brand's secondary {@link Color}. */
   "secondaryColor": Color;

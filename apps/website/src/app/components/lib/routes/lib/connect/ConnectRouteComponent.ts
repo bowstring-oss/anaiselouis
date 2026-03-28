@@ -2,16 +2,16 @@
  * Copyright © 2026 Anaïse Louis. All rights reserved.
  */
 
-import { ChangeDetectionStrategy, Component, effect, inject, signal, type WritableSignal }                                                                                                                        from "@angular/core";
-import { Analytics, logEvent }                                                                                                                                                                                    from "@angular/fire/analytics";
-import { addDoc, collection, type CollectionReference, Firestore, FirestoreError, serverTimestamp }                                                                                                               from "@angular/fire/firestore";
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                        from "@angular/forms";
-import { AuthenticationService, EllipsesService, ErrorsService, getFirestoreErrorMessage }                                                                                                                        from "@bowstring/core";
-import { AsideComponent, BoxComponent, HeaderComponent, HeadingGroupComponent, ImageComponent, InspectorComponent, RouteAsideDirective, RouteInspectorDirective, ScrollStackComponent, ScrollStackItemDirective } from "@bowstring/surface";
-import { type CountryCode, getCountries, getCountryCallingCode, isPossiblePhoneNumber, parsePhoneNumberWithError, type PhoneNumber }                                                                              from "libphonenumber-js";
-import { RouteComponent }                                                                                                                                                                                         from "../../../../";
-import { type MessageDocument }                                                                                                                                                                                   from "../../../../../interfaces";
-import { MessageService }                                                                                                                                                                                         from "../../../../../services";
+import { ChangeDetectionStrategy, Component, effect, inject, signal, type WritableSignal }                                                                                                                                                                               from "@angular/core";
+import { Analytics, logEvent }                                                                                                                                                                                                                                           from "@angular/fire/analytics";
+import { addDoc, collection, type CollectionReference, Firestore, FirestoreError, serverTimestamp }                                                                                                                                                                      from "@angular/fire/firestore";
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                                               from "@angular/forms";
+import { AuthenticationService, EllipsesService, ErrorsService, getFirestoreErrorMessage }                                                                                                                                                                               from "@bowstring/core";
+import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, OptionComponent, PhoneNumberFieldInputComponent, PickerInputComponent, SectionComponent, SymbolComponent, TextFieldInputComponent } from "@bowstring/surface";
+import { type CountryCode, getCountries, getCountryCallingCode, isPossiblePhoneNumber, parsePhoneNumberWithError, type PhoneNumber }                                                                                                                                     from "libphonenumber-js";
+import { RouteComponent }                                                                                                                                                                                                                                                from "../../../../";
+import { type MessageDocument }                                                                                                                                                                                                                                          from "../../../../../interfaces";
+import { MessageService }                                                                                                                                                                                                                                                from "../../../../../services";
 
 
 @Component(
@@ -20,23 +20,26 @@ import { MessageService }                                                       
     imports:         [
       AsideComponent,
       BoxComponent,
+      ButtonComponent,
+      DividerComponent,
+      FlexboxContainerComponent,
+      FormComponent,
       HeaderComponent,
-      HeadingGroupComponent,
-      ImageComponent,
-      InspectorComponent,
+      OptionComponent,
+      PhoneNumberFieldInputComponent,
+      PickerInputComponent,
       ReactiveFormsModule,
-      RouteAsideDirective,
-      RouteInspectorDirective,
-      ScrollStackComponent,
-      ScrollStackItemDirective,
+      SectionComponent,
+      SymbolComponent,
+      TextFieldInputComponent,
     ],
-    styleUrl:        "HomeRouteComponent.sass",
-    templateUrl:     "HomeRouteComponent.html",
+    styleUrl:        "ConnectRouteComponent.sass",
+    templateUrl:     "ConnectRouteComponent.html",
 
     standalone: true,
   },
 )
-export class HomeRouteComponent
+export class ConnectRouteComponent
   extends RouteComponent {
 
   constructor() {

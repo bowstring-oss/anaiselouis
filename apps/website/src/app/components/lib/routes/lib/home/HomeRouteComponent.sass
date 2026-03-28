@@ -9,20 +9,11 @@
 
   @include RouteComponent.host
 
-  > bowstring--flexbox-container
-    --bowstring--flexbox-child-directive--flex-grow: 1 !important
+bowstring--aside#aside::ng-deep
+  --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 3)) !important
+  --bowstring--flexbox-child-directive--flex-grow: pow(var(--phi), -3) !important
 
-    &::ng-deep > .harness > .between > bowstring--section > .harness > .between > bowstring--masonry-container
-      --bowstring--masonry-container-directive--columns: 1 !important
+  display: none
 
-    @media (min-width: 48rem)
-      --bowstring--flexbox-container-directive--flex-direction: row !important
-      --bowstring--flexbox-container-directive--flex-wrap: wrap !important
-
-      &::ng-deep > .harness > .between > bowstring--section
-        --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
-        --bowstring--flexbox-child-directive--flex-grow: 1 !important
-        --bowstring--flexbox-child-directive--flex-shrink: 0 !important
-
-        > .harness > .between > bowstring--masonry-container
-          --bowstring--masonry-container-directive--columns: 2 !important
+  @media (min-width: 72rem)
+    display: contents

@@ -2,18 +2,18 @@
  * Copyright © 2026 Gavin William Sawyer. All rights reserved.
  */
 
-import { DOCUMENT, isPlatformBrowser }                                                                                                                                                                                  from "@angular/common";
-import { ChangeDetectionStrategy, Component, effect, inject, Injector, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild }                                                                                  from "@angular/core";
-import { toObservable, toSignal }                                                                                                                                                                                       from "@angular/core/rxjs-interop";
-import { AppCheck, type AppCheckTokenResult, getLimitedUseToken }                                                                                                                                                       from "@angular/fire/app-check";
-import { RouterOutlet, type Routes }                                                                                                                                                                                    from "@angular/router";
-import { CONFIG_LIB, type ConfigLib }                                                                                                                                                                                   from "@bowstring/config";
-import { AuthenticationService, ConnectivityService, DateFormat, DatePipe, ENVIRONMENT, type Environment, ErrorsService, GIT_INFO_PARTIAL, PACKAGE_VERSION, PROJECT_NAME, PROJECT_ROUTES, SERVICE_WORKER_REGISTRATION } from "@bowstring/core";
-import { LOCALE_ID, LOCALE_IDS, type LocaleId, type LocaleIds }                                                                                                                                                         from "@bowstring/i18n";
-import { type AboveComponent, type AsideComponent, type BannerComponent, type BelowComponent, CanvasDirective, FlexboxContainerDirective, type FooterComponent, type HeaderComponent, type InspectorComponent }         from "@bowstring/surface";
-import { type GitInfo }                                                                                                                                                                                                 from "git-describe";
-import { map, Observable, type Observer, of, startWith, switchMap, type TeardownLogic }                                                                                                                                 from "rxjs";
-import { type RouteComponent }                                                                                                                                                                                          from "../../";
+import { DOCUMENT, isPlatformBrowser }                                                                                                                                                                                                          from "@angular/common";
+import { ChangeDetectionStrategy, Component, effect, inject, Injector, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild }                                                                                                          from "@angular/core";
+import { toObservable, toSignal }                                                                                                                                                                                                               from "@angular/core/rxjs-interop";
+import { AppCheck, type AppCheckTokenResult, getLimitedUseToken }                                                                                                                                                                               from "@angular/fire/app-check";
+import { RouterOutlet, type Routes }                                                                                                                                                                                                            from "@angular/router";
+import { CONFIG_LIB, type ConfigLib }                                                                                                                                                                                                           from "@bowstring/config";
+import { AuthenticationService, ConnectivityService, DateFormat, DatePipe, ENVIRONMENT, type Environment, ErrorsService, GIT_INFO_PARTIAL, PACKAGE_REPOSITORY_URL, PACKAGE_VERSION, PROJECT_NAME, PROJECT_ROUTES, SERVICE_WORKER_REGISTRATION } from "@bowstring/core";
+import { LOCALE_ID, LOCALE_IDS, type LocaleId, type LocaleIds }                                                                                                                                                                                 from "@bowstring/i18n";
+import { type AboveComponent, type AsideComponent, type BannerComponent, type BelowComponent, CanvasDirective, FlexboxContainerDirective, type FooterComponent, type HeaderComponent, type InspectorComponent }                                 from "@bowstring/surface";
+import { type GitInfo }                                                                                                                                                                                                                         from "git-describe";
+import { map, Observable, type Observer, of, startWith, switchMap, type TeardownLogic }                                                                                                                                                         from "rxjs";
+import { type RouteComponent }                                                                                                                                                                                                                  from "../../";
 
 
 @Component(
@@ -230,6 +230,7 @@ export class RootComponent {
   protected readonly localeId: LocaleId                                                         = inject<LocaleId>(LOCALE_ID);
   protected readonly projectName: string                                                        = inject<string>(PROJECT_NAME);
   protected readonly projectRoutes: Routes                                                      = inject<Routes>(PROJECT_ROUTES);
+  protected readonly packageRepositoryUrl: string                                               = inject<string>(PACKAGE_REPOSITORY_URL);
   protected readonly packageVersion: string                                                     = inject<string>(PACKAGE_VERSION);
   protected readonly subheaderTemplateRef$: Signal<TemplateRef<HeaderComponent> | undefined>    = toSignal<TemplateRef<HeaderComponent> | undefined>(
     toObservable<RouterOutlet>(this.routerOutlet$).pipe<TemplateRef<HeaderComponent> | undefined>(

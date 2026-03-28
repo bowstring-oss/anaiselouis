@@ -2,96 +2,34 @@
   ~ Copyright © 2026 Anaïse Louis. All rights reserved.
   -->
 
-<bowstring--box material="primary">
-  <bowstring--header fontSizeExponent="-3">
-    <h2 i18n="@@apps--Website--Components--Routes--Home--Header">Anaïse is a multi-disciplinary artist and the founder of apparel brand After Awakening.</h2>
-  </bowstring--header>
-</bowstring--box>
-<bowstring--flexbox-container>
-  <bowstring--aside>
-    <bowstring--flexbox-container
-      position="sticky"
-      positionTop="var(--bowstring--main--gap-row)">
-      <bowstring--box>
-        <bowstring--header fontSizeExponent="-2">
-          @if (messageFormGroup.disabled) {<h3 i18n="@@apps--Website--Components--Routes--Home--Aside--Header_1">We'll be in touch{{ ellipsesService.ellipses$() }}</h3>} @else {<h3 i18n="@@apps--Website--Components--Routes--Home--Aside--Header_2">Want to connect?</h3>}
-        </bowstring--header>
-        <bowstring--form (output)="messageFormSubmit()">
-          <bowstring--text-field-input
-            autocomplete="name"
-            enterKeyHint="next"
-            [formControl]="messageFormGroup.controls.name"
-            i18n-label
-            label="name"
-            level="2"
-            (nextFocused)="messageTextFieldInput.focus();" />
-          <bowstring--text-field-input #messageTextFieldInput
-            enterKeyHint="next"
-            [formControl]="messageFormGroup.controls.message"
-            i18n-label
-            label="message"
-            level="2"
-            (nextFocused)="emailTextFieldInput.focus();" />
-          <bowstring--text-field-input #emailTextFieldInput
-            autocomplete="email"
-            enterKeyHint="next"
-            [formControl]="messageFormGroup.controls.email"
-            i18n-label
-            label="email"
-            level="2"
-            (nextFocused)="countryCodePickerInputComponent.focus();"
-            type="email" />
-          <bowstring--flexbox-container
-            alignItems="flex-end"
-            flexDirection="row">
-            <bowstring--picker-input #countryCodePickerInputComponent
-              autocomplete="tel-country-code"
-              enterKeyHint="next"
-              explicitAutocomplete
-              [formControl]="messageFormGroup.controls.phone.controls.countryCallingCode"
-              flexBasis="calc(1rem * pow(var(--phi), 4))"
-              flexGrow="1"
-              i18n-label
-              label="country code"
-              level="2"
-              (nextFocused)="phoneNumberFieldInputComponent.focus();">
-              @for (countryCallingCode of countryCallingCodes; track $index) {<bowstring--option [label]="'+' + countryCallingCode" [value]="countryCallingCode" />}
-            </bowstring--picker-input>
-            <bowstring--phone-number-field-input #phoneNumberFieldInputComponent
-              [countryCallingCode]="messageFormGroup.controls.phone.controls.countryCallingCode.value"
-              [formControl]="messageFormGroup.controls.phone.controls.nationalNumber"
-              flexBasis="calc(1rem * pow(var(--phi), 5))"
-              flexGrow="1.6180339887"
-              i18n-label
-              label="phone number"
-              level="2" />
-          </bowstring--flexbox-container>
-          <bowstring--divider />
-          <bowstring--flexbox-container
-            flexDirection="row"
-            justifyContent="flex-end">
-            <bowstring--button
-              appearance="symbol"
-              [disabled]="!authenticationService.user$() || messageFormGroup.disabled || messageFormGroup.invalid || messagesFormWorking$()"
-              type="submit">
-              <bowstring--symbol input="ArrowUpCircleFill" />
-            </bowstring--button>
-          </bowstring--flexbox-container>
-        </bowstring--form>
-      </bowstring--box>
-      <bowstring--button
-        appearance="raised"
-        flexGrow="1"
-        material="glass"
-        (output)="logClickMailEvent();"
-        url="mailto:anaiselouis.com">
-        <bowstring--symbol input="EnvelopeFill" />
-        <bowstring--label
-          i18n-input
-          input="Mail" />
-      </bowstring--button>
-    </bowstring--flexbox-container>
-  </bowstring--aside>
-  <bowstring--section>
-  </bowstring--section>
-</bowstring--flexbox-container>
+<bowstring--scroll-stack [minimumAspectRatio]="0.75">
+  <bowstring--image
+    *bowstringScrollStackItem
+    [height]="400"
+    input="https://placehold.co/300x400"
+    [width]="300" />
+  <bowstring--image
+    *bowstringScrollStackItem
+    [height]="400"
+    input="https://placehold.co/300x400"
+    [width]="300" />
+  <bowstring--image
+    *bowstringScrollStackItem
+    [height]="400"
+    input="https://placehold.co/300x400"
+    [width]="300" />
+</bowstring--scroll-stack>
+
+<bowstring--aside *bowstringRouteAside id="aside" />
+<bowstring--inspector *bowstringRouteInspector>
+  <bowstring--box
+    position="sticky"
+    positionTop="var(--bowstring--root--padding-bottom)">
+    <bowstring--heading-group>
+      <bowstring--header>
+        <h4>Header...</h4>
+      </bowstring--header>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores cumque et officiis? Aperiam commodi doloribus error est libero, odio repudiandae veritatis. Animi architecto distinctio dolorem eius incidunt. Aliquam omnis quia unde.</p>
+    </bowstring--heading-group>
+  </bowstring--box>
+</bowstring--inspector>
