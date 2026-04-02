@@ -1,16 +1,17 @@
 {
-  "name":        "@anaiselouis/config",
-  "homepage":    "https://anaiselouis.com",
-  "author":      {
+  "name":         "@anaiselouis/config",
+  "homepage":     "https://anaiselouis.com",
+  "author":       {
     "name":  "Gavin William Sawyer",
     "email": "g@vinsawyer.us",
     "url":   "https://gavinsawyer.us"
   },
-  "repository":  {
+  "repository":   {
     "type":      "git",
     "url":       "git+https://github.com/bowstring-oss/anaiselouis.git",
     "directory": "libs/config"
   },
-  "private":     true,
-  "sideEffects": false
+  "private":      true,
+  "sideEffects":  false,
+  "dependencies": { "@angular/core": "18" }
 }

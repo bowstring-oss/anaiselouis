@@ -9,23 +9,22 @@
       "dependsOn": [ "build--cloud-functions" ],
       "executor":  "@nx/esbuild:esbuild",
       "options":   {
-        "declaration":         true,
-        "deleteOutputPath":    false,
-        "esbuildOptions":      {
+        "declaration":      true,
+        "deleteOutputPath": false,
+        "esbuildOptions":   {
           "banner": {
             "css": "/*!\n / Copyright © 2026 Gavin William Sawyer. All rights reserved.\n /\n",
             "js":  "/*\n * Copyright © 2026 Gavin William Sawyer. All rights reserved.\n */\n"
           }
         },
-        "external":            [ "@bowstring/*" ],
-        "generatePackageJson": true,
-        "main":                "libs/core/src/index.ts",
-        "metafile":            true,
-        "minify":              true,
-        "outputPath":          "dist/libs/core",
-        "splitting":           true,
-        "treeShaking":         true,
-        "tsConfig":            "libs/core/tsconfig.lib.json"
+        "external":         [ "@bowstring/*" ],
+        "main":             "libs/core/src/index.ts",
+        "metafile":         true,
+        "minify":           true,
+        "outputPath":       "dist/libs/core",
+        "splitting":        true,
+        "treeShaking":      true,
+        "tsConfig":         "libs/core/tsconfig.lib.json"
       },
       "outputs":   [ "{workspaceRoot}/dist/libs/core" ]
     },

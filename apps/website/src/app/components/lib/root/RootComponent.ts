@@ -5,6 +5,7 @@
 import { DOCUMENT, isPlatformBrowser }                                                                                                                                                                                                          from "@angular/common";
 import { ChangeDetectionStrategy, Component, effect, inject, Injector, PLATFORM_ID, signal, type Signal, type TemplateRef, viewChild }                                                                                                          from "@angular/core";
 import { toObservable, toSignal }                                                                                                                                                                                                               from "@angular/core/rxjs-interop";
+import { Analytics }                                                                                                                                                                                                                            from "@angular/fire/analytics";
 import { AppCheck, type AppCheckTokenResult, getLimitedUseToken }                                                                                                                                                                               from "@angular/fire/app-check";
 import { RouterOutlet, type Routes }                                                                                                                                                                                                            from "@angular/router";
 import { CONFIG_LIB, type ConfigLib }                                                                                                                                                                                                           from "@bowstring/config";
@@ -59,6 +60,7 @@ export class RootComponent {
     );
   }
 
+  private readonly analytics: Analytics                                        = inject<Analytics>(Analytics);
   private readonly appCheck: AppCheck                                          = inject<AppCheck>(AppCheck);
   private readonly datePipe: DatePipe                                          = inject<DatePipe>(DatePipe);
   private readonly document: Document                                          = inject<Document>(DOCUMENT);

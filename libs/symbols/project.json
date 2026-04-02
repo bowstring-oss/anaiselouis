@@ -8,22 +8,21 @@
       "dependsOn": [ "lint" ],
       "executor":  "@nx/esbuild:esbuild",
       "options":   {
-        "declaration":         true,
-        "esbuildOptions":      {
+        "declaration":    true,
+        "esbuildOptions": {
           "banner": {
             "css": "/*!\n / Copyright © 2026 Gavin William Sawyer. All rights reserved.\n /\n / Copyright © 2026 Apple Inc. Adapted for Bowstring from SF Symbols Version 7.2 (119).\n /\n",
             "js":  "/*\n * Copyright © 2026 Gavin William Sawyer. All rights reserved.\n * \n * Copyright © 2026 Apple Inc. Adapted for Bowstring from SF Symbols Version 7.2 (119).\n */\n"
           }
         },
-        "external":            [ "@bowstring/*" ],
-        "generatePackageJson": true,
-        "main":                "libs/symbols/src/index.ts",
-        "metafile":            true,
-        "minify":              true,
-        "outputPath":          "dist/libs/symbols",
-        "splitting":           true,
-        "treeShaking":         true,
-        "tsConfig":            "libs/symbols/tsconfig.lib.json"
+        "external":       [ "@bowstring/*" ],
+        "main":           "libs/symbols/src/index.ts",
+        "metafile":       true,
+        "minify":         true,
+        "outputPath":     "dist/libs/symbols",
+        "splitting":      true,
+        "treeShaking":    true,
+        "tsConfig":       "libs/symbols/tsconfig.lib.json"
       },
       "outputs":   [ "{workspaceRoot}/dist/libs/symbols" ]
     },

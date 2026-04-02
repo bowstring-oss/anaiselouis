@@ -57,6 +57,26 @@ module.exports = [
     }),
   ),
   {
+    files:           [ "**/*.json" ],
+    languageOptions: { parser: require("jsonc-eslint-parser") },
+    rules:           {
+      "@nx/dependency-checks": [
+        "error",
+        {
+          buildTargets:        [ "build", "build--cloud-functions" ],
+          ignoredDependencies: [
+            "@bowstring/colors",
+            "@bowstring/config",
+            "@bowstring/core",
+            "@bowstring/i18n",
+            "@bowstring/surface",
+            "@bowstring/symbols",
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: [ "**/*.ts" ],
     rules: {
       "@angular-eslint/component-selector": [

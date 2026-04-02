@@ -1,16 +1,33 @@
 {
-  "name":        "@bowstring/core",
-  "homepage":    "https://bowstr.ing",
-  "author":      {
+  "name":         "@bowstring/core",
+  "homepage":     "https://bowstr.ing",
+  "author":       {
     "name":  "Gavin William Sawyer",
     "email": "g@vinsawyer.us",
     "url":   "https://gavinsawyer.us"
   },
-  "repository":  {
+  "repository":   {
     "type":      "git",
     "url":       "git+https://github.com/gavinsawyer/bowstring.git",
     "directory": "libs/core"
   },
-  "private":     true,
-  "sideEffects": false
+  "private":      true,
+  "sideEffects":  false,
+  "dependencies": {
+    "@angular/cdk":                "18",
+    "@angular/common":             "18",
+    "@angular/core":               "18",
+    "@angular/fire":               "18",
+    "@angular/localize":           "18",
+    "@angular/router":             "18",
+    "@firebase-web-authn/browser": "10",
+    "express":                     "4",
+    "firebase":                    "10",
+    "firebase-admin":              "13",
+    "firebase-functions":          "7",
+    "git-describe":                "4",
+    "libphonenumber-js":           "1",
+    "rxjs":                        "7",
+    "uuid":                        "13"
+  }
 }

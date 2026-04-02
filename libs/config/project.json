@@ -8,22 +8,21 @@
       "dependsOn": [ "lint" ],
       "executor":  "@nx/esbuild:esbuild",
       "options":   {
-        "declaration":         true,
-        "esbuildOptions":      {
+        "declaration":    true,
+        "esbuildOptions": {
           "banner": {
             "css": "/*!\n / Copyright © 2026 Gavin William Sawyer. All rights reserved.\n /\n",
             "js":  "/*\n * Copyright © 2026 Gavin William Sawyer. All rights reserved.\n */\n"
           }
         },
-        "external":            [ "@bowstring/*" ],
-        "generatePackageJson": true,
-        "main":                "libs/config/src/index.ts",
-        "metafile":            true,
-        "minify":              true,
-        "outputPath":          "dist/libs/config",
-        "splitting":           true,
-        "treeShaking":         true,
-        "tsConfig":            "libs/config/tsconfig.lib.json"
+        "external":       [ "@bowstring/*" ],
+        "main":           "libs/config/src/index.ts",
+        "metafile":       true,
+        "minify":         true,
+        "outputPath":     "dist/libs/config",
+        "splitting":      true,
+        "treeShaking":    true,
+        "tsConfig":       "libs/config/tsconfig.lib.json"
       },
       "outputs":   [ "{workspaceRoot}/dist/libs/config" ]
     },

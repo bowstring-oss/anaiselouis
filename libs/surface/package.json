@@ -1,16 +1,32 @@
 {
-  "name":        "@bowstring/surface",
-  "homepage":    "https://bowstr.ing",
-  "author":      {
+  "name":         "@bowstring/surface",
+  "homepage":     "https://bowstr.ing",
+  "author":       {
     "name":  "Gavin William Sawyer",
     "email": "g@vinsawyer.us",
     "url":   "https://gavinsawyer.us"
   },
-  "repository":  {
+  "repository":   {
     "type":      "git",
     "url":       "git+https://github.com/gavinsawyer/bowstring.git",
     "directory": "libs/surface"
   },
-  "private":     true,
-  "sideEffects": false
+  "private":      true,
+  "sideEffects":  false,
+  "dependencies": {
+    "@angular/cdk":              "18",
+    "@angular/common":           "18",
+    "@angular/core":             "18",
+    "@angular/fire":             "18",
+    "@angular/forms":            "18",
+    "@angular/google-maps":      "18",
+    "@angular/router":           "18",
+    "@googlemaps/js-api-loader": "2",
+    "body-scroll-lock":          "3",
+    "libphonenumber-js":         "1",
+    "lodash":                    "4",
+    "masonry-layout":            "4",
+    "rxjs":                      "7",
+    "uuid":                      "13"
+  }
 }

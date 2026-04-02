@@ -5,6 +5,7 @@
 import { isPlatformServer }                                                                                                            from "@angular/common";
 import { ExperimentalPendingTasks as PendingTasks, inject, Injectable, makeStateKey, PLATFORM_ID, type StateKey, TransferState }       from "@angular/core";
 import { distinctUntilChanged, finalize, type MonoTypeOperatorFunction, type Observable, type OperatorFunction, startWith, take, tap } from "rxjs";
+import { validate }                                                                                                                    from "uuid";
 
 
 @Injectable({ providedIn: "root" })
@@ -44,7 +45,8 @@ export class RxSsrService {
         undefined,
       );
 
-      this.transferState.remove<T>(stateKey);
+      if (validate(id))
+        this.transferState.remove<T>(stateKey);
 
       if (state !== undefined)
         return inputObservable.pipe<T, T, T, T, T>(
@@ -105,7 +107,8 @@ export class RxSsrService {
         undefined,
       );
 
-      this.transferState.remove<R>(stateKey);
+      if (validate(id))
+        this.transferState.remove<R>(stateKey);
 
       if (state !== undefined)
         return inputObservable.pipe<T, T, R, R, R, R, R>(
