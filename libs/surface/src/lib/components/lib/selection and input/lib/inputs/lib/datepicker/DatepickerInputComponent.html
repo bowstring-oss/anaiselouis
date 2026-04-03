@@ -59,7 +59,7 @@
           (click)="$event.stopPropagation();"
           (focus)="onFocus();"
           (input)="onInput();"
-          (keydown)="$event.code !== 'Enter' || (enterKeyHintInput$() !== 'next' ? enterKeyHintInput$() !== 'previous' ? onSubmit?.() : focusPrevious() : focusNext()) || $event.preventDefault() || $event.stopPropagation();"
+          (keydown)="$event.code !== 'Enter' || (enterKeyHintInput$() !== 'next' && enterKeyHintInput$() !== 'previous') || $event.preventDefault(); ($event.code !== 'Enter' && $event.code !== 'Space') || $event.stopPropagation(); $event.code !== 'Enter' || (enterKeyHintInput$() !== 'next' ? enterKeyHintInput$() !== 'previous' ? onSubmit?.() : focusPrevious() : focusNext());"
           (pointerdown)="onPointerdown();"
           type="date">
       </div>

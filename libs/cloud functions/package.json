@@ -8,14 +8,12 @@
   },
   "repository":   {
     "type":      "git",
-    "url":       "git+https://github.com/bowstring-oss/anaiselouis.git",
+    "url":       "git+https://github.com/bowstring-mini/anaiselouis.git",
     "directory": "libs/cloud functions"
   },
   "private":      true,
   "engines":      { "node": "22" },
   "main":         "./main.cjs",
   "type":         "module",
-  "dependencies": {
-    "firebase-functions": "7"
-  }
+  "dependencies": { "firebase-functions": "7" }
 }

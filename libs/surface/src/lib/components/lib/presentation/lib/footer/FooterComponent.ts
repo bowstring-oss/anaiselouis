@@ -16,14 +16,16 @@ import { GlassMaskIdTickService, HapticsService }                               
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.pinning]":                                    "pinning$()",
-      "[class.pinned]":                                     "pinnedModelWithTransform$()",
-      "[class.raisedOrLoweringWhenPinnedOrUnpinning]":      "raisedOrLoweringWhenPinnedOrUnpinning$()",
-      "[class.raisedWhenPinnedOrUnpinning]":                "raisedWhenPinnedOrUnpinning$()",
-      "[class.unpinning]":                                  "unpinning$()",
-      "[style.--bowstring--footer--height]":                "height$()",
-      "[style.--bowstring--footer--raising-scale]":         "raisingScale$()",
-      "[style.--bowstring--footer--unpinning-translation]": "unpinningTranslation$()",
+      "[class.pinning]":                                           "pinning$()",
+      "[class.pinned]":                                            "pinnedModelWithTransform$()",
+      "[class.raisedOrLoweringWhenPinnedOrUnpinning]":             "raisedOrLoweringWhenPinnedOrUnpinning$()",
+      "[class.raisedWhenPinnedOrUnpinning]":                       "raisedWhenPinnedOrUnpinning$()",
+      "[class.unpinning]":                                         "unpinning$()",
+      "[style.--bowstring--footer--height]":                       "height$()",
+      "[style.--bowstring--footer--pinned-control--aspect-ratio]": "pinnedModelWithTransform$() ? pinSlashFillAspectRatio$() : pinFillAspectRatio$()",
+      "[style.--bowstring--footer--pinned-control--height-ratio]": "pinnedModelWithTransform$() ? pinSlashFillHeightRatio$() : pinFillHeightRatio$()",
+      "[style.--bowstring--footer--raising-scale]":                "raisingScale$()",
+      "[style.--bowstring--footer--unpinning-translation]":        "unpinningTranslation$()",
     },
     hostDirectives:  [
       {
@@ -133,10 +135,10 @@ export class FooterComponent {
   private readonly viewportService: ViewportService                                                         = inject<ViewportService>(ViewportService);
   private readonly width$: Signal<number | undefined>                                                       = computed<number | undefined>((): number | undefined => this.dimensions$()?.width);
 
-  protected readonly containerDirective: ContainerDirective          = inject<ContainerDirective>(ContainerDirective);
-  protected readonly hapticsService: HapticsService                  = inject<HapticsService>(HapticsService);
-  protected readonly height$: Signal<number | undefined>             = computed<number | undefined>((): number | undefined => this.dimensions$()?.height);
-  protected readonly pinFillSymbol$: Signal<Symbol | undefined>      = toSignal<Symbol>(
+  protected readonly containerDirective: ContainerDirective               = inject<ContainerDirective>(ContainerDirective);
+  protected readonly hapticsService: HapticsService                       = inject<HapticsService>(HapticsService);
+  protected readonly height$: Signal<number | undefined>                  = computed<number | undefined>((): number | undefined => this.dimensions$()?.height);
+  protected readonly pinFillSymbol$: Signal<Symbol | undefined>           = toSignal<Symbol>(
     of<SymbolName>("PinFill").pipe<Symbol>(
       this.rxSsrService.wrap<SymbolName, Symbol>(
         switchMap<SymbolName, Observable<Symbol>>((symbolName: SymbolName): Observable<Symbol> => from<Promise<Symbol>>(loadSymbol(symbolName))),
@@ -144,12 +146,36 @@ export class FooterComponent {
       ),
     ),
   );
-  protected readonly pinSlashFillSymbol$: Signal<Symbol | undefined> = toSignal<Symbol>(
+  protected readonly pinFillAspectRatio$: Signal<number | undefined>      = toSignal<number>(
+    toObservable<Symbol | undefined>(this.pinFillSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((pinFillSymbol?: Symbol): pinFillSymbol is Symbol => !!pinFillSymbol),
+      map<Symbol, number>((pinFillSymbol: Symbol): number => pinFillSymbol.viewBoxWidth / pinFillSymbol.viewBoxHeight),
+    ),
+  );
+  protected readonly pinFillHeightRatio$: Signal<number | undefined>      = toSignal<number>(
+    toObservable<Symbol | undefined>(this.pinFillSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((pinFillSymbol?: Symbol): pinFillSymbol is Symbol => !!pinFillSymbol),
+      map<Symbol, number>((pinFillSymbol: Symbol): number => pinFillSymbol.viewBoxHeight / 27.5742),
+    ),
+  );
+  protected readonly pinSlashFillSymbol$: Signal<Symbol | undefined>      = toSignal<Symbol>(
     of<SymbolName>("PinSlashFill").pipe<Symbol>(
       this.rxSsrService.wrap<SymbolName, Symbol>(
         switchMap<SymbolName, Observable<Symbol>>((symbolName: SymbolName): Observable<Symbol> => from<Promise<Symbol>>(loadSymbol(symbolName))),
         "Symbol:PinSlashFill",
       ),
+    ),
+  );
+  protected readonly pinSlashFillAspectRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.pinSlashFillSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((pinSlashFillSymbol?: Symbol): pinSlashFillSymbol is Symbol => !!pinSlashFillSymbol),
+      map<Symbol, number>((pinSlashFillSymbol: Symbol): number => pinSlashFillSymbol.viewBoxWidth / pinSlashFillSymbol.viewBoxHeight),
+    ),
+  );
+  protected readonly pinSlashFillHeightRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.pinSlashFillSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((pinSlashFillSymbol?: Symbol): pinSlashFillSymbol is Symbol => !!pinSlashFillSymbol),
+      map<Symbol, number>((pinSlashFillSymbol: Symbol): number => pinSlashFillSymbol.viewBoxHeight / 27.5742),
     ),
   );
 

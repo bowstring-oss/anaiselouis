@@ -7,7 +7,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input, ty
 import { toObservable, toSignal }                                                                                                            from "@angular/core/rxjs-interop";
 import { RxSsrService }                                                                                                                      from "@bowstring/core";
 import { loadSymbol, type Symbol, type SymbolName }                                                                                          from "@bowstring/symbols";
-import { from, type Observable, of, switchMap }                                                                                              from "rxjs";
+import { filter, from, map, type Observable, of, switchMap }                                                                                 from "rxjs";
 import { ContainerDirective, FlexboxContainerDirective, InlinableDirective }                                                                 from "../../../../../directives";
 
 
@@ -15,8 +15,10 @@ import { ContainerDirective, FlexboxContainerDirective, InlinableDirective }    
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.badge]":      "badgeInput$()",
-      "[class.fixedWidth]": "fixedWidthInput$()",
+      "[class.badge]":                             "badgeInput$()",
+      "[class.fixedWidth]":                        "fixedWidthInput$()",
+      "[style.--bowstring--symbol--aspect-ratio]": "aspectRatio$()",
+      "[style.--bowstring--symbol--height-ratio]": "heightRatio$()",
     },
     hostDirectives:  [
       {
@@ -52,18 +54,28 @@ export class SymbolComponent {
 
   public readonly input$: InputSignal<SymbolName> = input.required<SymbolName>({ alias: "input" });
 
-  protected readonly symbol$: Signal<Symbol | undefined> = toSignal<Symbol>(
+  protected readonly symbol$: Signal<Symbol | undefined>      = toSignal<Symbol>(
     toObservable<SymbolName>(this.input$).pipe<Symbol>(
       switchMap<SymbolName, Observable<Symbol>>(
         (input: SymbolName): Observable<Symbol> => of<SymbolName>(input).pipe<Symbol>(
           this.rxSsrService.wrap<SymbolName, Symbol>(
-            switchMap<SymbolName, Observable<Symbol>>(
-              (symbolName: SymbolName): Observable<Symbol> => from<Promise<Symbol>>(loadSymbol(symbolName)),
-            ),
+            switchMap<SymbolName, Observable<Symbol>>((symbolName: SymbolName): Observable<Symbol> => from<Promise<Symbol>>(loadSymbol(symbolName))),
             `Symbol:${ input }`,
           ),
         ),
       ),
+    ),
+  );
+  protected readonly aspectRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.symbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((symbol?: Symbol): symbol is Symbol => !!symbol),
+      map<Symbol, number>((symbol: Symbol): number => symbol.viewBoxWidth / symbol.viewBoxHeight),
+    ),
+  );
+  protected readonly heightRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.symbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((symbol?: Symbol): symbol is Symbol => !!symbol),
+      map<Symbol, number>((symbol: Symbol): number => symbol.viewBoxHeight / 27.5742),
     ),
   );
 

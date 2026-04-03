@@ -16,13 +16,17 @@
   --bowstring--flexbox-container-directive--justify-content: center !important
 
   > .harness
+    font-size: 0.8726779962em
+    height: 1.1458980338em
     vertical-align: middle
 
     > .between > svg
+      aspect-ratio: var(--bowstring--symbol--aspect-ratio)
       display: grid
       filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
-      height: 1em
-      max-width: 1em
+      height: calc(1em * var(--bowstring--symbol--height-ratio))
+      margin-top: calc(1em * (1 - var(--bowstring--symbol--height-ratio)) / 2)
+      margin-bottom: calc(1em * (1 - var(--bowstring--symbol--height-ratio)) / 2)
       overflow: visible
       transform: translateZ(0)
 

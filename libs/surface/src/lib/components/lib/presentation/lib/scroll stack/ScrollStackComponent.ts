@@ -114,6 +114,23 @@ export class ScrollStackComponent {
     ),
   ) : signal<undefined>(undefined);
 
+  public readonly itemIndex$: Signal<number>                                                         = isPlatformBrowser(this.platformId) ? toSignal<number>(
+    toObservable<ElementRef<HTMLDivElement>>(this.innerHtmlDivElementRef$).pipe<number, number>(
+      switchMap<ElementRef<HTMLDivElement>, Observable<number>>(
+        ({ nativeElement: innerHtmlDivElement }: ElementRef<HTMLDivElement>): Observable<number> => fromEvent<Event>(
+          innerHtmlDivElement,
+          "scrollend",
+          { passive: true },
+        ).pipe<Event | null, number, number>(
+          startWith<Event, [ null ]>(null),
+          map<Event | null, number>((): number => Math.round(innerHtmlDivElement.scrollLeft / innerHtmlDivElement.clientWidth)),
+          distinctUntilChanged<number>(),
+        ),
+      ),
+      startWith<number, [ 0 ]>(0),
+    ),
+    { requireSync: true },
+  ) : signal<number>(0);
   public readonly minimumAspectRatioInput$: InputSignalWithTransform<number, number | `${ number }`> = input.required<number, number | `${ number }`>(
     {
       alias:     "minimumAspectRatio",

@@ -27,10 +27,12 @@
           font-size: calc(1em * pow(var(--phi), -1))
 
           > svg
+            aspect-ratio: var(--bowstring--picker-input--chevron-up-chevron-down-aspect-ratio)
             display: grid
             filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
-            height: 1em
-            max-width: 1em
+            height: calc(1em * var(--bowstring--picker-input--chevron-up-chevron-down-height-ratio))
+            margin-top: calc(1em * (1 - var(--bowstring--picker-input--chevron-up-chevron-down-height-ratio)) / 2)
+            margin-bottom: calc(1em * (1 - var(--bowstring--picker-input--chevron-up-chevron-down-height-ratio)) / 2)
             overflow: visible
             transform: translateZ(0)
 

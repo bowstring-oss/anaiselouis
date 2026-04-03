@@ -1,13 +1,13 @@
 {
   "name":            "@anaiselouis/source",
-  "version":         "2026.0 Beta 103",
+  "version":         "2026.0 Beta 104",
   "homepage":        "https://anaiselouis.com",
   "author":          {
     "name":  "Gavin William Sawyer",
     "email": "g@vinsawyer.us",
     "url":   "https://gavinsawyer.us"
   },
-  "repository":      "github:bowstring-oss/anaiselouis",
+  "repository":      "github:bowstring-mini/anaiselouis",
   "private":         true,
   "scripts":         {
     "lint":   "npx nx run-many --target lint --all",

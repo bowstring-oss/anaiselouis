@@ -71,6 +71,8 @@ module.exports = [
             "@bowstring/i18n",
             "@bowstring/surface",
             "@bowstring/symbols",
+            "firebase-admin",
+            "firebase-functions",
           ],
         },
       ],

@@ -1,0 +1,12 @@
+<!--
+  ~ Copyright © 2026 Anaïse Louis. All rights reserved.
+  -->
+
+<bowstring--header *bowstringRouteHeader
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between">
+  <h2>@if (projectRoutes | bowstringFindRouteByPath:"bio"; as route) {{{ route.data?.['title'] }}}</h2>
+</bowstring--header>
+
+Bio...

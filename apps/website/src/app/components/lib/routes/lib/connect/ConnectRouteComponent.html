@@ -2,9 +2,18 @@
   ~ Copyright © 2026 Anaïse Louis. All rights reserved.
   -->
 
+<bowstring--header *bowstringRouteHeader
+  alignItems="center"
+  flexDirection="row"
+  justifyContent="space-between">
+  <h2>@if (projectRoutes | bowstringFindRouteByPath:"connect"; as route) {{{ route.data?.['title'] }}}</h2>
+</bowstring--header>
+
 <bowstring--flexbox-container>
   <bowstring--aside>
-    <bowstring--flexbox-container>
+    <bowstring--flexbox-container
+      position="sticky"
+      positionTop="var(--bowstring--main--gap-row)">
       <bowstring--box>
         <bowstring--header fontSizeExponent="-2">
           @if (messageFormGroup.disabled) {<h3 i18n="@@apps--Website--Components--Routes--Connect--Aside--Header_1">We'll be in <span style="text-wrap: nowrap;">touch<bowstring--ellipses inline /></span></h3>} @else {<h3 i18n="@@apps--Website--Components--Routes--Connect--Aside--Header_2">Want to connect?</h3>}
@@ -74,5 +83,7 @@
       </bowstring--box>
     </bowstring--flexbox-container>
   </bowstring--aside>
-  <bowstring--section />
+  <bowstring--section>
+    Connect...
+  </bowstring--section>
 </bowstring--flexbox-container>

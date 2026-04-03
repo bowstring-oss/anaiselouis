@@ -10,8 +10,5 @@
 
   @include RouteComponent.host
 
-bowstring--aside#aside::ng-deep
-  display: none
-
-  @media (min-width: 72rem)
-    display: contents
+  > router-outlet
+    display: none

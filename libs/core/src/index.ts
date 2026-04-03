@@ -10,5 +10,4 @@ export * from "./lib/services";
 export * from "./lib/types";
 
 export * from "./lib/getAuthErrorMessage";
-export * from "./lib/getCallableCloudFunction";
 export * from "./lib/getFirestoreErrorMessage";

@@ -21,30 +21,31 @@ const projectRoutes: Routes = [
   },
   {
     data:          {
+      description: $localize`:@@apps--Website--Components--Routes--Bio--Meta--Description:...`,
+      title:       $localize`:@@apps--Website--Components--Routes--Bio--Meta--Title:Bio`,
+    },
+    loadComponent: (): Promise<Type<unknown>> => import("./bio/BioRouteComponent").then<Type<unknown>>(({ BioRouteComponent }: typeof import("./bio/BioRouteComponent")): Type<unknown> => BioRouteComponent),
+    path:          "bio",
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ inject<ConfigLib>(CONFIG_LIB).brand.title }`,
+  },
+  {
+    data:          {
+      description: $localize`:@@apps--Website--Components--Routes--Works--Meta--Description:...`,
+      title:       $localize`:@@apps--Website--Components--Routes--Works--Meta--Title:Works`,
+    },
+    loadChildren:  (): Promise<Routes> => import("./works/children").then<Routes>(({ worksRoutes }: typeof import("./works/children")): Routes => worksRoutes),
+    loadComponent: (): Promise<Type<unknown>> => import("./works/WorksRouteComponent").then<Type<unknown>>(({ WorksRouteComponent }: typeof import("./works/WorksRouteComponent")): Type<unknown> => WorksRouteComponent),
+    path:          "works",
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ inject<ConfigLib>(CONFIG_LIB).brand.title }`,
+  },
+  {
+    data:          {
       description: $localize`:@@apps--Website--Components--Routes--Connect--Meta--Description:...`,
       title:       $localize`:@@apps--Website--Components--Routes--Connect--Meta--Title:Connect`,
     },
     loadComponent: (): Promise<Type<unknown>> => import("./connect/ConnectRouteComponent").then<Type<unknown>>(({ ConnectRouteComponent }: typeof import("./connect/ConnectRouteComponent")): Type<unknown> => ConnectRouteComponent),
     path:          "connect",
-    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - Connect`,
-  },
-  {
-    data:          {
-      description: $localize`:@@apps--Website--Components--Routes--Connect--Meta--Description:...`,
-      title:       $localize`:@@apps--Website--Components--Routes--Connect--Meta--Title:Work`,
-    },
-    loadComponent: (): Promise<Type<unknown>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown>>(({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> => PrivacyRouteComponent),
-    path:          "work",
-    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - Work`,
-  },
-  {
-    data:          {
-      description: $localize`:@@apps--Website--Components--Routes--Connect--Meta--Description:...`,
-      title:       $localize`:@@apps--Website--Components--Routes--Connect--Meta--Title:Bio`,
-    },
-    loadComponent: (): Promise<Type<unknown>> => import("./privacy/PrivacyRouteComponent").then<Type<unknown>>(({ PrivacyRouteComponent }: typeof import("./privacy/PrivacyRouteComponent")): Type<unknown> => PrivacyRouteComponent),
-    path:          "bio",
-    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - Bio`,
+    title:         ({ data: { title: routeTitle } }: ActivatedRouteSnapshot): string => `${ routeTitle } - ${ inject<ConfigLib>(CONFIG_LIB).brand.title }`,
   },
   {
     data:          {

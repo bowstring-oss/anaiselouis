@@ -1,0 +1,143 @@
+/*!
+ / Copyright © 2026 Anaïse Louis. All rights reserved.
+ /
+
+@use "../../../child/WorksChildRouteComponent"
+
+
+\:host
+  display: contents
+
+  @include WorksChildRouteComponent.host
+
+  > bowstring--grid-container::ng-deep > .harness > .between
+    > bowstring--image:nth-child(1)
+      --bowstring--grid-child-directive--grid-column-start: 1
+      --bowstring--grid-child-directive--grid-column-end: span 21
+      --bowstring--grid-child-directive--grid-row-start: 1
+      --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 24rem)
+        --bowstring--grid-child-directive--grid-column-start: 1
+        --bowstring--grid-child-directive--grid-column-end: span 15
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 48rem)
+        --bowstring--grid-child-directive--grid-column-start: 1
+        --bowstring--grid-child-directive--grid-column-end: span 10
+        --bowstring--grid-child-directive--grid-row-end: span 5
+
+      @media (min-width: 72rem)
+        --bowstring--grid-child-directive--grid-column-start: 1
+        --bowstring--grid-child-directive--grid-column-end: span 8
+        --bowstring--grid-child-directive--grid-row-end: span 7
+
+    > bowstring--image:nth-child(2)
+      --bowstring--grid-child-directive--grid-column-start: 10
+      --bowstring--grid-child-directive--grid-column-end: span 15
+      --bowstring--grid-child-directive--grid-row-start: 7
+      --bowstring--grid-child-directive--grid-row-end: span 3
+
+      @media (min-width: 24rem)
+        --bowstring--grid-child-directive--grid-column-start: 10
+        --bowstring--grid-child-directive--grid-column-end: span 12
+
+      @media (min-width: 48rem)
+        --bowstring--grid-child-directive--grid-column-start: 14
+        --bowstring--grid-child-directive--grid-column-end: span 8
+        --bowstring--grid-child-directive--grid-row-start: 4
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 72rem)
+        --bowstring--grid-child-directive--grid-column-start: 11
+        --bowstring--grid-child-directive--grid-column-end: span 5
+        --bowstring--grid-child-directive--grid-row-start: 4
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+    > bowstring--image:nth-child(3)
+      --bowstring--grid-child-directive--grid-column-start: 4
+      --bowstring--grid-child-directive--grid-column-end: span 13
+      --bowstring--grid-child-directive--grid-row-start: 13
+      --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 24rem)
+        --bowstring--grid-child-directive--grid-column-start: 5
+        --bowstring--grid-child-directive--grid-column-end: span 18
+
+      @media (min-width: 48rem)
+        --bowstring--grid-child-directive--grid-column-start: 6
+        --bowstring--grid-child-directive--grid-column-end: span 9
+        --bowstring--grid-child-directive--grid-row-start: 10
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 72rem)
+        --bowstring--grid-child-directive--grid-column-start: 18
+        --bowstring--grid-child-directive--grid-column-end: span 7
+        --bowstring--grid-child-directive--grid-row-start: 3
+        --bowstring--grid-child-directive--grid-row-end: span 6
+
+    > bowstring--image:nth-child(4)
+      --bowstring--grid-child-directive--grid-column-start: 2
+      --bowstring--grid-child-directive--grid-column-end: span 18
+      --bowstring--grid-child-directive--grid-row-start: 19
+      --bowstring--grid-child-directive--grid-row-end: span 3
+
+      @media (min-width: 24rem)
+        --bowstring--grid-child-directive--grid-column-start: 12
+        --bowstring--grid-child-directive--grid-column-end: span 10
+
+      @media (min-width: 48rem)
+        --bowstring--grid-child-directive--grid-column-start: 16
+        --bowstring--grid-child-directive--grid-column-end: span 9
+        --bowstring--grid-child-directive--grid-row-start: 12
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 72rem)
+        --bowstring--grid-child-directive--grid-column-start: 5
+        --bowstring--grid-child-directive--grid-column-end: span 9
+        --bowstring--grid-child-directive--grid-row-start: 13
+        --bowstring--grid-child-directive--grid-row-end: span 5
+
+    > bowstring--image:nth-child(5)
+      --bowstring--grid-child-directive--grid-column-start: 7
+      --bowstring--grid-child-directive--grid-column-end: span 11
+      --bowstring--grid-child-directive--grid-row-start: 25
+      --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 24rem)
+        --bowstring--grid-child-directive--grid-column-start: 2
+        --bowstring--grid-child-directive--grid-column-end: span 14
+
+      @media (min-width: 48rem)
+        --bowstring--grid-child-directive--grid-column-start: 2
+        --bowstring--grid-child-directive--grid-column-end: span 8
+        --bowstring--grid-child-directive--grid-row-start: 18
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 72rem)
+        --bowstring--grid-child-directive--grid-column-start: 16
+        --bowstring--grid-child-directive--grid-column-end: span 6
+        --bowstring--grid-child-directive--grid-row-start: 11
+        --bowstring--grid-child-directive--grid-row-end: span 8
+
+    > bowstring--image:nth-child(6)
+      --bowstring--grid-child-directive--grid-column-start: 3
+      --bowstring--grid-child-directive--grid-column-end: span 17
+      --bowstring--grid-child-directive--grid-row-start: 31
+      --bowstring--grid-child-directive--grid-row-end: span 3
+
+      @media (min-width: 24rem)
+        --bowstring--grid-child-directive--grid-column-start: 7
+        --bowstring--grid-child-directive--grid-column-end: span 16
+
+      @media (min-width: 48rem)
+        --bowstring--grid-child-directive--grid-column-start: 10
+        --bowstring--grid-child-directive--grid-column-end: span 10
+        --bowstring--grid-child-directive--grid-row-start: 23
+        --bowstring--grid-child-directive--grid-row-end: span 4
+
+      @media (min-width: 72rem)
+        --bowstring--grid-child-directive--grid-column-start: 4
+        --bowstring--grid-child-directive--grid-column-end: span 11
+        --bowstring--grid-child-directive--grid-row-start: 22
+        --bowstring--grid-child-directive--grid-row-end: span 6

@@ -204,12 +204,14 @@ div#dragControl
       transition: opacity 200ms ease-in-out
 
       > svg
+        aspect-ratio: var(--bowstring--sheet--drag-control--arrow-up-and-down-and-arrow-left-and-right-aspect-ratio)
         display: grid
         filter: drop-shadow(0 0 calc(1em * pow(var(--phi), -1)) var(--bowstring--colors--foreground-shadow))
-        height: 1em
+        height: calc(1em * var(--bowstring--sheet--drag-control--arrow-up-and-down-and-arrow-left-and-right-height-ratio))
+        margin-top: calc(1em * (1 - var(--bowstring--sheet--drag-control--arrow-up-and-down-and-arrow-left-and-right-height-ratio)) / 2)
+        margin-bottom: calc(1em * (1 - var(--bowstring--sheet--drag-control--arrow-up-and-down-and-arrow-left-and-right-height-ratio)) / 2)
         overflow: visible
         transform: translateZ(0)
-        width: 1em
 
     &:not(:focus-within, :hover) > .between
       background: none !important

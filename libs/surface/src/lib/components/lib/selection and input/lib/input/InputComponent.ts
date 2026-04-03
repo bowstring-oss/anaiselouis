@@ -8,7 +8,7 @@ import { toObservable, toSignal }                                               
 import { ControlValueAccessor, NG_VALUE_ACCESSOR }                                                                                                                                                                                                                                                   from "@angular/forms";
 import { RxSsrService }                                                                                                                                                                                                                                                                              from "@bowstring/core";
 import { loadSymbol, type Symbol, type SymbolName }                                                                                                                                                                                                                                                  from "@bowstring/symbols";
-import { firstValueFrom, from, Observable, of, switchMap }                                                                                                                                                                                                                                           from "rxjs";
+import { filter, firstValueFrom, from, map, Observable, of, switchMap }                                                                                                                                                                                                                              from "rxjs";
 import { v7 as uuidV7 }                                                                                                                                                                                                                                                                              from "uuid";
 import { ContainerDirective, HoverTransformingDirective, WellRoundedDirective }                                                                                                                                                                                                                      from "../../../../../directives";
 import { HapticsService }                                                                                                                                                                                                                                                                            from "../../../../../services";
@@ -17,7 +17,11 @@ import { HapticsService }                                                       
 @Component(
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host:            { "[class.disabled]": "disabledModel$()" },
+    host:            {
+      "[class.disabled]":                                                          "disabledModel$()",
+      "[style.--bowstring--input--close-control--xmark-circle-fill-aspect-ratio]": "xmarkCircleFillAspectRatio$()",
+      "[style.--bowstring--input--close-control--xmark-circle-fill-height-ratio]": "xmarkCircleFillHeightRatio$()",
+    },
     providers:       [
       {
         multi:       true,
@@ -54,6 +58,18 @@ export class InputComponent
         ),
         "Symbol:XmarkCircleFill",
       ),
+    ),
+  );
+  protected readonly xmarkCircleFillAspectRatio$: Signal<number | undefined>                  = toSignal<number>(
+    toObservable<Symbol | undefined>(this.xmarkCircleFillSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((xmarkCircleFillSymbol?: Symbol): xmarkCircleFillSymbol is Symbol => !!xmarkCircleFillSymbol),
+      map<Symbol, number>((xmarkCircleFillSymbol: Symbol): number => xmarkCircleFillSymbol.viewBoxWidth / xmarkCircleFillSymbol.viewBoxHeight),
+    ),
+  );
+  protected readonly xmarkCircleFillHeightRatio$: Signal<number | undefined>                  = toSignal<number>(
+    toObservable<Symbol | undefined>(this.xmarkCircleFillSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((xmarkCircleFillSymbol?: Symbol): xmarkCircleFillSymbol is Symbol => !!xmarkCircleFillSymbol),
+      map<Symbol, number>((xmarkCircleFillSymbol: Symbol): number => xmarkCircleFillSymbol.viewBoxHeight / 27.5742),
     ),
   );
 

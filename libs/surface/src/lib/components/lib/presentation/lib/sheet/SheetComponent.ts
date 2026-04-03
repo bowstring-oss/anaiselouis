@@ -8,7 +8,7 @@ import { takeUntilDestroyed, toObservable, toSignal }                           
 import { RxSsrService, ViewportService }                                                                                                                                                                                    from "@bowstring/core";
 import { loadSymbol, type Symbol, type SymbolName }                                                                                                                                                                         from "@bowstring/symbols";
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll }                                                                                                                                                     from "body-scroll-lock";
-import { delayWhen, from, fromEvent, map, type Observable, of, startWith, switchMap, timer }                                                                                                                                from "rxjs";
+import { delayWhen, filter, from, fromEvent, map, type Observable, of, startWith, switchMap, timer }                                                                                                                        from "rxjs";
 import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, GlassDirective, HoverTransformingDirective, WellRoundedDirective }                                                                               from "../../../../../directives";
 import { GlassMaskIdTickService, HapticsService }                                                                                                                                                                           from "../../../../../services";
 
@@ -17,9 +17,11 @@ import { GlassMaskIdTickService, HapticsService }                               
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.openOrClosing]":                  "openOrClosing$()",
-      "[class.open]":                           "openModelWithTransform$()",
-      "[style.--bowstring--sheet--scroll-top]": "viewportService.scrollTop$()",
+      "[class.openOrClosing]":                                                                             "openOrClosing$()",
+      "[class.open]":                                                                                      "openModelWithTransform$()",
+      "[style.--bowstring--sheet--drag-control--arrow-up-and-down-and-arrow-left-and-right-aspect-ratio]": "arrowUpAndDownAndArrowLeftAndRightAspectRatio$()",
+      "[style.--bowstring--sheet--drag-control--arrow-up-and-down-and-arrow-left-and-right-height-ratio]": "arrowUpAndDownAndArrowLeftAndRightHeightRatio$()",
+      "[style.--bowstring--sheet--scroll-top]":                                                            "viewportService.scrollTop$()",
     },
     hostDirectives:  [
       {
@@ -125,7 +127,7 @@ export class SheetComponent {
   private readonly platformId: NonNullable<unknown>                                                       = inject<NonNullable<unknown>>(PLATFORM_ID);
   private readonly rxSsrService: RxSsrService                                                             = inject<RxSsrService>(RxSsrService);
 
-  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbol$: Signal<Symbol | undefined> = toSignal<Symbol>(
+  protected readonly arrowUpAndDownAndArrowLeftAndRightSymbol$: Signal<Symbol | undefined>      = toSignal<Symbol>(
     of<SymbolName>("ArrowUpAndDownAndArrowLeftAndRight").pipe<Symbol>(
       this.rxSsrService.wrap<SymbolName, Symbol>(
         switchMap<SymbolName, Observable<Symbol>>((symbolName: SymbolName): Observable<Symbol> => from<Promise<Symbol>>(loadSymbol(symbolName))),
@@ -133,9 +135,21 @@ export class SheetComponent {
       ),
     ),
   );
-  protected readonly containerDirective: ContainerDirective                                = inject<ContainerDirective>(ContainerDirective);
-  protected readonly hapticsService: HapticsService                                        = inject<HapticsService>(HapticsService);
-  protected readonly viewportService: ViewportService                                      = inject<ViewportService>(ViewportService);
+  protected readonly arrowUpAndDownAndArrowLeftAndRightAspectRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.arrowUpAndDownAndArrowLeftAndRightSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((arrowUpAndDownAndArrowLeftAndRightSymbol?: Symbol): arrowUpAndDownAndArrowLeftAndRightSymbol is Symbol => !!arrowUpAndDownAndArrowLeftAndRightSymbol),
+      map<Symbol, number>((arrowUpAndDownAndArrowLeftAndRightSymbol: Symbol): number => arrowUpAndDownAndArrowLeftAndRightSymbol.viewBoxWidth / arrowUpAndDownAndArrowLeftAndRightSymbol.viewBoxHeight),
+    ),
+  );
+  protected readonly arrowUpAndDownAndArrowLeftAndRightHeightRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.arrowUpAndDownAndArrowLeftAndRightSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((arrowUpAndDownAndArrowLeftAndRightSymbol?: Symbol): arrowUpAndDownAndArrowLeftAndRightSymbol is Symbol => !!arrowUpAndDownAndArrowLeftAndRightSymbol),
+      map<Symbol, number>((arrowUpAndDownAndArrowLeftAndRightSymbol: Symbol): number => arrowUpAndDownAndArrowLeftAndRightSymbol.viewBoxHeight / 27.5742),
+    ),
+  );
+  protected readonly containerDirective: ContainerDirective                                     = inject<ContainerDirective>(ContainerDirective);
+  protected readonly hapticsService: HapticsService                                             = inject<HapticsService>(HapticsService);
+  protected readonly viewportService: ViewportService                                           = inject<ViewportService>(ViewportService);
 
   public readonly openModel$: ModelSignal<"" | boolean | `${ boolean }`> = model<"" | boolean | `${ boolean }`>(
     false,

@@ -7,7 +7,7 @@ import { afterRender, ChangeDetectionStrategy, Component, computed, type Element
 import { takeUntilDestroyed, toObservable, toSignal }                                                                                                               from "@angular/core/rxjs-interop";
 import { RxSsrService }                                                                                                                                             from "@bowstring/core";
 import { loadSymbol, type Symbol, type SymbolName }                                                                                                                 from "@bowstring/symbols";
-import { delayWhen, from, fromEvent, map, Observable, type Observer, of, switchMap, type TeardownLogic, timer }                                                     from "rxjs";
+import { delayWhen, filter, from, fromEvent, map, Observable, type Observer, of, switchMap, type TeardownLogic, timer }                                             from "rxjs";
 import { ContainerDirective, ElevatedDirective, FlexboxContainerDirective, HoverTransformingDirective, WarningDirective, WellRoundedDirective }                     from "../../../../../directives";
 import { HapticsService }                                                                                                                                           from "../../../../../services";
 
@@ -16,9 +16,11 @@ import { HapticsService }                                                       
   {
     changeDetection: ChangeDetectionStrategy.OnPush,
     host:            {
-      "[class.openOrClosing]":              "openOrClosing$()",
-      "[class.open]":                       "openModelWithTransform$()",
-      "[style.--bowstring--error--height]": "height$()",
+      "[class.openOrClosing]":                                  "openOrClosing$()",
+      "[class.open]":                                           "openModelWithTransform$()",
+      "[style.--bowstring--close-control--xmark-aspect-ratio]": "xmarkAspectRatio$()",
+      "[style.--bowstring--close-control--xmark-height-ratio]": "xmarkHeightRatio$()",
+      "[style.--bowstring--error--height]":                     "height$()",
     },
     hostDirectives:  [
       {
@@ -118,14 +120,14 @@ export class ErrorComponent {
   );
   public readonly openModelWithTransform$: Signal<boolean>               = computed<boolean>((): boolean => this.openModel$() === "" || this.openModel$() === true || this.openModel$() === "true");
 
-  protected readonly openOrClosing$: Signal<boolean | undefined> = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
+  protected readonly openOrClosing$: Signal<boolean | undefined>   = isPlatformBrowser(this.platformId) ? toSignal<boolean | undefined>(
     toObservable<boolean | undefined>(this.openModelWithTransform$).pipe<boolean | undefined, boolean | undefined>(
       delayWhen<boolean | undefined>((open?: boolean): Observable<number> => open ? timer(0) : timer(180)),
       map<boolean | undefined, boolean | undefined>((): boolean | undefined => this.openModelWithTransform$()),
     ),
   ) : signal<undefined>(undefined);
-  protected readonly wellRoundedDirective: WellRoundedDirective  = inject<WellRoundedDirective>(WellRoundedDirective);
-  protected readonly xmarkSymbol$: Signal<Symbol | undefined>    = toSignal<Symbol>(
+  protected readonly wellRoundedDirective: WellRoundedDirective    = inject<WellRoundedDirective>(WellRoundedDirective);
+  protected readonly xmarkSymbol$: Signal<Symbol | undefined>      = toSignal<Symbol>(
     of<SymbolName>("Xmark").pipe<Symbol>(
       this.rxSsrService.wrap<SymbolName, Symbol>(
         switchMap<SymbolName, Observable<Symbol>>(
@@ -133,6 +135,18 @@ export class ErrorComponent {
         ),
         "Symbol:Xmark",
       ),
+    ),
+  );
+  protected readonly xmarkAspectRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.xmarkSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((xmarkSymbol?: Symbol): xmarkSymbol is Symbol => !!xmarkSymbol),
+      map<Symbol, number>((xmarkSymbol: Symbol): number => xmarkSymbol.viewBoxWidth / xmarkSymbol.viewBoxHeight),
+    ),
+  );
+  protected readonly xmarkHeightRatio$: Signal<number | undefined> = toSignal<number>(
+    toObservable<Symbol | undefined>(this.xmarkSymbol$).pipe<Symbol, number>(
+      filter<Symbol | undefined, Symbol>((xmarkSymbol?: Symbol): xmarkSymbol is Symbol => !!xmarkSymbol),
+      map<Symbol, number>((xmarkSymbol: Symbol): number => xmarkSymbol.viewBoxHeight / 27.5742),
     ),
   );
 

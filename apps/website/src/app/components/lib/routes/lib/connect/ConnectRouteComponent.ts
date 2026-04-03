@@ -2,15 +2,15 @@
  * Copyright © 2026 Anaïse Louis. All rights reserved.
  */
 
-import { ChangeDetectionStrategy, Component, effect, inject, signal, type WritableSignal }                                                                                                                                                                                                  from "@angular/core";
-import { addDoc, collection, type CollectionReference, Firestore, FirestoreError, serverTimestamp }                                                                                                                                                                                         from "@angular/fire/firestore";
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                                                                  from "@angular/forms";
-import { AuthenticationService, ErrorsService, getFirestoreErrorMessage }                                                                                                                                                                                                                   from "@bowstring/core";
-import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, EllipsesComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, OptionComponent, PhoneNumberFieldInputComponent, PickerInputComponent, SectionComponent, SymbolComponent, TextFieldInputComponent } from "@bowstring/surface";
-import { type CountryCode, getCountries, getCountryCallingCode, isPossiblePhoneNumber, parsePhoneNumberWithError, type PhoneNumber }                                                                                                                                                        from "libphonenumber-js";
-import { RouteComponent }                                                                                                                                                                                                                                                                   from "../../../../";
-import { type MessageDocument }                                                                                                                                                                                                                                                             from "../../../../../interfaces";
-import { MessageService }                                                                                                                                                                                                                                                                   from "../../../../../services";
+import { ChangeDetectionStrategy, Component, effect, inject, signal, type WritableSignal }                                                                                                                                                                                                                        from "@angular/core";
+import { addDoc, collection, type CollectionReference, Firestore, FirestoreError, serverTimestamp }                                                                                                                                                                                                               from "@angular/fire/firestore";
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, type ValidationErrors, Validators }                                                                                                                                                                                                        from "@angular/forms";
+import { AuthenticationService, ErrorsService, FindRouteByPathPipe, getFirestoreErrorMessage }                                                                                                                                                                                                                    from "@bowstring/core";
+import { AsideComponent, BoxComponent, ButtonComponent, DividerComponent, EllipsesComponent, FlexboxContainerComponent, FormComponent, HeaderComponent, OptionComponent, PhoneNumberFieldInputComponent, PickerInputComponent, RouteHeaderDirective, SectionComponent, SymbolComponent, TextFieldInputComponent } from "@bowstring/surface";
+import { type CountryCode, getCountries, getCountryCallingCode, isPossiblePhoneNumber, parsePhoneNumberWithError, type PhoneNumber }                                                                                                                                                                              from "libphonenumber-js";
+import { RouteComponent }                                                                                                                                                                                                                                                                                         from "../../../../";
+import { type MessageDocument }                                                                                                                                                                                                                                                                                   from "../../../../../interfaces";
+import { MessageService }                                                                                                                                                                                                                                                                                         from "../../../../../services";
 
 
 @Component(
@@ -22,6 +22,7 @@ import { MessageService }                                                       
       ButtonComponent,
       DividerComponent,
       EllipsesComponent,
+      FindRouteByPathPipe,
       FlexboxContainerComponent,
       FormComponent,
       HeaderComponent,
@@ -29,6 +30,7 @@ import { MessageService }                                                       
       PhoneNumberFieldInputComponent,
       PickerInputComponent,
       ReactiveFormsModule,
+      RouteHeaderDirective,
       SectionComponent,
       SymbolComponent,
       TextFieldInputComponent,

@@ -2,20 +2,20 @@
  * Copyright © 2026 Gavin William Sawyer. All rights reserved.
  */
 
-import { DOCUMENT, isPlatformBrowser }                                                                                                           from "@angular/common";
-import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                from "@angular/core";
-import { toSignal }                                                                                                                              from "@angular/core/rxjs-interop";
-import { type FirebaseError }                                                                                                                    from "@angular/fire/app";
-import { Auth, createUserWithEmailAndPassword, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User, type UserCredential } from "@angular/fire/auth";
-import { Functions }                                                                                                                             from "@angular/fire/functions";
-import { createUserWithPasskey, type FirebaseWebAuthnError, signInWithPasskey, verifyUserWithPasskey }                                           from "@firebase-web-authn/browser";
-import { type Auth as AdminAuth, type UserRecord as AdminUserRecord }                                                                            from "firebase-admin/auth";
-import { catchError, distinctUntilChanged, filter, from, Observable, type Observer, of, switchMap, tap, type TeardownLogic }                     from "rxjs";
-import { getAuthErrorMessage }                                                                                                                   from "../../getAuthErrorMessage";
-import { getCallableCloudFunction }                                                                                                              from "../../getCallableCloudFunction";
-import { ADMIN_AUTH }                                                                                                                            from "../../injection tokens";
-import { ErrorsService }                                                                                                                         from "./ErrorsService";
-import { RxSsrService }                                                                                                                          from "./RxSsrService";
+import { DOCUMENT, isPlatformBrowser, isPlatformServer }                                                                                                        from "@angular/common";
+import { afterRender, inject, Injectable, PLATFORM_ID, signal, type Signal, type WritableSignal }                                                               from "@angular/core";
+import { toSignal }                                                                                                                                             from "@angular/core/rxjs-interop";
+import { type FirebaseError }                                                                                                                                   from "@angular/fire/app";
+import { Auth, createUserWithEmailAndPassword, IdTokenResult, onIdTokenChanged, signInAnonymously, signInWithEmailAndPassword, type User, type UserCredential } from "@angular/fire/auth";
+import { Functions }                                                                                                                                            from "@angular/fire/functions";
+import { createUserWithPasskey, type FirebaseWebAuthnError, signInWithPasskey, verifyUserWithPasskey }                                                          from "@firebase-web-authn/browser";
+import { type Auth as AdminAuth, type UserRecord as AdminUserRecord }                                                                                           from "firebase-admin/auth";
+import { catchError, distinctUntilChanged, filter, from, map, Observable, type Observer, of, switchMap, tap, type TeardownLogic }                               from "rxjs";
+import { getAuthErrorMessage }                                                                                                                                  from "../../getAuthErrorMessage";
+import { getCallableCloudFunction }                                                                                                                             from "../../getCallableCloudFunction";
+import { ADMIN_AUTH }                                                                                                                                           from "../../injection tokens";
+import { ErrorsService }                                                                                                                                        from "./ErrorsService";
+import { RxSsrService }                                                                                                                                         from "./RxSsrService";
 
 
 @Injectable({ providedIn: "root" })
@@ -70,7 +70,7 @@ export class AuthenticationService {
         (): void => userObserver.complete(),
       );
     },
-  ).pipe<User | null, User | null, User>(
+  ).pipe<User | null, User | null, User | null, User>(
     distinctUntilChanged<User | null>(),
     tap<User | null>(
       (user: User | null): void => {
@@ -82,6 +82,52 @@ export class AuthenticationService {
               throw firebaseError;
             },
           );
+      },
+    ),
+    map<User | null, User | null>(
+      (user: User | null): User | null => {
+        if (!user && isPlatformServer(this.platformId))
+          return {
+            displayName:   null,
+            email:         null,
+            emailVerified: false,
+            isAnonymous:   true,
+            metadata:      {},
+            phoneNumber:   null,
+            photoURL:      null,
+            providerData:  [],
+            providerId:    "",
+            refreshToken:  "",
+            tenantId:      null,
+            uid:           "uninitialized",
+
+            async delete(): Promise<void> {
+              return void (0);
+            },
+            async getIdToken(): Promise<string> {
+              return "";
+            },
+            async getIdTokenResult(): Promise<IdTokenResult> {
+              return {
+                authTime:           "",
+                claims:             {},
+                expirationTime:     "",
+                issuedAtTime:       "",
+                signInProvider:     null,
+                signInSecondFactor: null,
+                token:              "",
+              };
+            },
+            async reload(): Promise<void> {
+              return void (0);
+            },
+
+            toJSON(): object {
+              return {};
+            },
+          };
+
+        return user;
       },
     ),
     filter<User | null, User>((user: User | null): user is User => !!user),
@@ -104,6 +150,9 @@ export class AuthenticationService {
               uid: userId,
             }: User,
           ): Observable<boolean | undefined> => {
+            if (userId === "uninitialized")
+              return of<undefined>(undefined);
+
             if (isAnonymous)
               return of<false>(false);
 
@@ -130,7 +179,12 @@ export class AuthenticationService {
       ),
     ),
   );
-  public readonly user$: Signal<User | undefined>                                                     = toSignal<User>(this.userObservable.pipe<User>(this.rxSsrService.useState<User>("019672d4-6be7-75ef-b881-2cb04bc0ce7f")));
+  public readonly user$: Signal<User | undefined>                                                     = toSignal<User>(
+    this.userObservable.pipe<User, User>(
+      this.rxSsrService.useState<User>("019672d4-6be7-75ef-b881-2cb04bc0ce7f"),
+      filter<User>(({ uid: userId }: User): boolean => userId !== "uninitialized"),
+    ),
+  );
 
   public async createUserWithEmailAndPassword(
     email: string,

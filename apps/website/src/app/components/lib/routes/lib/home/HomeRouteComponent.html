@@ -2,7 +2,8 @@
   ~ Copyright © 2026 Anaïse Louis. All rights reserved.
   -->
 
-<bowstring--scroll-stack [minimumAspectRatio]="0.75">
+<bowstring--scroll-stack #scrollStackComponent
+  [minimumAspectRatio]="0.75">
   <bowstring--image
     *bowstringScrollStackItem
     [height]="400"
@@ -27,7 +28,7 @@
     positionTop="var(--bowstring--root--padding-bottom)">
     <bowstring--heading-group>
       <bowstring--header>
-        <h4>Header...</h4>
+        <h4>Header {{ scrollStackComponent.itemIndex$() + 1 }}...</h4>
       </bowstring--header>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci asperiores cumque et officiis? Aperiam commodi doloribus error est libero, odio repudiandae veritatis. Animi architecto distinctio dolorem eius incidunt. Aliquam omnis quia unde.</p>
     </bowstring--heading-group>

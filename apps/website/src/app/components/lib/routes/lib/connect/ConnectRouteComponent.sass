@@ -1,6 +1,7 @@
 /*!
  / Copyright © 2026 Anaïse Louis. All rights reserved.
  /
+
 @use "../../../route/RouteComponent"
 
 
@@ -15,3 +16,8 @@
     @media (min-width: 48rem)
       --bowstring--flexbox-container-directive--flex-direction: row !important
       --bowstring--flexbox-container-directive--flex-wrap: wrap !important
+
+      &::ng-deep > .harness > .between > bowstring--section
+        --bowstring--flexbox-child-directive--flex-basis: calc(1rem * pow(var(--phi), 6)) !important
+        --bowstring--flexbox-child-directive--flex-grow: 1 !important
+        --bowstring--flexbox-child-directive--flex-shrink: 0 !important

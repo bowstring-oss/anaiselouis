@@ -110,14 +110,12 @@
     @if (footerTemplateRef$(); as footerTemplateRef) {<ng-container *ngTemplateOutlet="footerTemplateRef" />}
   </bowstring--main>
   @defer {@if (belowTemplateRef$(); as belowTemplateRef) {<ng-container *ngTemplateOutlet="belowTemplateRef" />}}
+  <bowstring--box material="primary">
+    <bowstring--header fontSizeExponent="-1">
+      <h5 i18n="@@apps--Website--Components--Root--Summary-Box--Header">Anaïse is a multi-disciplinary artist and the founder of apparel brand After Awakening.</h5>
+    </bowstring--header>
+  </bowstring--box>
   <bowstring--footer>
-    <bowstring--box
-      level="2"
-      material="primary">
-      <bowstring--header fontSizeExponent="-3">
-        <h2 i18n="@@apps--Website--Components--Root--Footer--Header">Anaïse is a multi-disciplinary artist and the founder of apparel brand After Awakening.</h2>
-      </bowstring--header>
-    </bowstring--box>
     <bowstring--header>
       <h6>
         <bowstring--link

@@ -1,0 +1,14 @@
+<!--
+  ~ Copyright © 2026 Anaïse Louis. All rights reserved.
+  -->
+
+<bowstring--header *bowstringRouteHeader>
+  <h2>@if (projectRoutes | bowstringFindRouteByPath:"works"; as route) {<bowstring--link
+    exact
+    inline
+    url="./">
+    <bowstring--label [input]="route.data?.['title']" />
+  </bowstring--link>}</h2>
+</bowstring--header>
+
+<router-outlet />
